@@ -41,7 +41,7 @@
         <header class="emerald-glass rounded-3xl p-6 sm:p-8 mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
                 <div class="w-28 h-28 rounded-2xl border-2 border-yellow-500/70 overflow-hidden bg-white p-2 shadow-2xl flex-shrink-0 flex items-center justify-center">
-                    <img id="mainLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/000000?text=Aneeta+Collections';">
+                    <img id="mainLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
                 </div>
                 <div>
                     <h1 class="royal-font text-3xl sm:text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-100">
@@ -95,7 +95,7 @@
         <!-- FOOTER SECTION -->
         <footer class="emerald-glass rounded-3xl p-8 mt-16 text-center">
             <div class="w-16 h-16 rounded-xl border border-yellow-500/50 mx-auto mb-4 overflow-hidden bg-white p-1">
-                <img id="footerLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/000000?text=AC';">
+                <img id="footerLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
             </div>
             <h3 class="royal-font text-xl font-bold text-yellow-400 mb-1">ANEETA COLLECTIONS</h3>
             <p class="text-xs text-emerald-400 font-semibold mb-6">Your Destination for Premium Fancy Jewelry & Accessories</p>
@@ -118,18 +118,80 @@
     </div>
 
     <script>
+        // Full Inventory from inventory sheet
         const rawInventory = [
+            { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, key: "Coloured Rubber Bands" },
+            { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, key: "Striped Rubber Bands" },
+            { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, key: "Stone Fancy Bangles_1" },
+            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles", price: 500, key: "Jumka Fancy Bangles_1" },
+            { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, key: "Kashmiri Ghungroo Bangles Double Layered_1" },
+            { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles Single Layered", price: 100, key: "Kashmiri Ghungroo Bangles Single Layered_1" },
+            { id: 7, type: "Bracelet", name: "Bracelet Coloured Child", price: 20, key: "Bracelet Coloured_Child" },
+            { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, key: "Bracelet Green Butterfly" },
+            { id: 9, type: "Bracelet", name: "Bracelet Purple Butterfly", price: 50, key: "Bracelet Purple Butterfly" },
+            { id: 10, type: "Bracelet", name: "Bracelet Pearl", price: 50, key: "Bracelet Pearl" },
+            { id: 11, type: "Bracelet", name: "Bracelet Glass Stone", price: 80, key: "Bracelet Glass Stone" },
+            { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, key: "Bracelet Evil Eye" },
             { id: 13, type: "Anklet", name: "Anklet Butterly", price: 50, key: "Anklet Butterly" },
             { id: 14, type: "Anklet", name: "Anklet Evil Eye", price: 50, key: "Anklet Evil Eye" },
-            { id: 90, type: "Bindi", name: "Bendi Pack", price: 10, key: "Bendi" },
-            { id: 55, type: "Ring", name: "Black Awesome Ring", price: 25, key: "Black Awesome Ring" },
+            { id: 15, type: "Locket", name: "Locket Rose Gold", price: 30, key: "Locket Rose Gold_1" },
+            { id: 16, type: "Locket", name: "Locket Silver", price: 50, key: "Locket Silver_1" },
+            { id: 17, type: "Earing", name: "Jhumka Small", price: 30, key: "Jhumka Small" },
+            { id: 18, type: "Earing", name: "Jhumka Big", price: 40, key: "Jhumka Big" },
+            { id: 19, type: "Earing", name: "Oxydised Earcuf with Jhumka", price: 80, key: "Oxydised Earcuf with Jhumka" },
+            { id: 20, type: "Earing", name: "Floral Earcuf Earings", price: 80, key: "Floral Earcuf Earings" },
+            { id: 21, type: "Earing", name: "Square Ear-rings with Jhumka", price: 80, key: "Square Ear-rings with Jhumka" },
+            { id: 22, type: "Earing", name: "Single Mirror Jhumka Earing", price: 80, key: "Single Mirror Jhumka Earing" },
+            { id: 23, type: "Earing", name: "Golden Traditional Chand Bali Earing", price: 80, key: "Golden Traditional Chand Bali Earing" },
+            { id: 24, type: "Earing", name: "Silver Traditional Chand Bali Earing", price: 80, key: "Silver Traditional Chand Bali Earing" },
+            { id: 25, type: "Earing", name: "Pearl Fancy Jhumki", price: 80, key: "Pearl Fancy Jhumki" },
+            { id: 26, type: "Earing", name: "Stone Earing", price: 80, key: "Stone Earing" },
+            { id: 27, type: "Earing", name: "Green latkan Jhumki", price: 50, key: "Green latkan Jhumki" },
+            { id: 28, type: "Earing", name: "Peacock Jhumki", price: 50, key: "Peacock Jhumki" },
+            { id: 29, type: "Earing", name: "Small Earcufs Earing", price: 50, key: "Small Earcufs Earing" },
+            { id: 30, type: "Earing", name: "Sunflower Oxidised Jhumka", price: 50, key: "Sunflower Oxidised Jhumka" },
+            { id: 31, type: "Earing", name: "Cute Big Flower Earing", price: 50, key: "Cute Big Flower Earing" },
+            { id: 32, type: "Earing", name: "Trendy Pearl Earing Double Sided", price: 50, key: "Trendy Pearl Earing Double Sided" },
+            { id: 33, type: "Earing", name: "Yellow Stone Earing", price: 50, key: "Yellow Stone Earing" },
+            { id: 34, type: "Earing", name: "Pink Stone Earing", price: 50, key: "Pink Stone Earing" },
+            { id: 35, type: "Earing", name: "Sky Blue Stone Earing", price: 50, key: "Sky Blue Stone Earing" },
+            { id: 36, type: "Earing", name: "Sphere Nag Earing", price: 50, key: "Sphere Nag Earing" },
+            { id: 37, type: "Earing", name: "Heart Nag Earing", price: 50, key: "Heart Nag Earing" },
             { id: 38, type: "Earing", name: "Black Square Earing", price: 50, key: "Black Square Earing" },
-            { id: 7, type: "Bracelet", name: "Bracelet Coloured Child", price: 20, key: "Bracelet Coloured_Child" },
-            { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, key: "Bracelet Evil Eye" },
-            { id: 11, type: "Bracelet", name: "Bracelet Glass Stone", price: 80, key: "Bracelet Glass Stone" },
-            { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, key: "Bracelet Green Butterfly" },
-            { id: 10, type: "Bracelet", name: "Bracelet Pearl", price: 50, key: "Bracelet Pearl" },
-            { id: 59, type: "Clip", name: "Hair Clips", price: 5, key: "Hair Clips" }
+            { id: 39, type: "Earing", name: "Traditional Jhumka Earing", price: 50, key: "Traditional Jhumka Earing" },
+            { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, key: "Premium Bindi Single_1" },
+            { id: 41, type: "Bindi", name: "Premium Bindi Four in One", price: 80, key: "Premium Bindi Four_in_one_1" },
+            { id: 42, type: "Bindi", name: "Small Bindi Pack", price: 10, key: "Small Bindi Pack" },
+            { id: 43, type: "Bindi", name: "Multi Colour Bindi", price: 15, key: "Muti Colour Bindi" },
+            { id: 44, type: "Bindi", name: "Green Color Bindi", price: 10, key: "Green Color Bindi" },
+            { id: 45, type: "Clip", name: "Clip Ice Cream", price: 30, key: "Clip_Ice cream" },
+            { id: 46, type: "Clip", name: "Clip Sleepy Owl", price: 30, key: "Clip_Sleepy Owl" },
+            { id: 47, type: "Clip", name: "Clip Ice Cream Purple", price: 30, key: "Clip_Ice cream Purple" },
+            { id: 48, type: "Clip", name: "Clip Purple", price: 30, key: "Clip_Purple" },
+            { id: 49, type: "Clip", name: "Clip Car", price: 30, key: "Clip_Car" },
+            { id: 50, type: "Clip", name: "Clip Yellow", price: 30, key: "Clip_Yellow" },
+            { id: 51, type: "Clip", name: "Clip Cartoon", price: 30, key: "Clip_Cartoon" },
+            { id: 52, type: "Clip", name: "Clip Ice Cream Stick", price: 30, key: "Clip_Ice cream stick" },
+            { id: 53, type: "Clip", name: "Clip Coffee", price: 30, key: "Clip_Coffee" },
+            { id: 54, type: "Clip", name: "Clip Strawberry", price: 30, key: "Clip_Strawberry" },
+            { id: 55, type: "Ring", name: "Black Awesome Ring", price: 25, key: "Black Awesome Ring" },
+            { id: 56, type: "Clip", name: "Clip Small Fancy", price: 10, key: "Clip_small_Fancy" },
+            { id: 57, type: "Clip", name: "Clip Small Fancy Mouse", price: 10, key: "Clip_small_Fancy_Mouse" },
+            { id: 58, type: "Hair Rubber Bands", name: "Rubber Band Colourfull", price: 5, key: "Rubber Band Colourfull" },
+            { id: 59, type: "Clip", name: "Hair Clips", price: 5, key: "Hair Clips" },
+            { id: 60, type: "Earing", name: "Silver Toned Earing", price: 80, key: "Silver Toned Earing" },
+            { id: 61, type: "Locket", name: "Mangalsutra", price: 6, key: "Mangalsutra" },
+            { id: 62, type: "Earing", name: "Western Earing Series", price: 80, key: "Western Earing_1" },
+            { id: 74, type: "Bangle", name: "Daily Wear Bangle Series", price: 50, key: "Daily Wear Bangle_1" },
+            { id: 82, type: "Bangle", name: "Fancy Bangle Box Collection", price: 100, key: "Fancy Bangle with box 1" },
+            { id: 90, type: "Bindi", name: "Bendi Pack", price: 10, key: "Bendi" },
+            { id: 91, type: "Hanky", name: "Soft Hanky", price: 20, key: "Soft Hanky" },
+            { id: 92, type: "Mehandi", name: "Neha Mehandi Cone", price: 10, key: "Neha Mehandi" },
+            { id: 93, type: "Mehandi", name: "Kaveri Mehandi Cone", price: 15, key: "Kaveri Mehandi" },
+            { id: 94, type: "Independence Day", name: "Tri Color Hand Band", price: 10, key: "Tri Color Hand band" },
+            { id: 95, type: "Independence Day", name: "Indian Flag Plastic", price: 5, key: "Indian Flag_Plastic" },
+            { id: 96, type: "Independence Day", name: "Indian Flag Lapel Pin", price: 10, key: "Indian Flag Lapel Pin_1" },
+            { id: 97, type: "Independence Day", name: "Indian Flag Cloth", price: 10, key: "Indian Flag_Cloth" }
         ];
 
         let repoFiles = [];
@@ -142,7 +204,6 @@
                 if(Array.isArray(data)) {
                     repoFiles = data.map(f => f.name);
                     
-                    // Auto detect Logo file
                     const logoFile = repoFiles.find(f => f.toLowerCase().includes('logo'));
                     if(logoFile) {
                         document.getElementById('mainLogo').src = encodeURIComponent(logoFile);
@@ -158,7 +219,7 @@
         function findMatchingImage(key) {
             const match = repoFiles.find(f => f.toLowerCase().startsWith(key.toLowerCase()));
             if(match) return encodeURIComponent(match);
-            return encodeURIComponent(key + '.jpg');
+            return null;
         }
 
         function renderCategories() {
@@ -186,7 +247,7 @@
 
         function renderGrid(items) {
             const grid = document.getElementById('showroomGrid');
-            document.getElementById('productCounter').innerText = `${items.length} Designs Active`;
+            document.getElementById('productCounter').innerText = `${items.length} Total Designs`;
 
             grid.innerHTML = items.map((product) => {
                 const encodedMsg = encodeURIComponent(`Hello Aneeta Collections!\nI want to order:\nProduct: ${product.name}\nCategory: ${product.type}\nPrice: ₹${product.price}`);
@@ -196,7 +257,13 @@
                 return `
                     <div class="product-card rounded-2xl overflow-hidden flex flex-col relative">
                         <div class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900">
-                            <img src="${imgSrc}" class="w-full h-full object-contain" alt="${product.name}">
+                            ${imgSrc ? 
+                                `<img src="${imgSrc}" class="w-full h-full object-contain" alt="${product.name}">` : 
+                                `<div class="text-center p-4">
+                                    <span class="text-3xl block mb-2">💎</span>
+                                    <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
+                                 </div>`
+                            }
                         </div>
                         <div class="p-5 flex flex-col flex-grow">
                             <span class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-1">${product.type}</span>
