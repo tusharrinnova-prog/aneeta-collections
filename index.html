@@ -37,12 +37,11 @@
 
     <div class="max-w-7xl mx-auto px-4 pt-6">
         
-        <!-- HEADER SECTION WITH LOGO & DETAILS -->
+        <!-- HEADER SECTION -->
         <header class="emerald-glass rounded-3xl p-6 sm:p-8 mb-8 flex flex-col md:flex-row items-center justify-between gap-6">
             <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                <!-- OFFICIAL LOGO -->
                 <div class="w-28 h-28 rounded-2xl border-2 border-yellow-500/70 overflow-hidden bg-white p-2 shadow-2xl flex-shrink-0 flex items-center justify-center">
-                    <img src="Logo.png" alt="Aneeta Collections Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
+                    <img id="mainLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/000000?text=Aneeta+Collections';">
                 </div>
                 <div>
                     <h1 class="royal-font text-3xl sm:text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-100">
@@ -61,7 +60,6 @@
                 </div>
             </div>
 
-            <!-- Quick Action Buttons -->
             <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
                 <a href="https://wa.me/918796672636?text=Hello%20Aneeta%20Collections!" target="_blank" class="w-full sm:w-auto px-5 py-3 bg-emerald-500 hover:bg-emerald-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2">
                     <span>💬</span> WhatsApp Direct
@@ -72,7 +70,7 @@
             </div>
         </header>
 
-        <!-- SEARCH & CATEGORY FILTER BAR -->
+        <!-- SEARCH & FILTER BAR -->
         <section class="emerald-glass rounded-2xl p-4 mb-8">
             <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="🔍 Search Earrings, Lockets, Bangles..." class="w-full sm:w-80 bg-slate-950/90 border border-emerald-800/80 rounded-xl px-4 py-2.5 text-sm text-gray-100 focus:outline-none focus:border-yellow-400">
@@ -97,7 +95,7 @@
         <!-- FOOTER SECTION -->
         <footer class="emerald-glass rounded-3xl p-8 mt-16 text-center">
             <div class="w-16 h-16 rounded-xl border border-yellow-500/50 mx-auto mb-4 overflow-hidden bg-white p-1">
-                <img src="Logo.png" alt="Aneeta Collections Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
+                <img id="footerLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/200x200/ffffff/000000?text=AC';">
             </div>
             <h3 class="royal-font text-xl font-bold text-yellow-400 mb-1">ANEETA COLLECTIONS</h3>
             <p class="text-xs text-emerald-400 font-semibold mb-6">Your Destination for Premium Fancy Jewelry & Accessories</p>
@@ -120,25 +118,47 @@
     </div>
 
     <script>
-        // Exact uploaded files mapping
         const rawInventory = [
-            { id: 13, type: "Anklet", name: "Anklet Butterly", price: 50, images: ["Anklet Butterly.jpg"] },
-            { id: 14, type: "Anklet", name: "Anklet Evil Eye", price: 50, images: ["Anklet Evil Eye.jpeg"] },
-            { id: 90, type: "Bindi", name: "Bendi Pack", price: 10, images: ["Bendi.jpeg"] },
-            { id: 55, type: "Ring", name: "Black Awesome Ring", price: 25, images: ["Black Awesome Ring.jpeg"] },
-            { id: 38, type: "Earing", name: "Black Square Earing", price: 50, images: ["Black Square Earing.jpg"] },
-            { id: 7, type: "Bracelet", name: "Bracelet Coloured Child", price: 20, images: ["Bracelet Coloured_Child.jpg"] },
-            { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, images: ["Bracelet Evil Eye.jpg"] },
-            { id: 11, type: "Bracelet", name: "Bracelet Glass Stone", price: 80, images: ["Bracelet Glass Stone.jpeg"] },
-            { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, images: ["Bracelet Green Butterfly.jpg"] },
-            { id: 10, type: "Bracelet", name: "Bracelet Pearl", price: 50, images: ["Bracelet Pearl.jpeg"] }
+            { id: 13, type: "Anklet", name: "Anklet Butterly", price: 50, key: "Anklet Butterly" },
+            { id: 14, type: "Anklet", name: "Anklet Evil Eye", price: 50, key: "Anklet Evil Eye" },
+            { id: 90, type: "Bindi", name: "Bendi Pack", price: 10, key: "Bendi" },
+            { id: 55, type: "Ring", name: "Black Awesome Ring", price: 25, key: "Black Awesome Ring" },
+            { id: 38, type: "Earing", name: "Black Square Earing", price: 50, key: "Black Square Earing" },
+            { id: 7, type: "Bracelet", name: "Bracelet Coloured Child", price: 20, key: "Bracelet Coloured_Child" },
+            { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, key: "Bracelet Evil Eye" },
+            { id: 11, type: "Bracelet", name: "Bracelet Glass Stone", price: 80, key: "Bracelet Glass Stone" },
+            { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, key: "Bracelet Green Butterfly" },
+            { id: 10, type: "Bracelet", name: "Bracelet Pearl", price: 50, key: "Bracelet Pearl" },
+            { id: 59, type: "Clip", name: "Hair Clips", price: 5, key: "Hair Clips" }
         ];
 
+        let repoFiles = [];
         let selectedCategory = 'ALL';
 
-        function initShowroom() {
+        async function fetchRepoFiles() {
+            try {
+                const res = await fetch('https://api.github.com/repos/tusharrinnova-prog/aneeta-collections/contents');
+                const data = await res.json();
+                if(Array.isArray(data)) {
+                    repoFiles = data.map(f => f.name);
+                    
+                    // Auto detect Logo file
+                    const logoFile = repoFiles.find(f => f.toLowerCase().includes('logo'));
+                    if(logoFile) {
+                        document.getElementById('mainLogo').src = encodeURIComponent(logoFile);
+                        document.getElementById('footerLogo').src = encodeURIComponent(logoFile);
+                    }
+                }
+            } catch(e) { console.log('API fallback', e); }
+            
             renderCategories();
             renderGrid(rawInventory);
+        }
+
+        function findMatchingImage(key) {
+            const match = repoFiles.find(f => f.toLowerCase().startsWith(key.toLowerCase()));
+            if(match) return encodeURIComponent(match);
+            return encodeURIComponent(key + '.jpg');
         }
 
         function renderCategories() {
@@ -164,27 +184,19 @@
             renderGrid(filtered);
         }
 
-        function handleImgError(imgObj, originalName) {
-            if(originalName.endsWith('.jpg')) {
-                imgObj.src = encodeURIComponent(originalName.replace('.jpg', '.jpeg'));
-            } else if(originalName.endsWith('.jpeg')) {
-                imgObj.src = encodeURIComponent(originalName.replace('.jpeg', '.png'));
-            }
-        }
-
         function renderGrid(items) {
             const grid = document.getElementById('showroomGrid');
-            document.getElementById('productCounter').innerText = `${items.length} Uploaded Designs`;
+            document.getElementById('productCounter').innerText = `${items.length} Designs Active`;
 
-            grid.innerHTML = items.map((product, idx) => {
+            grid.innerHTML = items.map((product) => {
                 const encodedMsg = encodeURIComponent(`Hello Aneeta Collections!\nI want to order:\nProduct: ${product.name}\nCategory: ${product.type}\nPrice: ₹${product.price}`);
                 const waUrl = `https://wa.me/918796672636?text=${encodedMsg}`;
-                const imgFile = product.images[0];
+                const imgSrc = findMatchingImage(product.key);
 
                 return `
                     <div class="product-card rounded-2xl overflow-hidden flex flex-col relative">
                         <div class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900">
-                            <img src="${encodeURIComponent(imgFile)}" class="w-full h-full object-contain" alt="${product.name}" onerror="handleImgError(this, '${imgFile}')">
+                            <img src="${imgSrc}" class="w-full h-full object-contain" alt="${product.name}">
                         </div>
                         <div class="p-5 flex flex-col flex-grow">
                             <span class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-1">${product.type}</span>
@@ -201,7 +213,7 @@
             }).join('');
         }
 
-        initShowroom();
+        fetchRepoFiles();
     </script>
 </body>
 </html>
