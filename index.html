@@ -118,7 +118,6 @@
     </div>
 
     <script>
-        // Full Inventory from inventory sheet
         const rawInventory = [
             { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, key: "Coloured Rubber Bands" },
             { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, key: "Striped Rubber Bands" },
@@ -217,7 +216,11 @@
         }
 
         function findMatchingImage(key) {
-            const match = repoFiles.find(f => f.toLowerCase().startsWith(key.toLowerCase()));
+            const cleanKey = key.toLowerCase().trim().replace(/_/g, ' ');
+            const match = repoFiles.find(f => {
+                const cleanFile = f.toLowerCase().trim().replace(/_/g, ' ');
+                return cleanFile.startsWith(cleanKey) || cleanFile.includes(cleanKey);
+            });
             if(match) return encodeURIComponent(match);
             return null;
         }
@@ -258,7 +261,7 @@
                     <div class="product-card rounded-2xl overflow-hidden flex flex-col relative">
                         <div class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900">
                             ${imgSrc ? 
-                                `<img src="${imgSrc}" class="w-full h-full object-contain" alt="${product.name}">` : 
+                                `<img src="${imgSrc}" class="w-full h-full object-contain" alt="${product.name}" onerror="this.onerror=null; this.src='Hair Clips.jpeg';">` : 
                                 `<div class="text-center p-4">
                                     <span class="text-3xl block mb-2">💎</span>
                                     <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
