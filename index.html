@@ -88,7 +88,7 @@
             </div>
 
             <div id="showroomGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Dynamic Items -->
+                <!-- Dynamic 97 Items -->
             </div>
         </main>
 
@@ -118,14 +118,15 @@
     </div>
 
     <script>
+        // Exact 97 Inventory Entries from the Excel Sheet
         const rawInventory = [
             { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, file: "Coloured Rubber Bands" },
             { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, file: "Striped Rubber Bands" },
             { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, file: "Stone Fancy Bangles_1" },
-            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles", price: 500, file: "Jumka Fancy Bangles_1" },
+            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles_3", price: 500, file: "Jumka Fancy Bangles_1" },
             { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, file: "Kashmiri Ghungroo Bangles Double Layered_1" },
             { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles Single Layered", price: 100, file: "Kashmiri Ghungroo Bangles Single Layered_1" },
-            { id: 7, type: "Bracelet", name: "Bracelet Coloured Child", price: 20, file: "Bracelet Coloured_Child" },
+            { id: 7, type: "Bracelet", name: "Bracelet Coloured_Child", price: 20, file: "Bracelet Coloured_Child" },
             { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, file: "Bracelet Green Butterfly" },
             { id: 9, type: "Bracelet", name: "Bracelet Purple Butterfly", price: 50, file: "Bracelet Purple Butterfly" },
             { id: 10, type: "Bracelet", name: "Bracelet Pearl", price: 50, file: "Bracelet Pearl" },
@@ -159,30 +160,55 @@
             { id: 38, type: "Earing", name: "Black Square Earing", price: 50, file: "Black Square Earing" },
             { id: 39, type: "Earing", name: "Traditional Jhumka Earing", price: 50, file: "Traditional Jhumka Earing" },
             { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, file: "Premium Bindi Single_1" },
-            { id: 41, type: "Bindi", name: "Premium Bindi Four in One", price: 80, file: "Premium Bindi Four_in_one_1" },
+            { id: 41, type: "Bindi", name: "Premium Bindi Four_in_one_2", price: 80, file: "Premium Bindi Four_in_one_1" },
             { id: 42, type: "Bindi", name: "Small Bindi Pack", price: 10, file: "Small Bindi Pack" },
-            { id: 43, type: "Bindi", name: "Multi Colour Bindi", price: 15, file: "Muti Colour Bindi" },
+            { id: 43, type: "Bindi", name: "Muti Colour Bindi", price: 15, file: "Muti Colour Bindi" },
             { id: 44, type: "Bindi", name: "Green Color Bindi", price: 10, file: "Green Color Bindi" },
-            { id: 45, type: "Clip", name: "Clip Ice Cream", price: 30, file: "Clip_Ice cream" },
-            { id: 46, type: "Clip", name: "Clip Sleepy Owl", price: 30, file: "Clip_Sleepy Owl" },
-            { id: 47, type: "Clip", name: "Clip Ice Cream Purple", price: 30, file: "Clip_Ice cream Purple" },
-            { id: 48, type: "Clip", name: "Clip Purple", price: 30, file: "Clip_Purple" },
-            { id: 49, type: "Clip", name: "Clip Car", price: 30, file: "Clip_Car" },
-            { id: 50, type: "Clip", name: "Clip Yellow", price: 30, file: "Clip_Yellow" },
-            { id: 51, type: "Clip", name: "Clip Cartoon", price: 30, file: "Clip_Cartoon" },
-            { id: 52, type: "Clip", name: "Clip Ice Cream Stick", price: 30, file: "Clip_Ice cream stick" },
-            { id: 53, type: "Clip", name: "Clip Coffee", price: 30, file: "Clip_Coffee" },
-            { id: 54, type: "Clip", name: "Clip Strawberry", price: 30, file: "Clip_Strawberry" },
+            { id: 45, type: "Clip", name: "Clip_Ice cream", price: 30, file: "Clip_Ice cream" },
+            { id: 46, type: "Clip", name: "Clip_Sleepy Owl", price: 30, file: "Clip_Sleepy Owl" },
+            { id: 47, type: "Clip", name: "Clip_Ice cream Purple", price: 30, file: "Clip_Ice cream Purple" },
+            { id: 48, type: "Clip", name: "Clip_Purple", price: 30, file: "Clip_Purple" },
+            { id: 49, type: "Clip", name: "Clip_Car", price: 30, file: "Clip_Car" },
+            { id: 50, type: "Clip", name: "Clip_Yellow", price: 30, file: "Clip_Yellow" },
+            { id: 51, type: "Clip", name: "Clip_Cartoon", price: 30, file: "Clip_Cartoon" },
+            { id: 52, type: "Clip", name: "Clip_Ice cream stick", price: 30, file: "Clip_Ice cream stick" },
+            { id: 53, type: "Clip", name: "Clip_Coffee", price: 30, file: "Clip_Coffee" },
+            { id: 54, type: "Clip", name: "Clip_Strawberry", price: 30, file: "Clip_Strawberry" },
             { id: 55, type: "Ring", name: "Black Awesome Ring", price: 25, file: "Black Awesome Ring" },
-            { id: 56, type: "Clip", name: "Clip Small Fancy", price: 10, file: "Clip_small_Fancy" },
-            { id: 57, type: "Clip", name: "Clip Small Fancy Mouse", price: 10, file: "Clip_small_Fancy_Mouse" },
+            { id: 56, type: "Clip", name: "Clip_small_Fancy", price: 10, file: "Clip_small_Fancy" },
+            { id: 57, type: "Clip", name: "Clip_small_Fancy_Mouse", price: 10, file: "Clip_small_Fancy_Mouse" },
             { id: 58, type: "Hair Rubber Bands", name: "Rubber Band Colourfull", price: 5, file: "Rubber Band Colourfull" },
             { id: 59, type: "Clip", name: "Hair Clips", price: 5, file: "Hair Clips" },
             { id: 60, type: "Earing", name: "Silver Toned Earing", price: 80, file: "Silver Toned Earing" },
             { id: 61, type: "Locket", name: "Mangalsutra", price: 6, file: "Mangalsutra" },
-            { id: 62, type: "Earing", name: "Western Earing Series", price: 80, file: "Western Earing_1" },
-            { id: 74, type: "Bangle", name: "Daily Wear Bangle Series", price: 50, file: "Daily Wear Bangle_1" },
-            { id: 82, type: "Bangle", name: "Fancy Bangle Box Collection", price: 100, file: "Fancy Bangle with box 1" },
+            { id: 62, type: "Earing", name: "Western Earing Design 1", price: 80, file: "Western Earing_1" },
+            { id: 63, type: "Earing", name: "Western Earing Design 2", price: 80, file: "Western Earing_2" },
+            { id: 64, type: "Earing", name: "Western Earing Design 3", price: 80, file: "Western Earing_3" },
+            { id: 65, type: "Earing", name: "Western Earing Design 4", price: 80, file: "Western Earing_4" },
+            { id: 66, type: "Earing", name: "Western Earing Design 5", price: 80, file: "Western Earing_5" },
+            { id: 67, type: "Earing", name: "Western Earing Design 6", price: 80, file: "Western Earing_6" },
+            { id: 68, type: "Earing", name: "Western Earing Design 7", price: 80, file: "Western Earing_7" },
+            { id: 69, type: "Earing", name: "Western Earing Design 8", price: 80, file: "Western Earing_8" },
+            { id: 70, type: "Earing", name: "Western Earing Design 9", price: 80, file: "Western Earing_9" },
+            { id: 71, type: "Earing", name: "Western Earing Design 10", price: 80, file: "Western Earing_10" },
+            { id: 72, type: "Earing", name: "Western Earing Design 11", price: 80, file: "Western Earing_11" },
+            { id: 73, type: "Earing", name: "Western Earing Design 12", price: 80, file: "Western Earing_12" },
+            { id: 74, type: "Bangle", name: "Daily Wear Bangle Design 1", price: 50, file: "Daily Wear Bangle_1" },
+            { id: 75, type: "Bangle", name: "Daily Wear Bangle Design 2", price: 50, file: "Daily Wear Bangle_2" },
+            { id: 76, type: "Bangle", name: "Daily Wear Bangle Design 3", price: 50, file: "Daily Wear Bangle_3" },
+            { id: 77, type: "Bangle", name: "Daily Wear Bangle Design 4", price: 50, file: "Daily Wear Bangle_4" },
+            { id: 78, type: "Bangle", name: "Daily Wear Bangle Design 5", price: 50, file: "Daily Wear Bangle_5" },
+            { id: 79, type: "Bangle", name: "Daily Wear Bangle Design 6", price: 60, file: "Daily Wear Bangle_6" },
+            { id: 80, type: "Bangle", name: "Daily Wear Bangle Design 7", price: 60, file: "Daily Wear Bangle_7" },
+            { id: 81, type: "Bangle", name: "Daily Wear Bangle Design 8", price: 60, file: "Daily Wear Bangle_8" },
+            { id: 82, type: "Bangle", name: "Fancy Bangle Box Design 1", price: 100, file: "Fancy Bangle with box 1" },
+            { id: 83, type: "Bangle", name: "Fancy Bangle Box Design 2", price: 100, file: "Fancy Bangle with box 2" },
+            { id: 84, type: "Bangle", name: "Fancy Bangle Box Design 3", price: 100, file: "Fancy Bangle with box 3" },
+            { id: 85, type: "Bangle", name: "Fancy Bangle Box Design 4", price: 100, file: "Fancy Bangle with box 4" },
+            { id: 86, type: "Bangle", name: "Fancy Bangle Box Design 5", price: 100, file: "Fancy Bangle with box 5" },
+            { id: 87, type: "Bangle", name: "Fancy Bangle Box Design 6", price: 100, file: "Fancy Bangle with box 6" },
+            { id: 88, type: "Bangle", name: "Fancy Bangle Box Design 7", price: 100, file: "Fancy Bangle with box 7" },
+            { id: 89, type: "Bangle", name: "Fancy Bangle Box Design 8", price: 100, file: "Fancy Bangle with box 8" },
             { id: 90, type: "Bindi", name: "Bendi Pack", price: 10, file: "Bendi" },
             { id: 91, type: "Hanky", name: "Soft Hanky", price: 20, file: "Soft Hanky" },
             { id: 92, type: "Mehandi", name: "Neha Mehandi Cone", price: 10, file: "Neha Mehandi" },
@@ -240,7 +266,7 @@
 
         function renderGrid(items) {
             const grid = document.getElementById('showroomGrid');
-            document.getElementById('productCounter').innerText = `${items.length} Total Designs`;
+            document.getElementById('productCounter').innerText = `${items.length} Unique Products`;
 
             grid.innerHTML = items.map((product) => {
                 const encodedMsg = encodeURIComponent(`Hello Aneeta Collections!\nI want to order:\nProduct: ${product.name}\nCategory: ${product.type}\nPrice: ₹${product.price}`);
