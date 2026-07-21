@@ -26,6 +26,13 @@
             border-color: rgba(212, 175, 55, 0.8);
             box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
         }
+        /* STRICT PRODUCT IMAGE FIX SO THEY NEVER GET OVERSIZED */
+        .product-img-box img {
+            width: 100% !important;
+            height: 100% !important;
+            max-height: 220px !important;
+            object-fit: contain !important;
+        }
         .category-chip {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -181,9 +188,9 @@
             </div>
         </header>
 
-        <!-- LUXURY BANNER IMAGE SECTION (EXACT NAME LINKED) -->
+        <!-- LUXURY BANNER IMAGE SECTION WITH POSITION SHIFT (LOGO & BORDER CLEAR) -->
         <section class="w-full rounded-3xl overflow-hidden mb-6 border-2 border-yellow-500/50 shadow-2xl bg-slate-950 flex items-center justify-center">
-            <img src="Image%20Banner.png" alt="Aneeta Collections Luxury Banner" class="w-full h-auto object-cover max-h-[420px]" onerror="this.onerror=null; this.src='banner.png';">
+            <img src="Image%20Banner.png" alt="Aneeta Collections Luxury Banner" class="w-full h-auto object-cover max-h-[440px]" style="object-position: center 30%;" onerror="this.onerror=null; this.src='banner.png';">
         </section>
 
         <!-- SEARCH & CATEGORY FILTER BAR -->
@@ -497,13 +504,13 @@
                             </svg>
                         </button>
 
-                        <!-- ZOOM ON CLICK -->
-                        <div onclick="openProductZoomModal(${product.id})" class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
+                        <!-- ZOOM ON CLICK WITH STRICT CONTAINER CLASS -->
+                        <div onclick="openProductZoomModal(${product.id})" class="product-img-box relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
                             <img id="img-${product.id}"
                                  src="${initialSrc}" 
                                  data-step="0" 
                                  data-itemid="${product.id}"
-                                 class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" 
+                                 class="transition-transform duration-300 group-hover:scale-105" 
                                  alt="${product.name}" 
                                  onerror="handleImageError(this, '${safeName}')">
                             <div class="text-center p-4 hidden flex-col items-center justify-center">
