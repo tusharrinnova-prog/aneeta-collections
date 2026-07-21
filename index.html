@@ -99,6 +99,32 @@
         </div>
     </div>
 
+    <!-- FEATURE 1: IMAGE ZOOM & DEDICATED PRODUCT VIEW MODAL -->
+    <div id="productZoomModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="emerald-glass w-full max-w-lg rounded-3xl p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
+            <button onclick="closeProductZoomModal()" class="absolute top-4 right-4 z-10 w-9 h-9 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
+            
+            <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-4 flex items-center justify-center border border-slate-800 mb-4 overflow-hidden relative">
+                <img id="modalZoomImg" src="" class="w-full h-full object-contain transition-transform duration-300 transform hover:scale-125 cursor-zoom-in" alt="Zoom View">
+            </div>
+
+            <div class="flex flex-col gap-2">
+                <div class="flex items-center justify-between">
+                    <span id="modalProductCategory" class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase">Category</span>
+                    <button id="modalShareBtn" onclick="" class="px-3 py-1 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer">
+                        <span>📤</span> Share
+                    </button>
+                </div>
+                <h3 id="modalProductName" class="royal-font text-lg font-bold text-gray-100">Product Name</h3>
+                <span id="modalProductPrice" class="royal-font text-lg font-extrabold text-yellow-400">Price: ₹0</span>
+
+                <div class="mt-4" id="modalActionContainer">
+                    <!-- Dynamic Counter / Add Button -->
+                </div>
+            </div>
+        </div>
+    </div>
+
     <!-- THANK YOU POPUP -->
     <div id="thankYouModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="emerald-glass w-full max-w-md rounded-3xl p-8 text-center border-2 border-yellow-400 shadow-2xl relative">
@@ -153,10 +179,11 @@
         <!-- SEARCH & CATEGORY FILTER BAR -->
         <section class="emerald-glass rounded-3xl p-6 mb-8 shadow-2xl border border-yellow-500/40">
             <div class="flex flex-col gap-5">
-                <!-- Search Box -->
+                <!-- FEATURE 2: SEARCH BOX WITH CLEAR (X) BUTTON -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-yellow-400 text-base">🔍</span>
-                    <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-11 pr-4 py-3 bg-slate-950/90 border border-yellow-500/30 rounded-2xl text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
+                    <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-11 pr-10 py-3 bg-slate-950/90 border border-yellow-500/30 rounded-2xl text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
+                    <button id="searchClearBtn" onclick="clearSearch()" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-yellow-400 font-bold text-sm hidden cursor-pointer transition">✕</button>
                 </div>
 
                 <!-- Rich Category Chips Bar -->
@@ -348,8 +375,9 @@
 
         let selectedCategory = 'ALL';
         let cart = loadCartFromStorage();
+        let currentZoomProductId = null;
 
-        // OPTION 1: LocalStorage Operations
+        // LocalStorage Helpers
         function loadCartFromStorage() {
             try {
                 const saved = localStorage.getItem('aneeta_cart');
@@ -410,6 +438,25 @@
             filterProducts();
         }
 
+        // FEATURE 2: SEARCH CLEAR BUTTON LOGIC
+        function handleSearchInput() {
+            const input = document.getElementById('searchInput');
+            const clearBtn = document.getElementById('searchClearBtn');
+            if(input.value.trim().length > 0) {
+                clearBtn.classList.remove('hidden');
+            } else {
+                clearBtn.classList.add('hidden');
+            }
+            filterProducts();
+        }
+
+        function clearSearch() {
+            const input = document.getElementById('searchInput');
+            input.value = '';
+            document.getElementById('searchClearBtn').classList.add('hidden');
+            filterProducts();
+        }
+
         function filterProducts() {
             const search = document.getElementById('searchInput').value.toLowerCase();
             const filtered = rawInventory.filter(item => {
@@ -432,21 +479,33 @@
 
                 return `
                     <div class="product-card rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
-                        <div class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900">
-                            <img src="${initialSrc}" 
+                        
+                        <!-- FEATURE 3: SHARE BUTTON ON CARD -->
+                        <button onclick="shareProduct(${product.id}, event)" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center text-xs shadow hover:scale-110 cursor-pointer transition">
+                            📤
+                        </button>
+
+                        <!-- FEATURE 1: ZOOM ON CLICK -->
+                        <div onclick="openProductZoomModal(${product.id})" class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
+                            <img id="img-${product.id}"
+                                 src="${initialSrc}" 
                                  data-step="0" 
                                  data-itemid="${product.id}"
-                                 class="w-full h-full object-contain" 
+                                 class="w-full h-full object-contain transition-transform duration-300 group-hover:scale-105" 
                                  alt="${product.name}" 
                                  onerror="handleImageError(this, '${safeName}')">
                             <div class="text-center p-4 hidden flex-col items-center justify-center">
                                 <span class="text-3xl block mb-2">💎</span>
                                 <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
                             </div>
+                            <span class="absolute bottom-2 right-2 bg-black/60 text-yellow-300 text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition">
+                                🔍 Zoom
+                            </span>
                         </div>
+
                         <div class="p-5 flex flex-col flex-grow">
                             <span class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-1">${product.type}</span>
-                            <h3 class="royal-font text-sm font-semibold text-gray-100 line-clamp-1 mb-2">${product.name}</h3>
+                            <h3 onclick="openProductZoomModal(${product.id})" class="royal-font text-sm font-semibold text-gray-100 line-clamp-1 mb-2 cursor-pointer hover:text-yellow-400 transition">${product.name}</h3>
                             <div class="flex items-center justify-between mb-4">
                                 <span class="text-xs text-yellow-400 font-bold font-mono">Price: ₹${product.price}</span>
                             </div>
@@ -521,6 +580,59 @@
                 const qty = item ? item.qty : 0;
                 container.innerHTML = renderProductButton(productId, qty);
             }
+            if (currentZoomProductId === productId) {
+                const item = cart.find(p => p.id === productId);
+                const qty = item ? item.qty : 0;
+                document.getElementById('modalActionContainer').innerHTML = renderProductButton(productId, qty);
+            }
+        }
+
+        // FEATURE 1: ZOOM MODAL CONTROLS
+        function openProductZoomModal(productId) {
+            currentZoomProductId = productId;
+            const product = rawInventory.find(p => p.id === productId);
+            if (!product) return;
+
+            const modal = document.getElementById('productZoomModal');
+            const cardImg = document.getElementById(`img-${productId}`);
+            
+            document.getElementById('modalZoomImg').src = cardImg ? cardImg.src : encodeURIComponent(product.file) + '.jpg';
+            document.getElementById('modalProductName').innerText = product.name;
+            document.getElementById('modalProductCategory').innerText = product.type;
+            document.getElementById('modalProductPrice').innerText = `Price: ₹${product.price}`;
+            
+            const item = cart.find(p => p.id === productId);
+            const qty = item ? item.qty : 0;
+            document.getElementById('modalActionContainer').innerHTML = renderProductButton(productId, qty);
+
+            document.getElementById('modalShareBtn').setAttribute('onclick', `shareProduct(${product.id}, event)`);
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeProductZoomModal() {
+            document.getElementById('productZoomModal').classList.add('hidden');
+            currentZoomProductId = null;
+        }
+
+        // FEATURE 3: NATIVE INTELLIGENT SHARE SHEET
+        function shareProduct(productId, event) {
+            if(event) event.stopPropagation();
+            const product = rawInventory.find(p => p.id === productId);
+            if (!product) return;
+
+            const shareData = {
+                title: product.name,
+                text: `✨ Check out '${product.name}' (₹${product.price}) from Aneeta Collections! 🛍️\n\nContact / Order on WhatsApp: 8796672636`,
+                url: window.location.href
+            };
+
+            if (navigator.share) {
+                navigator.share(shareData).catch((err) => console.log('Share canceled', err));
+            } else {
+                navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
+                alert("✨ Product link copied to clipboard! You can paste and share it on WhatsApp/Instagram.");
+            }
         }
 
         function updateCartUI() {
@@ -571,7 +683,6 @@
             modal.classList.toggle('hidden');
         }
 
-        // UNIVERSAL WHATSAPP ROUTING (Personal WhatsApp First & Fallback Native URL)
         function sendWhatsAppCartOrder() {
             if(cart.length === 0) {
                 alert("Your shopping bag is empty! Please add products first.");
@@ -589,7 +700,6 @@
 
             msg += `------------------------------\n*Total Amount: ₹${total}*\n------------------------------\n\nPlease confirm product availability & shipping details. Thank you!`;
 
-            // api.whatsapp.com for best mobile routing to Personal WhatsApp first
             const waUrl = `https://api.whatsapp.com/send?phone=918796672636&text=${encodeURIComponent(msg)}`;
             
             window.open(waUrl, '_blank');
