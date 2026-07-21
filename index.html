@@ -108,27 +108,25 @@
         </div>
     </div>
 
-    <!-- IMAGE ZOOM & GALLERY SLIDER MODAL -->
+    <!-- IMAGE ZOOM & GALLERY MODAL -->
     <div id="productZoomModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="emerald-glass w-full max-w-lg rounded-3xl p-5 sm:p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
             <button onclick="closeProductZoomModal()" class="absolute top-3 right-3 z-20 w-8 h-8 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
             
-            <!-- Gallery Container with Arrows -->
             <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-3 flex items-center justify-center border border-slate-800 mb-3 overflow-hidden relative group">
                 <img id="modalZoomImg" src="" class="w-full h-full object-contain transition-transform duration-300" alt="Zoom View">
                 
-                <!-- Slider Arrows -->
-                <button id="prevImgBtn" onclick="slideModalImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition hidden">❮</button>
-                <button id="nextImgBtn" onclick="slideModalImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition hidden">❯</button>
+                <!-- Modal Arrows -->
+                <button onclick="slideModalImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition">❮</button>
+                <button onclick="slideModalImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition">❯</button>
                 
-                <span id="imgCounterBadge" class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-yellow-300 text-[10px] px-2.5 py-0.5 rounded-full font-mono hidden">1 / 1</span>
+                <span id="imgCounterBadge" class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-yellow-300 text-[10px] px-2.5 py-0.5 rounded-full font-mono">1 / 1</span>
             </div>
 
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
                     <span id="modalProductCategory" class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase">Category</span>
                     
-                    <!-- SHARE BUTTON -->
                     <button id="modalShareBtn" onclick="" class="px-3 py-1 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer transition">
                         <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                             <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
@@ -139,9 +137,7 @@
                 <h3 id="modalProductName" class="royal-font text-base sm:text-lg font-bold text-gray-100">Product Name</h3>
                 <span id="modalProductPrice" class="royal-font text-base sm:text-lg font-extrabold text-yellow-400">Price: ₹0</span>
 
-                <div class="mt-3" id="modalActionContainer">
-                    <!-- Dynamic Counter / Add Button -->
-                </div>
+                <div class="mt-3" id="modalActionContainer"></div>
             </div>
         </div>
     </div>
@@ -205,19 +201,15 @@
         <!-- SEARCH & CATEGORY FILTER BAR -->
         <section class="emerald-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-2xl border border-yellow-500/40">
             <div class="flex flex-col gap-4 sm:gap-5">
-                <!-- SEARCH BOX -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-yellow-400 text-sm sm:text-base">🔍</span>
                     <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-10 pr-9 py-2.5 sm:py-3 bg-slate-950/90 border border-yellow-500/30 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
                     <button id="searchClearBtn" onclick="clearSearch()" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-yellow-400 font-bold text-xs sm:text-sm hidden cursor-pointer transition">✕</button>
                 </div>
 
-                <!-- Rich Category Chips Bar -->
                 <div class="flex flex-col gap-1.5 sm:gap-2">
                     <span class="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Explore Collections:</span>
-                    <div id="categoryContainer" class="flex flex-wrap gap-2 items-center">
-                        <!-- Dynamic Buttons -->
-                    </div>
+                    <div id="categoryContainer" class="flex flex-wrap gap-2 items-center"></div>
                 </div>
             </div>
         </section>
@@ -229,9 +221,7 @@
                 <span id="productCounter" class="text-[11px] sm:text-xs bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 px-2.5 py-1 rounded-full font-mono">0 Designs</span>
             </div>
 
-            <div id="showroomGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
-                <!-- Dynamic Items -->
-            </div>
+            <div id="showroomGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6"></div>
         </main>
 
         <!-- FOOTER SECTION -->
@@ -260,7 +250,6 @@
     </div>
 
     <script>
-        // Master Inventory with Multiple Images Support from Excel Sheet
         const rawInventory = [
             { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, images: ["Coloured Rubber Bands"] },
             { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, images: ["Striped Rubber Bands"] },
@@ -403,46 +392,34 @@
         let cart = loadCartFromStorage();
         let currentZoomProductId = null;
         let currentZoomImageIndex = 0;
+        let activeCardIntervals = {};
 
-        // LocalStorage Helpers
         function loadCartFromStorage() {
             try {
                 const saved = localStorage.getItem('aneeta_cart');
                 return saved ? JSON.parse(saved) : [];
-            } catch(e) {
-                return [];
-            }
+            } catch(e) { return []; }
         }
 
         function saveCartToStorage() {
-            try {
-                localStorage.setItem('aneeta_cart', JSON.stringify(cart));
-            } catch(e) {}
+            try { localStorage.setItem('aneeta_cart', JSON.stringify(cart)); } catch(e) {}
         }
 
         function handleImageError(img, baseName) {
             const step = parseInt(img.dataset.step || '0');
-            const itemId = parseInt(img.dataset.itemid || '0');
             const variants = [
                 encodeURIComponent(baseName) + '.jpg',
                 encodeURIComponent(baseName) + '.jpeg',
                 encodeURIComponent(baseName) + '.png',
-                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpg',
-                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpeg',
-                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.png',
-                encodeURIComponent(baseName.replace(/_/g, ' ')) + '.jpg',
-                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.jpg' : null
-            ].filter(Boolean);
-
+                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpg'
+            ];
             if (step < variants.length) {
                 img.dataset.step = step + 1;
                 img.src = variants[step];
             } else {
                 img.onerror = null;
                 img.style.display = 'none';
-                if(img.nextElementSibling && img.nextElementSibling.tagName === 'DIV') {
-                    img.nextElementSibling.style.display = 'flex';
-                }
+                if(img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
             }
         }
 
@@ -452,11 +429,7 @@
             container.innerHTML = types.map(t => {
                 const label = categoryEmojis[t] || `✨ ${t}`;
                 const isActive = (selectedCategory === t) ? 'active' : 'bg-slate-950/80 border-yellow-500/30 text-gray-200';
-                return `
-                    <button onclick="filterCategory('${t}')" class="category-chip ${isActive} text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border text-center font-medium cursor-pointer shadow-sm">
-                        ${label}
-                    </button>
-                `;
+                return `<button onclick="filterCategory('${t}')" class="category-chip ${isActive} text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border text-center font-medium cursor-pointer shadow-sm">${label}</button>`;
             }).join('');
         }
 
@@ -469,17 +442,12 @@
         function handleSearchInput() {
             const input = document.getElementById('searchInput');
             const clearBtn = document.getElementById('searchClearBtn');
-            if(input.value.trim().length > 0) {
-                clearBtn.classList.remove('hidden');
-            } else {
-                clearBtn.classList.add('hidden');
-            }
+            clearBtn.classList.toggle('hidden', input.value.trim().length === 0);
             filterProducts();
         }
 
         function clearSearch() {
-            const input = document.getElementById('searchInput');
-            input.value = '';
+            document.getElementById('searchInput').value = '';
             document.getElementById('searchClearBtn').classList.add('hidden');
             filterProducts();
         }
@@ -494,14 +462,42 @@
             renderGrid(filtered);
         }
 
+        // START AUTO-SLIDE & HOVER EFFECT ON CARD IMAGES
+        function startCardHoverSlides(productId) {
+            const product = rawInventory.find(p => p.id === productId);
+            if (!product || product.images.length <= 1) return;
+
+            let imgIndex = 0;
+            const imgElement = document.getElementById(`grid-img-${productId}`);
+            if(!imgElement) return;
+
+            activeCardIntervals[productId] = setInterval(() => {
+                imgIndex = (imgIndex + 1) % product.images.length;
+                imgElement.src = encodeURIComponent(product.images[imgIndex]) + '.jpg';
+            }, 3000); // changes every 3 seconds automatically on hover
+        }
+
+        function stopCardHoverSlides(productId) {
+            if (activeCardIntervals[productId]) {
+                clearInterval(activeCardIntervals[productId]);
+                delete activeCardIntervals[productId];
+                
+                // Reset to first image
+                const product = rawInventory.find(p => p.id === productId);
+                const imgElement = document.getElementById(`grid-img-${productId}`);
+                if (product && imgElement) {
+                    imgElement.src = encodeURIComponent(product.images[0]) + '.jpg';
+                }
+            }
+        }
+
         function renderGrid(items) {
             const grid = document.getElementById('showroomGrid');
             document.getElementById('productCounter').innerText = `${items.length} Unique Products`;
 
             grid.innerHTML = items.map((product) => {
-                const primaryImageName = product.images[0] || product.name;
-                const initialSrc = encodeURIComponent(primaryImageName) + '.jpg';
-                const safeName = primaryImageName.replace(/'/g, "\\'");
+                const initialSrc = encodeURIComponent(product.images[0]) + '.jpg';
+                const safeName = product.images[0].replace(/'/g, "\\'");
                 const cartItem = cart.find(c => c.id === product.id);
                 const qty = cartItem ? cartItem.qty : 0;
                 const hasMultiple = product.images.length > 1;
@@ -509,25 +505,27 @@
                 return `
                     <div class="product-card rounded-xl sm:rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
                         
-                        <!-- SHARE BUTTON -->
                         <button onclick="shareProduct(${product.id}, event)" class="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center shadow hover:scale-110 cursor-pointer transition" title="Share Product">
                             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-yellow-400" viewBox="0 0 24 24">
                                 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
                             </svg>
                         </button>
 
-                        <!-- MULTIPLE IMAGES BADGE -->
                         ${hasMultiple ? `<span class="absolute top-2 left-2 z-20 bg-amber-500 text-black text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow">📷 ${product.images.length} Photos</span>` : ''}
 
-                        <!-- ZOOM / GALLERY TRIGGER -->
-                        <div onclick="openProductZoomModal(${product.id})" class="product-img-box relative aspect-square bg-slate-950/80 p-2 sm:p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
-                            <img id="img-${product.id}"
+                        <div onclick="openProductZoomModal(${product.id})" 
+                             onmouseenter="startCardHoverSlides(${product.id})" 
+                             onmouseleave="stopCardHoverSlides(${product.id})"
+                             class="product-img-box relative aspect-square bg-slate-950/80 p-2 sm:p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
+                            
+                            <img id="grid-img-${product.id}"
                                  src="${initialSrc}" 
                                  data-step="0" 
                                  data-itemid="${product.id}"
                                  class="transition-transform duration-300 group-hover:scale-105" 
                                  alt="${product.name}" 
                                  onerror="handleImageError(this, '${safeName}')">
+                            
                             <div class="text-center p-2 hidden flex-col items-center justify-center">
                                 <span class="text-2xl block mb-1">💎</span>
                                 <span class="royal-font text-[10px] text-yellow-400/80 font-bold">${product.name}</span>
@@ -557,15 +555,9 @@
             if (qty > 0) {
                 return `
                     <div class="w-full py-1.5 px-2 bg-slate-950 border border-yellow-500/50 rounded-xl flex items-center justify-between shadow-inner">
-                        <button onclick="changeQty(${productId}, -1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 text-yellow-400 font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition">
-                            -
-                        </button>
-                        <span class="text-[10px] sm:text-xs font-mono font-bold text-yellow-300 tracking-wider px-1">
-                            ${qty} In Bag
-                        </span>
-                        <button onclick="changeQty(${productId}, 1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500 hover:bg-yellow-400 text-black font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition shadow">
-                            +
-                        </button>
+                        <button onclick="changeQty(${productId}, -1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 text-yellow-400 font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition">-</button>
+                        <span class="text-[10px] sm:text-xs font-mono font-bold text-yellow-300 tracking-wider px-1">${qty} In Bag</span>
+                        <button onclick="changeQty(${productId}, 1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500 hover:bg-yellow-400 text-black font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition shadow">+</button>
                     </div>
                 `;
             } else {
@@ -580,27 +572,17 @@
         function addToCart(productId) {
             const product = rawInventory.find(p => p.id === productId);
             const existing = cart.find(item => item.id === productId);
-            if(existing) {
-                existing.qty += 1;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
+            if(existing) { existing.qty += 1; } else { cart.push({ ...product, qty: 1 }); }
             saveCartToStorage();
             updateCartUI();
             updateCardButton(productId);
-            
-            const floatingBtn = document.getElementById('floatingCartCount');
-            floatingBtn.classList.add('scale-150');
-            setTimeout(() => floatingBtn.classList.remove('scale-150'), 200);
         }
 
         function changeQty(productId, delta) {
             const item = cart.find(p => p.id === productId);
             if(item) {
                 item.qty += delta;
-                if(item.qty <= 0) {
-                    cart = cart.filter(p => p.id !== productId);
-                }
+                if(item.qty <= 0) cart = cart.filter(p => p.id !== productId);
             }
             saveCartToStorage();
             updateCartUI();
@@ -611,17 +593,15 @@
             const container = document.getElementById(`btn-container-${productId}`);
             if (container) {
                 const item = cart.find(p => p.id === productId);
-                const qty = item ? item.qty : 0;
-                container.innerHTML = renderProductButton(productId, qty);
+                container.innerHTML = renderProductButton(productId, item ? item.qty : 0);
             }
             if (currentZoomProductId === productId) {
                 const item = cart.find(p => p.id === productId);
-                const qty = item ? item.qty : 0;
-                document.getElementById('modalActionContainer').innerHTML = renderProductButton(productId, qty);
+                document.getElementById('modalActionContainer').innerHTML = renderProductButton(productId, item ? item.qty : 0);
             }
         }
 
-        // ZOOM & GALLERY SLIDER CONTROLS
+        // ZOOM & GALLERY MODAL CONTROLS
         function openProductZoomModal(productId) {
             currentZoomProductId = productId;
             currentZoomImageIndex = 0;
@@ -635,8 +615,7 @@
             updateModalImageDisplay();
 
             const item = cart.find(p => p.id === productId);
-            const qty = item ? item.qty : 0;
-            document.getElementById('modalActionContainer').innerHTML = renderProductButton(productId, qty);
+            document.getElementById('modalActionContainer').innerHTML = renderProductButton(productId, item ? item.qty : 0);
             document.getElementById('modalShareBtn').setAttribute('onclick', `shareProduct(${product.id}, event)`);
 
             document.getElementById('productZoomModal').classList.remove('hidden');
@@ -646,23 +625,9 @@
             const product = rawInventory.find(p => p.id === currentZoomProductId);
             if(!product) return;
 
-            const imageName = product.images[currentZoomImageIndex] || product.name;
+            const imageName = product.images[currentZoomImageIndex];
             document.getElementById('modalZoomImg').src = encodeURIComponent(imageName) + '.jpg';
-
-            const prevBtn = document.getElementById('prevImgBtn');
-            const nextBtn = document.getElementById('nextImgBtn');
-            const badge = document.getElementById('imgCounterBadge');
-
-            if(product.images.length > 1) {
-                prevBtn.classList.remove('hidden');
-                nextBtn.classList.remove('hidden');
-                badge.classList.remove('hidden');
-                badge.innerText = `${currentZoomImageIndex + 1} / ${product.images.length}`;
-            } else {
-                prevBtn.classList.add('hidden');
-                nextBtn.classList.add('hidden');
-                badge.classList.add('hidden');
-            }
+            document.getElementById('imgCounterBadge').innerText = `${currentZoomImageIndex + 1} / ${product.images.length}`;
         }
 
         function slideModalImage(direction) {
@@ -670,11 +635,9 @@
             if(!product) return;
 
             currentZoomImageIndex += direction;
-            if(currentZoomImageIndex < 0) {
-                currentZoomImageIndex = product.images.length - 1;
-            } else if(currentZoomImageIndex >= product.images.length) {
-                currentZoomImageIndex = 0;
-            }
+            if(currentZoomImageIndex < 0) currentZoomImageIndex = product.images.length - 1;
+            if(currentZoomImageIndex >= product.images.length) currentZoomImageIndex = 0;
+
             updateModalImageDisplay();
         }
 
@@ -695,7 +658,7 @@
             };
 
             if (navigator.share) {
-                navigator.share(shareData).catch((err) => console.log('Share canceled', err));
+                navigator.share(shareData).catch((err) => {});
             } else {
                 navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
                 alert("✨ Product link copied to clipboard!");
@@ -721,12 +684,7 @@
 
             const listContainer = document.getElementById('cartItemsList');
             if(cart.length === 0) {
-                listContainer.innerHTML = `
-                    <div class="text-center py-6 text-gray-400">
-                        <span class="text-3xl block mb-2">🛍️</span>
-                        <p class="text-xs">Your shopping bag is empty!</p>
-                    </div>
-                `;
+                listContainer.innerHTML = `<div class="text-center py-6 text-gray-400"><span class="text-3xl block mb-2">🛍️</span><p class="text-xs">Your shopping bag is empty!</p></div>`;
             } else {
                 listContainer.innerHTML = cart.map(item => `
                     <div class="flex items-center justify-between bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
@@ -749,28 +707,18 @@
         }
 
         function sendWhatsAppCartOrder() {
-            if(cart.length === 0) {
-                alert("Your shopping bag is empty!");
-                return;
-            }
-
+            if(cart.length === 0) { alert("Your shopping bag is empty!"); return; }
             let msg = `Hello Aneeta Collections! 👋\nI would like to place an order for:\n\n`;
             let total = 0;
-
             cart.forEach((item, index) => {
                 const subtotal = item.price * item.qty;
                 total += subtotal;
                 msg += `${index + 1}. *${item.name}*\n   Qty: ${item.qty} x ₹${item.price} = ₹${subtotal}\n\n`;
             });
-
             msg += `------------------------------\n*Total Amount: ₹${total}*\n------------------------------`;
-
-            const waUrl = `https://api.whatsapp.com/send?phone=918796672636&text=${encodeURIComponent(msg)}`;
-            window.open(waUrl, '_blank');
-
+            window.open(`https://api.whatsapp.com/send?phone=918796672636&text=${encodeURIComponent(msg)}`, '_blank');
             toggleCartModal();
             document.getElementById('thankYouModal').classList.remove('hidden');
-
             cart = [];
             saveCartToStorage();
             updateCartUI();
