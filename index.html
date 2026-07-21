@@ -47,7 +47,7 @@
 </head>
 <body class="min-h-screen pb-28 relative">
 
-    <!-- OPTION 3: STICKY BOTTOM CART RECOVERY BAR (TOAST) -->
+    <!-- STICKY BOTTOM CART RECOVERY BAR (TOAST) -->
     <div id="cartToast" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-lg emerald-glass rounded-2xl p-3.5 shadow-2xl border-2 border-yellow-400/70 hidden transition-all duration-300">
         <div class="flex items-center justify-between gap-3">
             <div class="flex items-center gap-2.5 overflow-hidden">
@@ -347,9 +347,9 @@
         };
 
         let selectedCategory = 'ALL';
-        let cart = loadCartFromStorage(); // Auto Restore Cart
+        let cart = loadCartFromStorage();
 
-        // OPTION 1: Storage Mechanics
+        // OPTION 1: LocalStorage Operations
         function loadCartFromStorage() {
             try {
                 const saved = localStorage.getItem('aneeta_cart');
@@ -523,7 +523,6 @@
             }
         }
 
-        // OPTION 3: Toast & Cart UI Sync
         function updateCartUI() {
             const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
@@ -532,7 +531,6 @@
             document.getElementById('headerCartCount').innerText = totalQty;
             document.getElementById('cartTotal').innerText = `₹${totalPrice}`;
 
-            // Sync Option 3 Toast Strip
             const toast = document.getElementById('cartToast');
             if (totalQty > 0) {
                 document.getElementById('toastItemCount').innerText = totalQty;
@@ -573,6 +571,7 @@
             modal.classList.toggle('hidden');
         }
 
+        // UNIVERSAL WHATSAPP ROUTING (Personal WhatsApp First & Fallback Native URL)
         function sendWhatsAppCartOrder() {
             if(cart.length === 0) {
                 alert("Your shopping bag is empty! Please add products first.");
@@ -590,7 +589,8 @@
 
             msg += `------------------------------\n*Total Amount: ₹${total}*\n------------------------------\n\nPlease confirm product availability & shipping details. Thank you!`;
 
-            const waUrl = `https://wa.me/918796672636?text=${encodeURIComponent(msg)}`;
+            // api.whatsapp.com for best mobile routing to Personal WhatsApp first
+            const waUrl = `https://api.whatsapp.com/send?phone=918796672636&text=${encodeURIComponent(msg)}`;
             
             window.open(waUrl, '_blank');
 
@@ -600,7 +600,7 @@
             cart = [];
             saveCartToStorage();
             updateCartUI();
-            filterProducts(); // Reset buttons on cards
+            filterProducts();
         }
 
         function closeThankYouModal() {
