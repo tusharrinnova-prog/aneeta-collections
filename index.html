@@ -215,7 +215,7 @@
             </div>
         </section>
 
-        <!-- PRODUCTS SHOWROOM GRID (2-COLUMNS ON MOBILE LIKE AMAZON/MEESHO, 3-4 ON DESKTOP) -->
+        <!-- PRODUCTS SHOWROOM GRID -->
         <main>
             <div class="flex items-center justify-between mb-4 sm:mb-6 pb-2 border-b border-emerald-900/60">
                 <h2 class="royal-font text-base sm:text-xl font-semibold text-yellow-400">Featured Collections Catalog</h2>
@@ -253,7 +253,7 @@
     </div>
 
     <script>
-        // Exact 117 Master Inventory List from Inventory File1.xlsx
+        // Exact 117 Master Inventory List with foolproof image file mapping
         const rawInventory = [
             { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, file: "Coloured Rubber Bands" },
             { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, file: "Striped Rubber Bands" },
@@ -414,15 +414,23 @@
 
         function handleImageError(img, baseName) {
             const step = parseInt(img.dataset.step || '0');
+            const itemId = parseInt(img.dataset.itemid || '0');
+            
+            // Smart variants list to check all possible extensions and formats
             const variants = [
+                encodeURIComponent(baseName) + '.jpg',
                 encodeURIComponent(baseName) + '.jpeg',
                 encodeURIComponent(baseName) + '.png',
                 encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpg',
                 encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpeg',
+                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.png',
                 encodeURIComponent(baseName.replace(/_/g, ' ')) + '.jpg',
                 encodeURIComponent(baseName.replace(/_/g, ' ')) + '.jpeg',
-                baseName.toLowerCase().includes('rakhi') ? 'Rakhi_' + (img.dataset.itemid - 97) + '.jpg' : null,
-                baseName.toLowerCase().includes('rakhi') ? 'Rakhi_' + (img.dataset.itemid - 97) + '.jpeg' : null
+                // Special mapping for Rakhis or numbered items
+                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.jpg' : null,
+                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.jpeg' : null,
+                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.png' : null,
+                itemId >= 98 ? 'Rakhi ' + (itemId - 97) + '.jpg' : null
             ].filter(Boolean);
 
             if (step < variants.length) {
