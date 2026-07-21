@@ -132,7 +132,7 @@
             </div>
         </header>
 
-        <!-- BEAUTIFIED SEARCH & CATEGORY FILTER BAR -->
+        <!-- SEARCH & CATEGORY FILTER BAR -->
         <section class="emerald-glass rounded-3xl p-6 mb-8 shadow-2xl border border-yellow-500/40">
             <div class="flex flex-col gap-5">
                 <!-- Search Box -->
@@ -145,7 +145,7 @@
                 <div class="flex flex-col gap-2">
                     <span class="text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Explore Collections:</span>
                     <div id="categoryContainer" class="flex flex-wrap gap-2.5 items-center">
-                        <!-- Dynamic Buttons with Emojis & Hover effects -->
+                        <!-- Dynamic Buttons -->
                     </div>
                 </div>
             </div>
@@ -159,7 +159,7 @@
             </div>
 
             <div id="showroomGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Dynamic 117 Items -->
+                <!-- Dynamic Items -->
             </div>
         </main>
 
@@ -189,13 +189,14 @@
     </div>
 
     <script>
+        // Exact 117 Master Inventory List auto-extracted from Inventory File1.xlsx
         const rawInventory = [
             { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, file: "Coloured Rubber Bands" },
             { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, file: "Striped Rubber Bands" },
-            { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, file: "Stone Fancy Bangles" },
-            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles_3", price: 500, file: "Jumka Fancy Bangles" },
-            { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, file: "Kashmiri Ghungroo Bangles Double Layered" },
-            { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles Single Layered", price: 100, file: "Kashmiri Ghungroo Bangles" },
+            { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, file: "Stone Fancy Bangles_1" },
+            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles_3", price: 500, file: "Jumka Fancy Bangles_1" },
+            { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, file: "Kashmiri Ghungroo Bangles Double Layered_1" },
+            { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles  Single Layered", price: 100, file: "Kashmiri Ghungroo Bangles  Single Layered_1" },
             { id: 7, type: "Bracelet", name: "Bracelet Coloured_Child", price: 20, file: "Bracelet Coloured_Child" },
             { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, file: "Bracelet Green Butterfly" },
             { id: 9, type: "Bracelet", name: "Bracelet Purple Butterfly", price: 50, file: "Bracelet Purple Butterfly" },
@@ -204,8 +205,8 @@
             { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, file: "Bracelet Evil Eye" },
             { id: 13, type: "Anklet", name: "Anklet Butterly", price: 50, file: "Anklet Butterly" },
             { id: 14, type: "Anklet", name: "Anklet Evil Eye", price: 50, file: "Anklet Evil Eye" },
-            { id: 15, type: "Locket", name: "Locket Rose Gold", price: 30, file: "Locket Rose Gold" },
-            { id: 16, type: "Locket", name: "Locket Silver", price: 50, file: "Locket Silver" },
+            { id: 15, type: "Locket", name: "Locket Rose Gold", price: 30, file: "Locket Rose Gold_1" },
+            { id: 16, type: "Locket", name: "Locket Silver", price: 50, file: "Locket Silver_1" },
             { id: 17, type: "Earing", name: "Jhumka Small", price: 30, file: "Jhumka Small" },
             { id: 18, type: "Earing", name: "Jhumka Big", price: 40, file: "Jhumka Big" },
             { id: 19, type: "Earing", name: "Oxydised Earcuf with Jhumka", price: 80, file: "Oxydised Earcuf with Jhumka" },
@@ -225,12 +226,12 @@
             { id: 33, type: "Earing", name: "Yellow Stone Earing", price: 50, file: "Yellow Stone Earing" },
             { id: 34, type: "Earing", name: "Pink Stone Earing", price: 50, file: "Pink Stone Earing" },
             { id: 35, type: "Earing", name: "Sky Blue Stone Earing", price: 50, file: "Sky Blue Stone Earing" },
-            { id: 36, type: "Earing", name: "Sphere Nag Earing", price: 50, file: "Sphere Nag Earing" },
+            { id: 36, type: "Earing", name: "Sphere Nag Earing", price: 50, file: "Heart Nag Earing" },
             { id: 37, type: "Earing", name: "Heart Nag Earing", price: 50, file: "Heart Nag Earing" },
             { id: 38, type: "Earing", name: "Black Square Earing", price: 50, file: "Black Square Earing" },
             { id: 39, type: "Earing", name: "Traditional Jhumka Earing", price: 50, file: "Traditional Jhumka Earing" },
-            { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, file: "Premium Bindi Single" },
-            { id: 41, type: "Bindi", name: "Premium Bindi Four_in_one_2", price: 80, file: "Premium Bindi Four_in_one" },
+            { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, file: "Premium Bindi Single_1" },
+            { id: 41, type: "Bindi", name: "Premium Bindi Four_in_one_2", price: 80, file: "Premium Bindi Four_in_one_1" },
             { id: 42, type: "Bindi", name: "Small Bindi Pack", price: 10, file: "Small Bindi Pack" },
             { id: 43, type: "Bindi", name: "Muti Colour Bindi", price: 15, file: "Muti Colour Bindi" },
             { id: 44, type: "Bindi", name: "Green Color Bindi", price: 10, file: "Green Color Bindi" },
@@ -250,7 +251,7 @@
             { id: 58, type: "Hair Rubber Bands", name: "Rubber Band Colourfull", price: 5, file: "Rubber Band Colourfull" },
             { id: 59, type: "Clip", name: "Hair Clips", price: 5, file: "Hair Clips" },
             { id: 60, type: "Earing", name: "Silver Toned Earing", price: 80, file: "Silver Toned Earing" },
-            { id: 61, type: "Locket", name: "Mangalsutra", price: 6, file: "Mangalsutra" },
+            { id: 61, type: "Locket", name: "Mangalsutra", price: 100, file: "Mangalsutra" },
             { id: 62, type: "Earing", name: "Western Earing Design 1", price: 80, file: "Western Earing_1" },
             { id: 63, type: "Earing", name: "Western Earing Design 2", price: 80, file: "Western Earing_2" },
             { id: 64, type: "Earing", name: "Western Earing Design 3", price: 80, file: "Western Earing_3" },
@@ -283,35 +284,32 @@
             { id: 91, type: "Hanky", name: "Soft Hanky", price: 20, file: "Soft Hanky" },
             { id: 92, type: "Mehandi", name: "Neha Mehandi Cone", price: 10, file: "Neha Mehandi" },
             { id: 93, type: "Mehandi", name: "Kaveri Mehandi Cone", price: 15, file: "Kaveri Mehandi" },
-            { id: 94, type: "Independence Day", name: "Tri Color Hand Band", price: 10, file: "Tri Color Hand band" },
-            { id: 95, type: "Independence Day", name: "Indian Flag Plastic", price: 5, file: "Indian Flag_Plastic" },
-            { id: 96, type: "Independence Day", name: "Indian Flag Lapel Pin", price: 10, file: "Indian Flag Lapel Pin_1" },
-            { id: 97, type: "Independence Day", name: "Indian Flag Cloth", price: 10, file: "Indian Flag_Cloth" },
-            
-            // Rakhi Special Collection Entries (98 to 117)
-            { id: 98, type: "Rakhi", name: "Designer Pearl Rakhi", price: 40, file: "Rakhi_1" },
-            { id: 99, type: "Rakhi", name: "Rudraksha Designer Rakhi", price: 50, file: "Rakhi_2" },
-            { id: 100, type: "Rakhi", name: "Golden Kundan Rakhi", price: 60, file: "Rakhi_3" },
-            { id: 101, type: "Rakhi", name: "Kids Cartoon Special Rakhi", price: 30, file: "Rakhi_4" },
-            { id: 102, type: "Rakhi", name: "Silver Plated Floral Rakhi", price: 50, file: "Rakhi_5" },
-            { id: 103, type: "Rakhi", name: "Evil Eye Thread Rakhi", price: 40, file: "Rakhi_6" },
-            { id: 104, type: "Rakhi", name: "Traditional Zardosi Rakhi", price: 70, file: "Rakhi_7" },
-            { id: 105, type: "Rakhi", name: "Stone Studded Fancy Rakhi", price: 60, file: "Rakhi_8" },
-            { id: 106, type: "Rakhi", name: "Bhai Bhabhi Lumba Set", price: 120, file: "Rakhi_9" },
-            { id: 107, type: "Rakhi", name: "Royal Peacock Thread Rakhi", price: 50, file: "Rakhi_10" },
-            { id: 108, type: "Rakhi", name: "Ganesha Divine Rakhi", price: 45, file: "Rakhi_11" },
-            { id: 109, type: "Rakhi", name: "Light Up LED Kids Rakhi", price: 35, file: "Rakhi_12" },
-            { id: 110, type: "Rakhi", name: "Resham Thread Designer Rakhi", price: 30, file: "Rakhi_13" },
-            { id: 111, type: "Rakhi", name: "Meenakari Premium Rakhi", price: 80, file: "Rakhi_14" },
-            { id: 112, type: "Rakhi", name: "Handcrafted Beaded Rakhi", price: 40, file: "Rakhi_15" },
-            { id: 113, type: "Rakhi", name: "Crystal Stone Fancy Rakhi", price: 60, file: "Rakhi_16" },
-            { id: 114, type: "Rakhi", name: "Swarovski Diamond Rakhi", price: 90, file: "Rakhi_17" },
-            { id: 115, type: "Rakhi", name: "Wooden Carved Divine Rakhi", price: 50, file: "Rakhi_18" },
-            { id: 116, type: "Rakhi", name: "Velvet Box Couple Lumba Set", price: 150, file: "Rakhi_19" },
-            { id: 117, type: "Rakhi", name: "Golden Om Symbol Thread Rakhi", price: 45, file: "Rakhi_20" }
+            { id: 94, type: "Flag", name: "Tri Color Hand Band", price: 10, file: "Tri Color Hand band" },
+            { id: 95, type: "Flag", name: "Indian Flag_Plastic", price: 5, file: "Indian Flag_Plastic" },
+            { id: 96, type: "Lapel Pin", name: "Indian Flag Lapel Pin_1", price: 10, file: "Indian Flag Lapel Pin_1" },
+            { id: 97, type: "Flag", name: "Indian Flag_Cloth", price: 10, file: "Indian Flag_Cloth" },
+            { id: 98, type: "Rakhi", name: "Instagram Premium Rakhi", price: 70, file: "Instagram Premium Rakhi" },
+            { id: 99, type: "Rakhi", name: "Triangle Diamond Stone Rakhi", price: 80, file: "Triangle Diamond Stone Rakhi" },
+            { id: 100, type: "Rakhi", name: "Flower Nag Rakhi", price: 80, file: "Flower Nag Rakhi" },
+            { id: 101, type: "Rakhi", name: "Krishna Ji Rakhi", price: 80, file: "Krishna Ji Rakhi" },
+            { id: 102, type: "Rakhi", name: "Premium Round Nag Rakhi", price: 80, file: "Premium Round Nag Rakhi" },
+            { id: 103, type: "Rakhi", name: "Ganesh Ji shaped Rakhi", price: 60, file: "Ganesh Ji shaped Rakhi" },
+            { id: 104, type: "Rakhi", name: "Yellow Print Rakhi", price: 35, file: "Yellow Print Rakhi" },
+            { id: 105, type: "Rakhi", name: "Bro Print Rakhi", price: 40, file: "Bro Print Rakhi" },
+            { id: 106, type: "Rakhi", name: "Om Print Rakhi", price: 25, file: "Om Print Rakhi" },
+            { id: 107, type: "Rakhi", name: "Om Shaped Rakhi", price: 30, file: "Om Shaped Rakhi" },
+            { id: 108, type: "Rakhi", name: "Ganesh Ji With Om Print Rakhi", price: 25, file: "Ganesh Ji With Om Print Rakhi" },
+            { id: 109, type: "Rakhi", name: "Mala Rakhi - Most Awaited", price: 150, file: "Mala Rakhi - Most Awaited" },
+            { id: 110, type: "Rakhi", name: "Bhaiya Bhabhi Rakhi", price: 300, file: "Bhaiya Bhabhi Rakhi" },
+            { id: 111, type: "Rakhi", name: "Hello Brother Rakhi", price: 40, file: "Hello Brother Rakhi" },
+            { id: 112, type: "Rakhi", name: "Fancy Rakhi with Nag", price: 40, file: "Fancy Rakhi with Nag" },
+            { id: 113, type: "Rakhi", name: "Elegant Coloured Rakhi 01", price: 60, file: "Elegant Coloured Rakhi" },
+            { id: 114, type: "Rakhi", name: "Elegant Coloured Rakhi 02", price: 60, file: "Elegant Coloured Rakhi 02" },
+            { id: 115, type: "Rakhi", name: "Premium Fancy Flower Rakhi", price: 70, file: "Premium Fancy Flower Rakhi" },
+            { id: 116, type: "Rakhi", name: "Fancy Rudraksh Rakhi", price: 60, file: "Fancy Rudraksh Rakhi" },
+            { id: 117, type: "Rakhi", name: "Rudraksh Rakhi", price: 10, file: "Rudraksh Rakhi" }
         ];
 
-        // Emojis per category
         const categoryEmojis = {
             'ALL': '✨ All Products',
             'Rakhi': '🪔 Rakhi Special',
@@ -326,7 +324,8 @@
             'Ring': '💍 Rings',
             'Hanky': '📜 Hanky',
             'Mehandi': '🌿 Mehandi',
-            'Independence Day': '🇮🇳 Special'
+            'Flag': '🇮🇳 Independence Day',
+            'Lapel Pin': '🎖️ Lapel Pin'
         };
 
         let repoFiles = [];
