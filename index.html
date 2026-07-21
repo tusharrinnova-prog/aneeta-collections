@@ -121,10 +121,10 @@
         const rawInventory = [
             { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, file: "Coloured Rubber Bands" },
             { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, file: "Striped Rubber Bands" },
-            { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, file: "Stone Fancy Bangles_1" },
-            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles_3", price: 500, file: "Jumka Fancy Bangles_1" },
-            { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, file: "Kashmiri Ghungroo Bangles Double Layered_1" },
-            { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles Single Layered", price: 100, file: "Kashmiri Ghungroo Bangles  Single Layered_1" },
+            { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, file: "Stone Fancy Bangles" },
+            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles_3", price: 500, file: "Jumka Fancy Bangles" },
+            { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, file: "Kashmiri Ghungroo Bangles Double Layered" },
+            { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles Single Layered", price: 100, file: "Kashmiri Ghungroo Bangles" },
             { id: 7, type: "Bracelet", name: "Bracelet Coloured_Child", price: 20, file: "Bracelet Coloured_Child" },
             { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, file: "Bracelet Green Butterfly" },
             { id: 9, type: "Bracelet", name: "Bracelet Purple Butterfly", price: 50, file: "Bracelet Purple Butterfly" },
@@ -133,8 +133,8 @@
             { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, file: "Bracelet Evil Eye" },
             { id: 13, type: "Anklet", name: "Anklet Butterly", price: 50, file: "Anklet Butterly" },
             { id: 14, type: "Anklet", name: "Anklet Evil Eye", price: 50, file: "Anklet Evil Eye" },
-            { id: 15, type: "Locket", name: "Locket Rose Gold", price: 30, file: "Locket Rose Gold_1" },
-            { id: 16, type: "Locket", name: "Locket Silver", price: 50, file: "Locket Silver_1" },
+            { id: 15, type: "Locket", name: "Locket Rose Gold", price: 30, file: "Locket Rose Gold" },
+            { id: 16, type: "Locket", name: "Locket Silver", price: 50, file: "Locket Silver" },
             { id: 17, type: "Earing", name: "Jhumka Small", price: 30, file: "Jhumka Small" },
             { id: 18, type: "Earing", name: "Jhumka Big", price: 40, file: "Jhumka Big" },
             { id: 19, type: "Earing", name: "Oxydised Earcuf with Jhumka", price: 80, file: "Oxydised Earcuf with Jhumka" },
@@ -158,8 +158,8 @@
             { id: 37, type: "Earing", name: "Heart Nag Earing", price: 50, file: "Heart Nag Earing" },
             { id: 38, type: "Earing", name: "Black Square Earing", price: 50, file: "Black Square Earing" },
             { id: 39, type: "Earing", name: "Traditional Jhumka Earing", price: 50, file: "Traditional Jhumka Earing" },
-            { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, file: "Premium Bindi Single_1" },
-            { id: 41, type: "Bindi", name: "Premium Bindi Four_in_one_2", price: 80, file: "Premium Bindi Four_in_one_1" },
+            { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, file: "Premium Bindi Single" },
+            { id: 41, type: "Bindi", name: "Premium Bindi Four_in_one_2", price: 80, file: "Premium Bindi Four_in_one" },
             { id: 42, type: "Bindi", name: "Small Bindi Pack", price: 10, file: "Small Bindi Pack" },
             { id: 43, type: "Bindi", name: "Muti Colour Bindi", price: 15, file: "Muti Colour Bindi" },
             { id: 44, type: "Bindi", name: "Green Color Bindi", price: 10, file: "Green Color Bindi" },
@@ -218,26 +218,34 @@
             { id: 97, type: "Independence Day", name: "Indian Flag Cloth", price: 10, file: "Indian Flag_Cloth" }
         ];
 
+        let repoFiles = [];
         let selectedCategory = 'ALL';
 
-        function initShowroom() {
+        async function fetchRepoFiles() {
+            try {
+                const res = await fetch('https://api.github.com/repos/tusharrinnova-prog/aneeta-collections/contents');
+                const data = await res.json();
+                if(Array.isArray(data)) {
+                    repoFiles = data.map(f => f.name);
+                }
+            } catch(e) { console.log('API fallback', e); }
+            
             renderCategories();
             renderGrid(rawInventory);
         }
 
-        function handleImgError(imgObj, baseName) {
-            if (imgObj.dataset.step === 'jpg') {
-                imgObj.dataset.step = 'jpeg';
-                imgObj.src = encodeURIComponent(baseName + '.jpeg');
-            } else if (imgObj.dataset.step === 'jpeg') {
-                imgObj.dataset.step = 'png';
-                imgObj.src = encodeURIComponent(baseName + '.png');
-            } else {
-                imgObj.style.display = 'none';
-                if(imgObj.nextElementSibling) {
-                    imgObj.nextElementSibling.style.display = 'block';
-                }
-            }
+        function findMatchingImage(searchKey) {
+            if(!repoFiles || repoFiles.length === 0) return null;
+            
+            // Clean key by removing underscores/extra spaces for flexible search
+            const cleanKey = searchKey.toLowerCase().replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+            
+            const match = repoFiles.find(f => {
+                const cleanFile = f.toLowerCase().replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
+                return cleanFile.includes(cleanKey);
+            });
+
+            return match ? encodeURIComponent(match) : null;
         }
 
         function renderCategories() {
@@ -270,16 +278,18 @@
             grid.innerHTML = items.map((product) => {
                 const encodedMsg = encodeURIComponent(`Hello Aneeta Collections!\nI want to order:\nProduct: ${product.name}\nCategory: ${product.type}\nPrice: ₹${product.price}`);
                 const waUrl = `https://wa.me/918796672636?text=${encodedMsg}`;
-                const initialSrc = encodeURIComponent(product.file + '.jpg');
+                const imgSrc = findMatchingImage(product.file);
 
                 return `
                     <div class="product-card rounded-2xl overflow-hidden flex flex-col relative">
                         <div class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900">
-                            <img src="${initialSrc}" data-step="jpg" class="w-full h-full object-contain" alt="${product.name}" onerror="handleImgError(this, '${product.file.replace(/'/g, "\\'")}')">
-                            <div class="text-center p-4 hidden">
-                                <span class="text-3xl block mb-2">💎</span>
-                                <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
-                            </div>
+                            ${imgSrc ? 
+                                `<img src="${imgSrc}" class="w-full h-full object-contain" alt="${product.name}">` : 
+                                `<div class="text-center p-4">
+                                    <span class="text-3xl block mb-2">💎</span>
+                                    <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
+                                 </div>`
+                            }
                         </div>
                         <div class="p-5 flex flex-col flex-grow">
                             <span class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-1">${product.type}</span>
@@ -296,7 +306,7 @@
             }).join('');
         }
 
-        initShowroom();
+        fetchRepoFiles();
     </script>
 </body>
 </html>
