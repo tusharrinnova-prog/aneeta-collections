@@ -99,7 +99,7 @@
         </div>
     </div>
 
-    <!-- FEATURE 1: IMAGE ZOOM & DEDICATED PRODUCT VIEW MODAL -->
+    <!-- IMAGE ZOOM & DEDICATED PRODUCT VIEW MODAL -->
     <div id="productZoomModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="emerald-glass w-full max-w-lg rounded-3xl p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
             <button onclick="closeProductZoomModal()" class="absolute top-4 right-4 z-10 w-9 h-9 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
@@ -111,8 +111,13 @@
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
                     <span id="modalProductCategory" class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase">Category</span>
-                    <button id="modalShareBtn" onclick="" class="px-3 py-1 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer">
-                        <span>📤</span> Share
+                    
+                    <!-- AMAZON STYLE SHARE BUTTON IN MODAL -->
+                    <button id="modalShareBtn" onclick="" class="px-3 py-1.5 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer transition">
+                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
+                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                        </svg>
+                        <span>Share</span>
                     </button>
                 </div>
                 <h3 id="modalProductName" class="royal-font text-lg font-bold text-gray-100">Product Name</h3>
@@ -179,7 +184,7 @@
         <!-- SEARCH & CATEGORY FILTER BAR -->
         <section class="emerald-glass rounded-3xl p-6 mb-8 shadow-2xl border border-yellow-500/40">
             <div class="flex flex-col gap-5">
-                <!-- FEATURE 2: SEARCH BOX WITH CLEAR (X) BUTTON -->
+                <!-- SEARCH BOX WITH CLEAR (X) BUTTON -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-yellow-400 text-base">🔍</span>
                     <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-11 pr-10 py-3 bg-slate-950/90 border border-yellow-500/30 rounded-2xl text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
@@ -438,7 +443,7 @@
             filterProducts();
         }
 
-        // FEATURE 2: SEARCH CLEAR BUTTON LOGIC
+        // SEARCH CLEAR BUTTON LOGIC
         function handleSearchInput() {
             const input = document.getElementById('searchInput');
             const clearBtn = document.getElementById('searchClearBtn');
@@ -480,12 +485,14 @@
                 return `
                     <div class="product-card rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
                         
-                        <!-- FEATURE 3: SHARE BUTTON ON CARD -->
-                        <button onclick="shareProduct(${product.id}, event)" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center text-xs shadow hover:scale-110 cursor-pointer transition">
-                            📤
+                        <!-- OFFICIAL AMAZON STYLE VECTOR SHARE BUTTON ON CARD -->
+                        <button onclick="shareProduct(${product.id}, event)" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center shadow hover:scale-110 cursor-pointer transition" title="Share Product">
+                            <svg class="w-4 h-4 fill-current text-yellow-400" viewBox="0 0 24 24">
+                                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
+                            </svg>
                         </button>
 
-                        <!-- FEATURE 1: ZOOM ON CLICK -->
+                        <!-- ZOOM ON CLICK -->
                         <div onclick="openProductZoomModal(${product.id})" class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
                             <img id="img-${product.id}"
                                  src="${initialSrc}" 
@@ -587,7 +594,7 @@
             }
         }
 
-        // FEATURE 1: ZOOM MODAL CONTROLS
+        // ZOOM MODAL CONTROLS
         function openProductZoomModal(productId) {
             currentZoomProductId = productId;
             const product = rawInventory.find(p => p.id === productId);
@@ -615,7 +622,7 @@
             currentZoomProductId = null;
         }
 
-        // FEATURE 3: NATIVE INTELLIGENT SHARE SHEET
+        // NATIVE INTELLIGENT SHARE SHEET
         function shareProduct(productId, event) {
             if(event) event.stopPropagation();
             const product = rawInventory.find(p => p.id === productId);
@@ -700,7 +707,7 @@
 
             msg += `------------------------------\n*Total Amount: ₹${total}*\n------------------------------\n\nPlease confirm product availability & shipping details. Thank you!`;
 
-            const waUrl = `https://api.whatsapp.com/send?phone=918796672636&text=${encodeURIComponent(msg)}`;
+            const waUrl = `https://api.whatsapp.com/send?phone=918796672636?text=${encodeURIComponent(msg)}`;
             
             window.open(waUrl, '_blank');
 
