@@ -181,11 +181,9 @@
             </div>
         </header>
 
-        <!-- LUXURY IMAGE BANNER SECTION (AUTO FALLBACK PNG/JPG) -->
-        <section class="w-full rounded-3xl overflow-hidden mb-8 border-2 border-yellow-500/50 shadow-2xl bg-slate-950">
-            <a href="#showroomGrid" onclick="document.getElementById('searchInput').focus()">
-                <img src="Banner Image.png" alt="Aneeta Collections Luxury Banner" class="w-full h-auto object-cover hover:scale-[1.01] transition duration-500 cursor-pointer" onerror="this.onerror=null; this.src='banner.jpg';">
-            </a>
+        <!-- LUXURY BANNER IMAGE SECTION -->
+        <section class="w-full rounded-3xl overflow-hidden mb-6 border-2 border-yellow-500/50 shadow-2xl bg-slate-950">
+            <img src="Image Banner.png" alt="Aneeta Collections Luxury Banner" class="w-full h-auto object-cover" onerror="this.onerror=null; this.src='banner.jpg';">
         </section>
 
         <!-- SEARCH & CATEGORY FILTER BAR -->
@@ -211,11 +209,11 @@
         <!-- PRODUCTS SHOWROOM GRID -->
         <main>
             <div class="flex items-center justify-between mb-6 pb-2 border-b border-emerald-900/60">
-                <h2 id="showroomGrid" class="royal-font text-xl font-semibold text-yellow-400">Featured Collections Catalog</h2>
+                <h2 class="royal-font text-xl font-semibold text-yellow-400">Featured Collections Catalog</h2>
                 <span id="productCounter" class="text-xs bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 px-3 py-1 rounded-full font-mono">0 Designs</span>
             </div>
 
-            <div id="showroomGridContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div id="showroomGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
                 <!-- Dynamic Items -->
             </div>
         </main>
