@@ -138,7 +138,7 @@
                 <!-- Search Box -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-yellow-400 text-base">🔍</span>
-                    <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search Earrings, Bangles, Lockets, Clips..." class="w-full pl-11 pr-4 py-3 bg-slate-950/90 border border-yellow-500/30 rounded-2xl text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
+                    <input type="text" id="searchInput" onkeyup="filterProducts()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-11 pr-4 py-3 bg-slate-950/90 border border-yellow-500/30 rounded-2xl text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
                 </div>
 
                 <!-- Rich Category Chips Bar -->
@@ -159,7 +159,7 @@
             </div>
 
             <div id="showroomGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                <!-- Dynamic 97 Items -->
+                <!-- Dynamic 117 Items -->
             </div>
         </main>
 
@@ -286,12 +286,35 @@
             { id: 94, type: "Independence Day", name: "Tri Color Hand Band", price: 10, file: "Tri Color Hand band" },
             { id: 95, type: "Independence Day", name: "Indian Flag Plastic", price: 5, file: "Indian Flag_Plastic" },
             { id: 96, type: "Independence Day", name: "Indian Flag Lapel Pin", price: 10, file: "Indian Flag Lapel Pin_1" },
-            { id: 97, type: "Independence Day", name: "Indian Flag Cloth", file: "Indian Flag_Cloth", price: 10 }
+            { id: 97, type: "Independence Day", name: "Indian Flag Cloth", price: 10, file: "Indian Flag_Cloth" },
+            
+            // Rakhi Special Collection Entries (98 to 117)
+            { id: 98, type: "Rakhi", name: "Designer Pearl Rakhi", price: 40, file: "Rakhi_1" },
+            { id: 99, type: "Rakhi", name: "Rudraksha Designer Rakhi", price: 50, file: "Rakhi_2" },
+            { id: 100, type: "Rakhi", name: "Golden Kundan Rakhi", price: 60, file: "Rakhi_3" },
+            { id: 101, type: "Rakhi", name: "Kids Cartoon Special Rakhi", price: 30, file: "Rakhi_4" },
+            { id: 102, type: "Rakhi", name: "Silver Plated Floral Rakhi", price: 50, file: "Rakhi_5" },
+            { id: 103, type: "Rakhi", name: "Evil Eye Thread Rakhi", price: 40, file: "Rakhi_6" },
+            { id: 104, type: "Rakhi", name: "Traditional Zardosi Rakhi", price: 70, file: "Rakhi_7" },
+            { id: 105, type: "Rakhi", name: "Stone Studded Fancy Rakhi", price: 60, file: "Rakhi_8" },
+            { id: 106, type: "Rakhi", name: "Bhai Bhabhi Lumba Set", price: 120, file: "Rakhi_9" },
+            { id: 107, type: "Rakhi", name: "Royal Peacock Thread Rakhi", price: 50, file: "Rakhi_10" },
+            { id: 108, type: "Rakhi", name: "Ganesha Divine Rakhi", price: 45, file: "Rakhi_11" },
+            { id: 109, type: "Rakhi", name: "Light Up LED Kids Rakhi", price: 35, file: "Rakhi_12" },
+            { id: 110, type: "Rakhi", name: "Resham Thread Designer Rakhi", price: 30, file: "Rakhi_13" },
+            { id: 111, type: "Rakhi", name: "Meenakari Premium Rakhi", price: 80, file: "Rakhi_14" },
+            { id: 112, type: "Rakhi", name: "Handcrafted Beaded Rakhi", price: 40, file: "Rakhi_15" },
+            { id: 113, type: "Rakhi", name: "Crystal Stone Fancy Rakhi", price: 60, file: "Rakhi_16" },
+            { id: 114, type: "Rakhi", name: "Swarovski Diamond Rakhi", price: 90, file: "Rakhi_17" },
+            { id: 115, type: "Rakhi", name: "Wooden Carved Divine Rakhi", price: 50, file: "Rakhi_18" },
+            { id: 116, type: "Rakhi", name: "Velvet Box Couple Lumba Set", price: 150, file: "Rakhi_19" },
+            { id: 117, type: "Rakhi", name: "Golden Om Symbol Thread Rakhi", price: 45, file: "Rakhi_20" }
         ];
 
         // Emojis per category
         const categoryEmojis = {
             'ALL': '✨ All Products',
+            'Rakhi': '🪔 Rakhi Special',
             'Hair Rubber Bands': '🎀 Hair Bands',
             'Bangle': '🌸 Bangles',
             'Bracelet': '💫 Bracelets',
