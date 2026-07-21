@@ -17,28 +17,31 @@
             box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
         }
         .product-card {
-            background: rgba(17, 24, 39, 0.8);
-            border: 1px solid rgba(212, 175, 55, 0.2);
+            background: rgba(17, 24, 39, 0.85);
+            border: 1px solid rgba(212, 175, 55, 0.22);
             transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .product-card:hover {
-            transform: translateY(-6px);
+            transform: translateY(-4px);
             border-color: rgba(212, 175, 55, 0.8);
-            box-shadow: 0 12px 30px rgba(16, 185, 129, 0.25);
+            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
         }
-        /* STRICT PRODUCT IMAGE FIX SO THEY NEVER GET OVERSIZED */
+        /* STRICT PRODUCT IMAGE FIX FOR MOBILE & DESKTOP */
         .product-img-box img {
             width: 100% !important;
             height: 100% !important;
-            max-height: 220px !important;
+            max-height: 160px !important;
             object-fit: contain !important;
+        }
+        @media(min-width: 640px) {
+            .product-img-box img { max-height: 220px !important; }
         }
         .category-chip {
             transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
         .category-chip:hover {
-            transform: translateY(-2px) scale(1.06);
-            box-shadow: 0 6px 20px rgba(234, 179, 8, 0.25);
+            transform: translateY(-2px) scale(1.04);
+            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2);
             border-color: rgba(250, 204, 21, 0.9);
             color: #fef08a;
         }
@@ -47,59 +50,58 @@
             color: #000000;
             font-weight: 800;
             border-color: #fef08a;
-            box-shadow: 0 4px 18px rgba(234, 179, 8, 0.4);
-            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
         }
     </style>
 </head>
 <body class="min-h-screen pb-28 relative">
 
     <!-- STICKY BOTTOM CART RECOVERY BAR (TOAST) -->
-    <div id="cartToast" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-lg emerald-glass rounded-2xl p-3.5 shadow-2xl border-2 border-yellow-400/70 hidden transition-all duration-300">
-        <div class="flex items-center justify-between gap-3">
-            <div class="flex items-center gap-2.5 overflow-hidden">
-                <span class="text-2xl animate-bounce">🛍️</span>
+    <div id="cartToast" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-lg emerald-glass rounded-2xl p-3 shadow-2xl border-2 border-yellow-400/70 hidden transition-all duration-300">
+        <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2 overflow-hidden">
+                <span class="text-xl animate-bounce">🛍️</span>
                 <div class="truncate">
-                    <p class="text-xs font-bold text-yellow-300">Welcome Back!</p>
-                    <p class="text-[11px] text-gray-200 truncate">
-                        <span id="toastItemCount" class="font-bold text-emerald-400">0</span> item(s) in bag • Total: <span id="toastCartTotal" class="font-bold text-yellow-400">₹0</span>
+                    <p class="text-[11px] font-bold text-yellow-300">Welcome Back!</p>
+                    <p class="text-[10px] text-gray-200 truncate">
+                        <span id="toastItemCount" class="font-bold text-emerald-400">0</span> item(s) • Total: <span id="toastCartTotal" class="font-bold text-yellow-400">₹0</span>
                     </p>
                 </div>
             </div>
-            <button onclick="toggleCartModal()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg flex-shrink-0 cursor-pointer">
+            <button onclick="toggleCartModal()" class="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-extrabold text-[11px] uppercase tracking-wider rounded-xl shadow flex-shrink-0 cursor-pointer">
                 View Bag 🛒
             </button>
         </div>
     </div>
 
     <!-- FLOATING CART BUTTON -->
-    <button onclick="toggleCartModal()" class="fixed bottom-6 right-6 z-40 bg-amber-500 hover:bg-yellow-400 text-black p-4 rounded-full shadow-2xl flex items-center justify-center font-bold transition transform hover:scale-110 border-2 border-yellow-200 cursor-pointer">
-        <span class="text-2xl mr-1">🛒</span>
-        <span id="floatingCartCount" class="bg-black text-yellow-400 text-xs px-2 py-0.5 rounded-full font-mono font-bold">0</span>
+    <button onclick="toggleCartModal()" class="fixed bottom-5 right-5 z-40 bg-amber-500 hover:bg-yellow-400 text-black p-3.5 sm:p-4 rounded-full shadow-2xl flex items-center justify-center font-bold transition transform hover:scale-110 border-2 border-yellow-200 cursor-pointer">
+        <span class="text-xl sm:text-2xl mr-1">🛒</span>
+        <span id="floatingCartCount" class="bg-black text-yellow-400 text-[11px] px-2 py-0.5 rounded-full font-mono font-bold">0</span>
     </button>
 
     <!-- SHOPPING CART MODAL -->
     <div id="cartModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="emerald-glass w-full max-w-lg rounded-3xl p-6 relative max-h-[85vh] flex flex-col shadow-2xl">
-            <div class="flex items-center justify-between pb-4 border-b border-yellow-500/30">
-                <h3 class="royal-font text-lg font-bold text-yellow-400 flex items-center gap-2">
+        <div class="emerald-glass w-full max-w-lg rounded-3xl p-5 sm:p-6 relative max-h-[85vh] flex flex-col shadow-2xl">
+            <div class="flex items-center justify-between pb-3 border-b border-yellow-500/30">
+                <h3 class="royal-font text-base sm:text-lg font-bold text-yellow-400 flex items-center gap-2">
                     <span>🛒</span> Your Shopping Bag
                 </h3>
-                <button onclick="toggleCartModal()" class="text-gray-400 hover:text-white text-xl font-bold cursor-pointer">✕</button>
+                <button onclick="toggleCartModal()" class="text-gray-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
             </div>
 
             <!-- Cart Items List -->
-            <div id="cartItemsList" class="my-4 overflow-y-auto flex-grow space-y-3 pr-1">
+            <div id="cartItemsList" class="my-3 overflow-y-auto flex-grow space-y-2.5 pr-1">
                 <!-- Cart items populated via JS -->
             </div>
 
             <!-- Cart Footer Summary -->
-            <div class="pt-4 border-t border-yellow-500/30">
-                <div class="flex justify-between items-center mb-4">
+            <div class="pt-3 border-t border-yellow-500/30">
+                <div class="flex justify-between items-center mb-3">
                     <span class="text-xs uppercase tracking-wider text-emerald-400 font-semibold">Total Amount:</span>
-                    <span id="cartTotal" class="royal-font text-xl font-extrabold text-yellow-400">₹0</span>
+                    <span id="cartTotal" class="royal-font text-lg sm:text-xl font-extrabold text-yellow-400">₹0</span>
                 </div>
-                <button onclick="sendWhatsAppCartOrder()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 text-black font-extrabold rounded-xl text-center text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                <button onclick="sendWhatsAppCartOrder()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 text-black font-extrabold rounded-xl text-center text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
                     <span>💬</span> Place Order via WhatsApp
                 </button>
             </div>
@@ -108,10 +110,10 @@
 
     <!-- IMAGE ZOOM & DEDICATED PRODUCT VIEW MODAL -->
     <div id="productZoomModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="emerald-glass w-full max-w-lg rounded-3xl p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
-            <button onclick="closeProductZoomModal()" class="absolute top-4 right-4 z-10 w-9 h-9 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
+        <div class="emerald-glass w-full max-w-lg rounded-3xl p-5 sm:p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
+            <button onclick="closeProductZoomModal()" class="absolute top-3 right-3 z-10 w-8 h-8 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
             
-            <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-4 flex items-center justify-center border border-slate-800 mb-4 overflow-hidden relative">
+            <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-3 flex items-center justify-center border border-slate-800 mb-3 overflow-hidden relative">
                 <img id="modalZoomImg" src="" class="w-full h-full object-contain transition-transform duration-300 transform hover:scale-125 cursor-zoom-in" alt="Zoom View">
             </div>
 
@@ -120,17 +122,17 @@
                     <span id="modalProductCategory" class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase">Category</span>
                     
                     <!-- AMAZON STYLE SHARE BUTTON IN MODAL -->
-                    <button id="modalShareBtn" onclick="" class="px-3 py-1.5 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer transition">
+                    <button id="modalShareBtn" onclick="" class="px-3 py-1 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer transition">
                         <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                             <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
                         </svg>
                         <span>Share</span>
                     </button>
                 </div>
-                <h3 id="modalProductName" class="royal-font text-lg font-bold text-gray-100">Product Name</h3>
-                <span id="modalProductPrice" class="royal-font text-lg font-extrabold text-yellow-400">Price: ₹0</span>
+                <h3 id="modalProductName" class="royal-font text-base sm:text-lg font-bold text-gray-100">Product Name</h3>
+                <span id="modalProductPrice" class="royal-font text-base sm:text-lg font-extrabold text-yellow-400">Price: ₹0</span>
 
-                <div class="mt-4" id="modalActionContainer">
+                <div class="mt-3" id="modalActionContainer">
                     <!-- Dynamic Counter / Add Button -->
                 </div>
             </div>
@@ -139,14 +141,14 @@
 
     <!-- THANK YOU POPUP -->
     <div id="thankYouModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="emerald-glass w-full max-w-md rounded-3xl p-8 text-center border-2 border-yellow-400 shadow-2xl relative">
-            <div class="w-20 h-20 mx-auto mb-4 bg-emerald-500/20 border-2 border-emerald-400 rounded-full flex items-center justify-center text-4xl shadow-lg">
+        <div class="emerald-glass w-full max-w-md rounded-3xl p-6 sm:p-8 text-center border-2 border-yellow-400 shadow-2xl relative">
+            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 bg-emerald-500/20 border-2 border-emerald-400 rounded-full flex items-center justify-center text-3xl sm:text-4xl shadow-lg">
                 ✨
             </div>
-            <h3 class="royal-font text-2xl font-extrabold text-yellow-400 mb-2">Thank You! 🎉</h3>
-            <h4 class="text-sm font-semibold text-emerald-300 mb-4">Your Order Details Have Been Sent</h4>
+            <h3 class="royal-font text-xl sm:text-2xl font-extrabold text-yellow-400 mb-2">Thank You! 🎉</h3>
+            <h4 class="text-xs sm:text-sm font-semibold text-emerald-300 mb-3">Your Order Details Have Been Sent</h4>
             
-            <p class="text-xs text-gray-200 leading-relaxed mb-6 bg-slate-950/70 p-4 rounded-2xl border border-emerald-900/80">
+            <p class="text-xs text-gray-200 leading-relaxed mb-5 bg-slate-950/70 p-3.5 rounded-2xl border border-emerald-900/80">
                 We have received your order list on WhatsApp. Our team at <strong>Aneeta Collections</strong> will call you shortly to confirm your items and shipping details! 📞🛍️
             </p>
 
@@ -156,93 +158,93 @@
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-4 pt-6">
+    <div class="max-w-7xl mx-auto px-2.5 sm:px-4 pt-4 sm:pt-6">
         
-        <!-- HEADER SECTION -->
-        <header class="emerald-glass rounded-3xl p-6 sm:p-8 mb-6 flex flex-col md:flex-row items-center justify-between gap-6">
-            <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left">
-                <div class="w-28 h-28 rounded-2xl border-2 border-yellow-500/70 overflow-hidden bg-white p-2 shadow-2xl flex-shrink-0 flex items-center justify-center">
+        <!-- COMPACT & ELEGANT MOBILE/DESKTOP HEADER -->
+        <header class="emerald-glass rounded-2xl sm:rounded-3xl p-4 sm:p-8 mb-4 sm:mb-6 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
+            <div class="flex items-center gap-4 sm:gap-6 text-left w-full md:w-auto">
+                <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-xl sm:rounded-2xl border-2 border-yellow-500/70 overflow-hidden bg-white p-1.5 shadow-xl flex-shrink-0 flex items-center justify-center">
                     <img id="mainLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
                 </div>
-                <div>
-                    <h1 class="royal-font text-3xl sm:text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-100">
+                <div class="flex-grow">
+                    <h1 class="royal-font text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-100">
                         ANEETA COLLECTIONS
                     </h1>
-                    <p class="text-xs tracking-widest text-emerald-400 uppercase font-semibold mt-1">✨ Exclusive Luxury Jewelry & Accessories ✨</p>
+                    <p class="text-[10px] sm:text-xs tracking-widest text-emerald-400 uppercase font-semibold mt-0.5 sm:mt-1">✨ Exclusive Luxury Jewelry & Accessories ✨</p>
                     
-                    <div class="mt-3 text-xs text-gray-200 space-y-1 font-medium">
-                        <p class="flex items-center justify-center sm:justify-start gap-2">
-                            <span>📞</span> <strong>Call / WhatsApp:</strong> <a href="tel:8796672636" class="text-yellow-400 font-bold hover:underline">8796672636</a>
+                    <div class="mt-2 text-[11px] sm:text-xs text-gray-200 space-y-0.5 font-medium">
+                        <p class="flex items-center gap-1.5">
+                            <span>📞</span> <strong>Call/WhatsApp:</strong> <a href="tel:8796672636" class="text-yellow-400 font-bold hover:underline">8796672636</a>
                         </p>
-                        <p class="flex items-center justify-center sm:justify-start gap-2">
-                            <span>📍</span> <strong>Address:</strong> SG Shikhar Heights Indirapuram Ghaziabad, 201009
+                        <p class="flex items-center gap-1.5 truncate">
+                            <span>📍</span> <span class="truncate">SG Shikhar Heights Indirapuram Ghaziabad</span>
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="flex flex-col sm:flex-row items-center gap-3 w-full md:w-auto">
-                <button onclick="toggleCartModal()" class="w-full sm:w-auto px-5 py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+            <div class="w-full md:w-auto flex-shrink-0">
+                <button onclick="toggleCartModal()" class="w-full md:w-auto px-5 py-2.5 sm:py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
                     <span>🛒</span> View Bag (<span id="headerCartCount">0</span>)
                 </button>
             </div>
         </header>
 
-        <!-- LUXURY BANNER IMAGE SECTION WITH SHOP NOW COMPLETELY CROPPED OUT -->
-        <section class="w-full rounded-3xl overflow-hidden mb-6 border-2 border-yellow-500/50 shadow-2xl bg-slate-950 flex items-center justify-center">
-            <img src="Image%20Banner.png" alt="Aneeta Collections Luxury Banner" class="w-full h-auto object-cover max-h-[400px]" style="object-position: center 15%;" onerror="this.onerror=null; this.src='banner.png';">
+        <!-- LUXURY BANNER IMAGE SECTION -->
+        <section class="w-full rounded-2xl sm:rounded-3xl overflow-hidden mb-5 sm:mb-6 border-2 border-yellow-500/50 shadow-2xl bg-slate-950 flex items-center justify-center">
+            <img src="Image%20Banner.png" alt="Aneeta Collections Luxury Banner" class="w-full h-auto object-cover max-h-[320px] sm:max-h-[420px]" style="object-position: center 15%;" onerror="this.onerror=null; this.src='banner.png';">
         </section>
 
         <!-- SEARCH & CATEGORY FILTER BAR -->
-        <section class="emerald-glass rounded-3xl p-6 mb-8 shadow-2xl border border-yellow-500/40">
-            <div class="flex flex-col gap-5">
+        <section class="emerald-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-2xl border border-yellow-500/40">
+            <div class="flex flex-col gap-4 sm:gap-5">
                 <!-- SEARCH BOX WITH CLEAR (X) BUTTON -->
                 <div class="relative w-full">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-yellow-400 text-base">🔍</span>
-                    <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-11 pr-10 py-3 bg-slate-950/90 border border-yellow-500/30 rounded-2xl text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
-                    <button id="searchClearBtn" onclick="clearSearch()" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-yellow-400 font-bold text-sm hidden cursor-pointer transition">✕</button>
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-yellow-400 text-sm sm:text-base">🔍</span>
+                    <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-10 pr-9 py-2.5 sm:py-3 bg-slate-950/90 border border-yellow-500/30 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
+                    <button id="searchClearBtn" onclick="clearSearch()" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-yellow-400 font-bold text-xs sm:text-sm hidden cursor-pointer transition">✕</button>
                 </div>
 
                 <!-- Rich Category Chips Bar -->
-                <div class="flex flex-col gap-2">
-                    <span class="text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Explore Collections:</span>
-                    <div id="categoryContainer" class="flex flex-wrap gap-2.5 items-center">
+                <div class="flex flex-col gap-1.5 sm:gap-2">
+                    <span class="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Explore Collections:</span>
+                    <div id="categoryContainer" class="flex flex-wrap gap-2 items-center">
                         <!-- Dynamic Buttons -->
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- PRODUCTS SHOWROOM GRID -->
+        <!-- PRODUCTS SHOWROOM GRID (2-COLUMNS ON MOBILE LIKE AMAZON/MEESHO, 3-4 ON DESKTOP) -->
         <main>
-            <div class="flex items-center justify-between mb-6 pb-2 border-b border-emerald-900/60">
-                <h2 class="royal-font text-xl font-semibold text-yellow-400">Featured Collections Catalog</h2>
-                <span id="productCounter" class="text-xs bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 px-3 py-1 rounded-full font-mono">0 Designs</span>
+            <div class="flex items-center justify-between mb-4 sm:mb-6 pb-2 border-b border-emerald-900/60">
+                <h2 class="royal-font text-base sm:text-xl font-semibold text-yellow-400">Featured Collections Catalog</h2>
+                <span id="productCounter" class="text-[11px] sm:text-xs bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 px-2.5 py-1 rounded-full font-mono">0 Designs</span>
             </div>
 
-            <div id="showroomGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div id="showroomGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6">
                 <!-- Dynamic Items -->
             </div>
         </main>
 
         <!-- FOOTER SECTION -->
-        <footer class="emerald-glass rounded-3xl p-8 mt-16 text-center">
-            <div class="w-16 h-16 rounded-xl border border-yellow-500/50 mx-auto mb-4 overflow-hidden bg-white p-1">
+        <footer class="emerald-glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 mt-12 sm:mt-16 text-center">
+            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-yellow-500/50 mx-auto mb-3 sm:mb-4 overflow-hidden bg-white p-1">
                 <img id="footerLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
             </div>
-            <h3 class="royal-font text-xl font-bold text-yellow-400 mb-1">ANEETA COLLECTIONS</h3>
-            <p class="text-xs text-emerald-400 font-semibold mb-6">Your Destination for Premium Fancy Jewelry & Accessories</p>
+            <h3 class="royal-font text-lg sm:text-xl font-bold text-yellow-400 mb-1">ANEETA COLLECTIONS</h3>
+            <p class="text-[11px] sm:text-xs text-emerald-400 font-semibold mb-5">Your Destination for Premium Fancy Jewelry & Accessories</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-xs text-gray-300 pt-6 border-t border-slate-800">
-                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 text-xs text-gray-300 pt-5 border-t border-slate-800">
+                <div class="bg-slate-950/60 p-3 sm:p-4 rounded-xl border border-slate-800">
                     <p class="text-yellow-400 font-bold mb-1">📞 Contact Number</p>
                     <p>WhatsApp & Call: <a href="tel:8796672636" class="hover:underline font-semibold text-white">8796672636</a></p>
                 </div>
-                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                <div class="bg-slate-950/60 p-3 sm:p-4 rounded-xl border border-slate-800">
                     <p class="text-yellow-400 font-bold mb-1">✉️ Email Address</p>
                     <p><a href="mailto:aneetacollections.in@gmail.com" class="hover:underline text-white">aneetacollections.in@gmail.com</a></p>
                 </div>
-                <div class="bg-slate-950/60 p-4 rounded-xl border border-slate-800">
+                <div class="bg-slate-950/60 p-3 sm:p-4 rounded-xl border border-slate-800">
                     <p class="text-yellow-400 font-bold mb-1">📍 Store Location</p>
                     <p>SG Shikhar Heights Indirapuram Ghaziabad, 201009</p>
                 </div>
@@ -442,7 +444,7 @@
                 const label = categoryEmojis[t] || `✨ ${t}`;
                 const isActive = (selectedCategory === t) ? 'active' : 'bg-slate-950/80 border-yellow-500/30 text-gray-200';
                 return `
-                    <button onclick="filterCategory('${t}')" class="category-chip ${isActive} text-xs px-4 py-2 rounded-xl border text-center font-medium cursor-pointer shadow-sm">
+                    <button onclick="filterCategory('${t}')" class="category-chip ${isActive} text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border text-center font-medium cursor-pointer shadow-sm">
                         ${label}
                     </button>
                 `;
@@ -495,17 +497,17 @@
                 const qty = cartItem ? cartItem.qty : 0;
 
                 return `
-                    <div class="product-card rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
+                    <div class="product-card rounded-xl sm:rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
                         
                         <!-- OFFICIAL AMAZON STYLE VECTOR SHARE BUTTON ON CARD -->
-                        <button onclick="shareProduct(${product.id}, event)" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center shadow hover:scale-110 cursor-pointer transition" title="Share Product">
-                            <svg class="w-4 h-4 fill-current text-yellow-400" viewBox="0 0 24 24">
+                        <button onclick="shareProduct(${product.id}, event)" class="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center shadow hover:scale-110 cursor-pointer transition" title="Share Product">
+                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-yellow-400" viewBox="0 0 24 24">
                                 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
                             </svg>
                         </button>
 
                         <!-- ZOOM ON CLICK WITH STRICT CONTAINER CLASS -->
-                        <div onclick="openProductZoomModal(${product.id})" class="product-img-box relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
+                        <div onclick="openProductZoomModal(${product.id})" class="product-img-box relative aspect-square bg-slate-950/80 p-2 sm:p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
                             <img id="img-${product.id}"
                                  src="${initialSrc}" 
                                  data-step="0" 
@@ -513,20 +515,20 @@
                                  class="transition-transform duration-300 group-hover:scale-105" 
                                  alt="${product.name}" 
                                  onerror="handleImageError(this, '${safeName}')">
-                            <div class="text-center p-4 hidden flex-col items-center justify-center">
-                                <span class="text-3xl block mb-2">💎</span>
-                                <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
+                            <div class="text-center p-2 hidden flex-col items-center justify-center">
+                                <span class="text-2xl block mb-1">💎</span>
+                                <span class="royal-font text-[10px] text-yellow-400/80 font-bold">${product.name}</span>
                             </div>
-                            <span class="absolute bottom-2 right-2 bg-black/60 text-yellow-300 text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition">
+                            <span class="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 bg-black/60 text-yellow-300 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition">
                                 🔍 Zoom
                             </span>
                         </div>
 
-                        <div class="p-5 flex flex-col flex-grow">
-                            <span class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-1">${product.type}</span>
-                            <h3 onclick="openProductZoomModal(${product.id})" class="royal-font text-sm font-semibold text-gray-100 line-clamp-1 mb-2 cursor-pointer hover:text-yellow-400 transition">${product.name}</h3>
-                            <div class="flex items-center justify-between mb-4">
-                                <span class="text-xs text-yellow-400 font-bold font-mono">Price: ₹${product.price}</span>
+                        <div class="p-3 sm:p-5 flex flex-col flex-grow">
+                            <span class="text-[9px] sm:text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-0.5 sm:mb-1">${product.type}</span>
+                            <h3 onclick="openProductZoomModal(${product.id})" class="royal-font text-xs sm:text-sm font-semibold text-gray-100 line-clamp-1 mb-1.5 sm:mb-2 cursor-pointer hover:text-yellow-400 transition">${product.name}</h3>
+                            <div class="flex items-center justify-between mb-3 sm:mb-4">
+                                <span class="text-[11px] sm:text-xs text-yellow-400 font-bold font-mono">Price: ₹${product.price}</span>
                             </div>
                             
                             <div class="mt-auto" id="btn-container-${product.id}">
@@ -542,20 +544,20 @@
             if (qty > 0) {
                 return `
                     <div class="w-full py-1.5 px-2 bg-slate-950 border border-yellow-500/50 rounded-xl flex items-center justify-between shadow-inner">
-                        <button onclick="changeQty(${productId}, -1)" class="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 text-yellow-400 font-extrabold text-sm flex items-center justify-center cursor-pointer transition">
+                        <button onclick="changeQty(${productId}, -1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 text-yellow-400 font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition">
                             -
                         </button>
-                        <span class="text-xs font-mono font-bold text-yellow-300 tracking-wider px-2">
-                            ${qty} Selected
+                        <span class="text-[10px] sm:text-xs font-mono font-bold text-yellow-300 tracking-wider px-1">
+                            ${qty} In Bag
                         </span>
-                        <button onclick="changeQty(${productId}, 1)" class="w-8 h-8 rounded-lg bg-amber-500 hover:bg-yellow-400 text-black font-extrabold text-sm flex items-center justify-center cursor-pointer transition shadow">
+                        <button onclick="changeQty(${productId}, 1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500 hover:bg-yellow-400 text-black font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition shadow">
                             +
                         </button>
                     </div>
                 `;
             } else {
                 return `
-                    <button onclick="addToCart(${productId})" class="w-full py-2.5 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold rounded-xl text-center text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                    <button onclick="addToCart(${productId})" class="w-full py-2 sm:py-2.5 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold rounded-xl text-center text-[10px] sm:text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
                         <span>🛒</span> Add To Bag
                     </button>
                 `;
@@ -674,20 +676,20 @@
             const listContainer = document.getElementById('cartItemsList');
             if(cart.length === 0) {
                 listContainer.innerHTML = `
-                    <div class="text-center py-8 text-gray-400">
-                        <span class="text-4xl block mb-2">🛍️</span>
+                    <div class="text-center py-6 text-gray-400">
+                        <span class="text-3xl block mb-2">🛍️</span>
                         <p class="text-xs">Your shopping bag is empty!</p>
                         <p class="text-[10px] text-gray-500 mt-1">Add items to place your order.</p>
                     </div>
                 `;
             } else {
                 listContainer.innerHTML = cart.map(item => `
-                    <div class="flex items-center justify-between bg-slate-950/80 p-3 rounded-xl border border-slate-800">
+                    <div class="flex items-center justify-between bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
                         <div class="flex-grow pr-2">
                             <h4 class="text-xs font-bold text-gray-200 line-clamp-1">${item.name}</h4>
                             <p class="text-[10px] text-yellow-400 font-mono font-bold">₹${item.price} x ${item.qty} = ₹${item.price * item.qty}</p>
                         </div>
-                        <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1">
+                        <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1">
                             <button onclick="changeQty(${item.id}, -1)" class="text-yellow-400 font-bold px-1 hover:text-white cursor-pointer">-</button>
                             <span class="text-xs font-mono font-bold text-white px-1">${item.qty}</span>
                             <button onclick="changeQty(${item.id}, 1)" class="text-yellow-400 font-bold px-1 hover:text-white cursor-pointer">+</button>
