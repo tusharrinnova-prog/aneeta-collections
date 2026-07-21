@@ -189,7 +189,7 @@
     </div>
 
     <script>
-        // Exact 117 Master Inventory List auto-extracted from Inventory File1.xlsx
+        // Exact 117 Master Inventory List from Inventory File1.xlsx
         const rawInventory = [
             { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, file: "Coloured Rubber Bands" },
             { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, file: "Striped Rubber Bands" },
@@ -328,32 +328,32 @@
             'Lapel Pin': '🎖️ Lapel Pin'
         };
 
-        let repoFiles = [];
         let selectedCategory = 'ALL';
         let cart = [];
 
-        async function fetchRepoFiles() {
-            try {
-                const res = await fetch('https://api.github.com/repos/tusharrinnova-prog/aneeta-collections/contents');
-                const data = await res.json();
-                if(Array.isArray(data)) {
-                    repoFiles = data.map(f => f.name);
-                }
-            } catch(e) { console.log('API fallback', e); }
-            
-            renderCategories();
-            renderGrid(rawInventory);
-            updateCartUI();
-        }
+        function handleImageError(img, baseName) {
+            const step = parseInt(img.dataset.step || '0');
+            const variants = [
+                encodeURIComponent(baseName) + '.jpeg',
+                encodeURIComponent(baseName) + '.png',
+                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpg',
+                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpeg',
+                encodeURIComponent(baseName.replace(/_/g, ' ')) + '.jpg',
+                encodeURIComponent(baseName.replace(/_/g, ' ')) + '.jpeg',
+                baseName.toLowerCase().includes('rakhi') ? 'Rakhi_' + (img.dataset.itemid - 97) + '.jpg' : null,
+                baseName.toLowerCase().includes('rakhi') ? 'Rakhi_' + (img.dataset.itemid - 97) + '.jpeg' : null
+            ].filter(Boolean);
 
-        function findMatchingImage(searchKey) {
-            if(!repoFiles || repoFiles.length === 0) return null;
-            const cleanKey = searchKey.toLowerCase().replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
-            const match = repoFiles.find(f => {
-                const cleanFile = f.toLowerCase().replace(/_/g, ' ').replace(/\s+/g, ' ').trim();
-                return cleanFile.includes(cleanKey);
-            });
-            return match ? encodeURIComponent(match) : null;
+            if (step < variants.length) {
+                img.dataset.step = step + 1;
+                img.src = variants[step];
+            } else {
+                img.onerror = null;
+                img.style.display = 'none';
+                if(img.nextElementSibling) {
+                    img.nextElementSibling.style.display = 'flex';
+                }
+            }
         }
 
         function renderCategories() {
@@ -391,18 +391,24 @@
             document.getElementById('productCounter').innerText = `${items.length} Unique Products`;
 
             grid.innerHTML = items.map((product) => {
-                const imgSrc = findMatchingImage(product.file);
+                const initialSrc = encodeURIComponent(product.file) + '.jpg';
+                const safeName = product.file.replace(/'/g, "\\'");
+                const cartItem = cart.find(c => c.id === product.id);
+                const qty = cartItem ? cartItem.qty : 0;
 
                 return `
-                    <div class="product-card rounded-2xl overflow-hidden flex flex-col relative">
+                    <div class="product-card rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
                         <div class="relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900">
-                            ${imgSrc ? 
-                                `<img src="${imgSrc}" class="w-full h-full object-contain" alt="${product.name}">` : 
-                                `<div class="text-center p-4">
-                                    <span class="text-3xl block mb-2">💎</span>
-                                    <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
-                                 </div>`
-                            }
+                            <img src="${initialSrc}" 
+                                 data-step="0" 
+                                 data-itemid="${product.id}"
+                                 class="w-full h-full object-contain" 
+                                 alt="${product.name}" 
+                                 onerror="handleImageError(this, '${safeName}')">
+                            <div class="text-center p-4 hidden flex-col items-center justify-center">
+                                <span class="text-3xl block mb-2">💎</span>
+                                <span class="royal-font text-xs text-yellow-400/80 font-bold">${product.name}</span>
+                            </div>
                         </div>
                         <div class="p-5 flex flex-col flex-grow">
                             <span class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-1">${product.type}</span>
@@ -410,13 +416,39 @@
                             <div class="flex items-center justify-between mb-4">
                                 <span class="text-xs text-yellow-400 font-bold font-mono">Price: ₹${product.price}</span>
                             </div>
-                            <button onclick="addToCart(${product.id})" class="w-full mt-auto py-2.5 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold rounded-xl text-center text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
-                                <span>🛒</span> Add To Bag
-                            </button>
+                            
+                            <!-- DYNAMIC ACTION BUTTON / QUANTITY COUNTER -->
+                            <div class="mt-auto" id="btn-container-${product.id}">
+                                ${renderProductButton(product.id, qty)}
+                            </div>
                         </div>
                     </div>
                 `;
             }).join('');
+        }
+
+        function renderProductButton(productId, qty) {
+            if (qty > 0) {
+                return `
+                    <div class="w-full py-1.5 px-2 bg-slate-950 border border-yellow-500/50 rounded-xl flex items-center justify-between shadow-inner">
+                        <button onclick="changeQty(${productId}, -1)" class="w-8 h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 text-yellow-400 font-extrabold text-sm flex items-center justify-center cursor-pointer transition">
+                            -
+                        </button>
+                        <span class="text-xs font-mono font-bold text-yellow-300 tracking-wider px-2">
+                            ${qty} Selected
+                        </span>
+                        <button onclick="changeQty(${productId}, 1)" class="w-8 h-8 rounded-lg bg-amber-500 hover:bg-yellow-400 text-black font-extrabold text-sm flex items-center justify-center cursor-pointer transition shadow">
+                            +
+                        </button>
+                    </div>
+                `;
+            } else {
+                return `
+                    <button onclick="addToCart(${productId})" class="w-full py-2.5 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold rounded-xl text-center text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                        <span>🛒</span> Add To Bag
+                    </button>
+                `;
+            }
         }
 
         function addToCart(productId) {
@@ -428,6 +460,7 @@
                 cart.push({ ...product, qty: 1 });
             }
             updateCartUI();
+            updateCardButton(productId);
             
             const floatingBtn = document.getElementById('floatingCartCount');
             floatingBtn.classList.add('scale-150');
@@ -443,6 +476,16 @@
                 }
             }
             updateCartUI();
+            updateCardButton(productId);
+        }
+
+        function updateCardButton(productId) {
+            const container = document.getElementById(`btn-container-${productId}`);
+            if (container) {
+                const item = cart.find(p => p.id === productId);
+                const qty = item ? item.qty : 0;
+                container.innerHTML = renderProductButton(productId, qty);
+            }
         }
 
         function updateCartUI() {
@@ -510,13 +553,16 @@
 
             cart = [];
             updateCartUI();
+            filterProducts(); // Reset buttons on cards
         }
 
         function closeThankYouModal() {
             document.getElementById('thankYouModal').classList.add('hidden');
         }
 
-        fetchRepoFiles();
+        renderCategories();
+        renderGrid(rawInventory);
+        updateCartUI();
     </script>
 </body>
 </html>
