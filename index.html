@@ -108,20 +108,27 @@
         </div>
     </div>
 
-    <!-- IMAGE ZOOM & DEDICATED PRODUCT VIEW MODAL -->
+    <!-- IMAGE ZOOM & GALLERY SLIDER MODAL -->
     <div id="productZoomModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
         <div class="emerald-glass w-full max-w-lg rounded-3xl p-5 sm:p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
-            <button onclick="closeProductZoomModal()" class="absolute top-3 right-3 z-10 w-8 h-8 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
+            <button onclick="closeProductZoomModal()" class="absolute top-3 right-3 z-20 w-8 h-8 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
             
-            <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-3 flex items-center justify-center border border-slate-800 mb-3 overflow-hidden relative">
-                <img id="modalZoomImg" src="" class="w-full h-full object-contain transition-transform duration-300 transform hover:scale-125 cursor-zoom-in" alt="Zoom View">
+            <!-- Gallery Container with Arrows -->
+            <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-3 flex items-center justify-center border border-slate-800 mb-3 overflow-hidden relative group">
+                <img id="modalZoomImg" src="" class="w-full h-full object-contain transition-transform duration-300" alt="Zoom View">
+                
+                <!-- Slider Arrows -->
+                <button id="prevImgBtn" onclick="slideModalImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition hidden">❮</button>
+                <button id="nextImgBtn" onclick="slideModalImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition hidden">❯</button>
+                
+                <span id="imgCounterBadge" class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-yellow-300 text-[10px] px-2.5 py-0.5 rounded-full font-mono hidden">1 / 1</span>
             </div>
 
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
                     <span id="modalProductCategory" class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase">Category</span>
                     
-                    <!-- AMAZON STYLE SHARE BUTTON IN MODAL -->
+                    <!-- SHARE BUTTON -->
                     <button id="modalShareBtn" onclick="" class="px-3 py-1 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer transition">
                         <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
                             <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
@@ -160,7 +167,7 @@
 
     <div class="max-w-7xl mx-auto px-2.5 sm:px-4 pt-4 sm:pt-6">
         
-        <!-- COMPACT & ELEGANT MOBILE/DESKTOP HEADER -->
+        <!-- HEADER SECTION -->
         <header class="emerald-glass rounded-2xl sm:rounded-3xl p-4 sm:p-8 mb-4 sm:mb-6 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
             <div class="flex items-center gap-4 sm:gap-6 text-left w-full md:w-auto">
                 <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-xl sm:rounded-2xl border-2 border-yellow-500/70 overflow-hidden bg-white p-1.5 shadow-xl flex-shrink-0 flex items-center justify-center">
@@ -198,7 +205,7 @@
         <!-- SEARCH & CATEGORY FILTER BAR -->
         <section class="emerald-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-2xl border border-yellow-500/40">
             <div class="flex flex-col gap-4 sm:gap-5">
-                <!-- SEARCH BOX WITH CLEAR (X) BUTTON -->
+                <!-- SEARCH BOX -->
                 <div class="relative w-full">
                     <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-yellow-400 text-sm sm:text-base">🔍</span>
                     <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-10 pr-9 py-2.5 sm:py-3 bg-slate-950/90 border border-yellow-500/30 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
@@ -253,125 +260,125 @@
     </div>
 
     <script>
-        // Exact 117 Master Inventory List with foolproof image file mapping matching Spreadsheet
+        // Master Inventory with Multiple Images Support from Excel Sheet
         const rawInventory = [
-            { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, file: "Coloured Rubber Bands" },
-            { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, file: "Striped Rubber Bands" },
-            { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, file: "Stone Fancy Bangles_1" },
-            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles_3", price: 500, file: "Jumka Fancy Bangles_1" },
-            { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, file: "Kashmiri Ghungroo Bangles Double Layered_1" },
-            { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles  Single Layered", price: 100, file: "Kashmiri Ghungroo Bangles  Single Layered_1" },
-            { id: 7, type: "Bracelet", name: "Bracelet Coloured_Child", price: 20, file: "Bracelet Coloured_Child" },
-            { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, file: "Bracelet Green Butterfly" },
-            { id: 9, type: "Bracelet", name: "Bracelet Purple Butterfly", price: 50, file: "Bracelet Purple Butterfly" },
-            { id: 10, type: "Bracelet", name: "Bracelet Pearl", price: 50, file: "Bracelet Pearl" },
-            { id: 11, type: "Bracelet", name: "Bracelet Glass Stone", price: 80, file: "Bracelet Glass Stone" },
-            { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, file: "Bracelet Evil Eye" },
-            { id: 13, type: "Anklet", name: "Anklet Butterly", price: 50, file: "Anklet Butterly" },
-            { id: 14, type: "Anklet", name: "Anklet Evil Eye", price: 50, file: "Anklet Evil Eye" },
-            { id: 15, type: "Locket", name: "Locket Rose Gold", price: 30, file: "Locket Rose Gold_1" },
-            { id: 16, type: "Locket", name: "Locket Silver", price: 50, file: "Locket Silver_1" },
-            { id: 17, type: "Earing", name: "Jhumka Small", price: 30, file: "Jhumka Small" },
-            { id: 18, type: "Earing", name: "Jhumka Big", price: 40, file: "Jhumka Big" },
-            { id: 19, type: "Earing", name: "Oxydised Earcuf with Jhumka", price: 80, file: "Oxydised Earcuf with Jhumka" },
-            { id: 20, type: "Earing", name: "Floral Earcuf Earings", price: 80, file: "Floral Earcuf Earings" },
-            { id: 21, type: "Earing", name: "Square Ear-rings with Jhumka", price: 80, file: "Square Ear-rings with Jhumka" },
-            { id: 22, type: "Earing", name: "Single Mirror Jhumka Earing", price: 80, file: "Single Mirror Jhumka Earing" },
-            { id: 23, type: "Earing", name: "Golden Traditional Chand Bali Earing", price: 80, file: "Golden Traditional Chand Bali Earing" },
-            { id: 24, type: "Earing", name: "Silver Traditional Chand Bali Earing", price: 80, file: "Silver Traditional Chand Bali Earing" },
-            { id: 25, type: "Earing", name: "Pearl Fancy Jhumki", price: 80, file: "Pearl Fancy Jhumki" },
-            { id: 26, type: "Earing", name: "Stone Earing", price: 80, file: "Stone Earing" },
-            { id: 27, type: "Earing", name: "Green latkan Jhumki", price: 50, file: "Green latkan Jhumki" },
-            { id: 28, type: "Earing", name: "Peacock Jhumki", price: 50, file: "Peacock Jhumki" },
-            { id: 29, type: "Earing", name: "Small Earcufs Earing", price: 50, file: "Small Earcufs Earing" },
-            { id: 30, type: "Earing", name: "Sunflower Oxidised Jhumka", price: 50, file: "Sunflower Oxidised Jhumka" },
-            { id: 31, type: "Earing", name: "Cute Big Flower Earing", price: 50, file: "Cute Big Flower Earing" },
-            { id: 32, type: "Earing", name: "Trendy Pearl Earing Double Sided", price: 50, file: "Trendy Pearl Earing Double Sided" },
-            { id: 33, type: "Earing", name: "Yellow Stone Earing", price: 50, file: "Yellow Stone Earing" },
-            { id: 34, type: "Earing", name: "Pink Stone Earing", price: 50, file: "Pink Stone Earing" },
-            { id: 35, type: "Earing", name: "Sky Blue Stone Earing", price: 50, file: "Sky Blue Stone Earing" },
-            { id: 36, type: "Earing", name: "Sphere Nag Earing", price: 50, file: "Heart Nag Earing" },
-            { id: 37, type: "Earing", name: "Heart Nag Earing", price: 50, file: "Heart Nag Earing" },
-            { id: 38, type: "Earing", name: "Black Square Earing", price: 50, file: "Black Square Earing" },
-            { id: 39, type: "Earing", name: "Traditional Jhumka Earing", price: 50, file: "Traditional Jhumka Earing" },
-            { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, file: "Premium Bindi Single_1" },
-            { id: 41, type: "Bindi", name: "Premium Bindi Four_in_one_2", price: 80, file: "Premium Bindi Four_in_one_1" },
-            { id: 42, type: "Bindi", name: "Small Bindi Pack", price: 10, file: "Small Bindi Pack" },
-            { id: 43, type: "Bindi", name: "Muti Colour Bindi", price: 15, file: "Muti Colour Bindi" },
-            { id: 44, type: "Bindi", name: "Green Color Bindi", price: 10, file: "Green Color Bindi" },
-            { id: 45, type: "Clip", name: "Clip_Ice cream", price: 30, file: "Clip_Ice cream" },
-            { id: 46, type: "Clip", name: "Clip_Sleepy Owl", price: 30, file: "Clip_Sleepy Owl" },
-            { id: 47, type: "Clip", name: "Clip_Ice cream Purple", price: 30, file: "Clip_Ice cream Purple" },
-            { id: 48, type: "Clip", name: "Clip_Purple", price: 30, file: "Clip_Purple" },
-            { id: 49, type: "Clip", name: "Clip_Car", price: 30, file: "Clip_Car" },
-            { id: 50, type: "Clip", name: "Clip_Yellow", price: 30, file: "Clip_Yellow" },
-            { id: 51, type: "Clip", name: "Clip_Cartoon", price: 30, file: "Clip_Cartoon" },
-            { id: 52, type: "Clip", name: "Clip_Ice cream stick", price: 30, file: "Clip_Ice cream stick" },
-            { id: 53, type: "Clip", name: "Clip_Coffee", price: 30, file: "Clip_Coffee" },
-            { id: 54, type: "Clip", name: "Clip_Strawberry", price: 30, file: "Clip_Strawberry" },
-            { id: 55, type: "Ring", name: "Black Awesome Ring", price: 25, file: "Black Awesome Ring" },
-            { id: 56, type: "Clip", name: "Clip_small_Fancy", price: 10, file: "Clip_small_Fancy" },
-            { id: 57, type: "Clip", name: "Clip_small_Fancy_Mouse", price: 10, file: "Clip_small_Fancy_Mouse" },
-            { id: 58, type: "Hair Rubber Bands", name: "Rubber Band Colourfull", price: 5, file: "Rubber Band Colourfull" },
-            { id: 59, type: "Clip", name: "Hair Clips", price: 5, file: "Hair Clips" },
-            { id: 60, type: "Earing", name: "Silver Toned Earing", price: 80, file: "Silver Toned Earing" },
-            { id: 61, type: "Locket", name: "Mangalsutra", price: 100, file: "Mangalsutra" },
-            { id: 62, type: "Earing", name: "Western Earing Design 1", price: 80, file: "Western Earing_1" },
-            { id: 63, type: "Earing", name: "Western Earing Design 2", price: 80, file: "Western Earing_2" },
-            { id: 64, type: "Earing", name: "Western Earing Design 3", price: 80, file: "Western Earing_3" },
-            { id: 65, type: "Earing", name: "Western Earing Design 4", price: 80, file: "Western Earing_4" },
-            { id: 66, type: "Earing", name: "Western Earing Design 5", price: 80, file: "Western Earing_5" },
-            { id: 67, type: "Earing", name: "Western Earing Design 6", price: 80, file: "Western Earing_6" },
-            { id: 68, type: "Earing", name: "Western Earing Design 7", price: 80, file: "Western Earing_7" },
-            { id: 69, type: "Earing", name: "Western Earing Design 8", price: 80, file: "Western Earing_8" },
-            { id: 70, type: "Earing", name: "Western Earing Design 9", price: 80, file: "Western Earing_9" },
-            { id: 71, type: "Earing", name: "Western Earing Design 10", price: 80, file: "Western Earing_10" },
-            { id: 72, type: "Earing", name: "Western Earing Design 11", price: 80, file: "Western Earing_11" },
-            { id: 73, type: "Earing", name: "Western Earing Design 12", price: 80, file: "Western Earing_12" },
-            { id: 74, type: "Bangle", name: "Daily Wear Bangle Design 1", price: 50, file: "Daily Wear Bangle_1" },
-            { id: 75, type: "Bangle", name: "Daily Wear Bangle Design 2", price: 50, file: "Daily Wear Bangle_2" },
-            { id: 76, type: "Bangle", name: "Daily Wear Bangle Design 3", price: 50, file: "Daily Wear Bangle_3" },
-            { id: 77, type: "Bangle", name: "Daily Wear Bangle Design 4", price: 50, file: "Daily Wear Bangle_4" },
-            { id: 78, type: "Bangle", name: "Daily Wear Bangle Design 5", price: 50, file: "Daily Wear Bangle_5" },
-            { id: 79, type: "Bangle", name: "Daily Wear Bangle Design 6", price: 60, file: "Daily Wear Bangle_6" },
-            { id: 80, type: "Bangle", name: "Daily Wear Bangle Design 7", price: 60, file: "Daily Wear Bangle_7" },
-            { id: 81, type: "Bangle", name: "Daily Wear Bangle Design 8", price: 60, file: "Daily Wear Bangle_8" },
-            { id: 82, type: "Bangle", name: "Fancy Bangle Box Design 1", price: 100, file: "Fancy Bangle with box 1" },
-            { id: 83, type: "Bangle", name: "Fancy Bangle Box Design 2", price: 100, file: "Fancy Bangle with box 2" },
-            { id: 84, type: "Bangle", name: "Fancy Bangle Box Design 3", price: 100, file: "Fancy Bangle with box 3" },
-            { id: 85, type: "Bangle", name: "Fancy Bangle Box Design 4", price: 100, file: "Fancy Bangle with box 4" },
-            { id: 86, type: "Bangle", name: "Fancy Bangle Box Design 5", price: 100, file: "Fancy Bangle with box 5" },
-            { id: 87, type: "Bangle", name: "Fancy Bangle Box Design 6", price: 100, file: "Fancy Bangle with box 6" },
-            { id: 88, type: "Bangle", name: "Fancy Bangle Box Design 7", price: 100, file: "Fancy Bangle with box 7" },
-            { id: 89, type: "Bangle", name: "Fancy Bangle Box Design 8", price: 100, file: "Fancy Bangle with box 8" },
-            { id: 90, type: "Bindi", name: "Bendi Pack", price: 10, file: "Bendi" },
-            { id: 91, type: "Hanky", name: "Soft Hanky", price: 20, file: "Soft Hanky" },
-            { id: 92, type: "Mehandi", name: "Neha Mehandi Cone", price: 10, file: "Neha Mehandi" },
-            { id: 93, type: "Mehandi", name: "Kaveri Mehandi Cone", price: 15, file: "Kaveri Mehandi" },
-            { id: 94, type: "Flag", name: "Tri Color Hand Band", price: 10, file: "Tri Color Hand band" },
-            { id: 95, type: "Flag", name: "Indian Flag_Plastic", price: 5, file: "Indian Flag_Plastic" },
-            { id: 96, type: "Lapel Pin", name: "Indian Flag Lapel Pin_1", price: 10, file: "Indian Flag Lapel Pin_1" },
-            { id: 97, type: "Flag", name: "Indian Flag_Cloth", price: 10, file: "Indian Flag_Cloth" },
-            { id: 98, type: "Rakhi", name: "Instagram Premium Rakhi", price: 70, file: "Instagram Premium Rakhi 1" },
-            { id: 99, type: "Rakhi", name: "Triangle Diamond Stone Rakhi", price: 80, file: "Triangle Diamond Stone Rakhi" },
-            { id: 100, type: "Rakhi", name: "Flower Nag Rakhi", price: 80, file: "Flower Nag Rakhi" },
-            { id: 101, type: "Rakhi", name: "Krishna Ji Rakhi", price: 80, file: "Krishna Ji Rakhi" },
-            { id: 102, type: "Rakhi", name: "Premium Round Nag Rakhi", price: 80, file: "Premium Round Nag Rakhi" },
-            { id: 103, type: "Rakhi", name: "Ganesh Ji shaped Rakhi", price: 60, file: "Ganesh Ji shaped Rakhi" },
-            { id: 104, type: "Rakhi", name: "Yellow Print Rakhi", price: 35, file: "Yellow Print Rakhi" },
-            { id: 105, type: "Rakhi", name: "Bro Print Rakhi", price: 40, file: "Bro Print Rakhi" },
-            { id: 106, type: "Rakhi", name: "Om Print Rakhi", price: 25, file: "Om Print Rakhi" },
-            { id: 107, type: "Rakhi", name: "Om Shaped Rakhi", price: 30, file: "Om Shaped Rakhi" },
-            { id: 108, type: "Rakhi", name: "Ganesh Ji With Om Print Rakhi", price: 25, file: "Ganesh Ji With Om Print Rakhi" },
-            { id: 109, type: "Rakhi", name: "Mala Rakhi - Most Awaited", price: 150, file: "Mala Rakhi - Most Awaited" },
-            { id: 110, type: "Rakhi", name: "Bhaiya Bhabhi Rakhi", price: 300, file: "Bhaiya Bhabhi Rakhi" },
-            { id: 111, type: "Rakhi", name: "Hello Brother Rakhi", price: 40, file: "Hello Brother Rakhi" },
-            { id: 112, type: "Rakhi", name: "Fancy Rakhi with Nag", price: 40, file: "Fancy Rakhi with Nag" },
-            { id: 113, type: "Rakhi", name: "Elegant Coloured Rakhi 01", price: 60, file: "Elegant Coloured Rakhi 01" },
-            { id: 114, type: "Rakhi", name: "Elegant Coloured Rakhi 02", price: 60, file: "Elegant Coloured Rakhi 02" },
-            { id: 115, type: "Rakhi", name: "Premium Fancy Flower Rakhi", price: 70, file: "Premium Fancy Flower Rakhi" },
-            { id: 116, type: "Rakhi", name: "Fancy Rudraksh Rakhi", price: 60, file: "Fancy Rudraksh Rakhi" },
-            { id: 117, type: "Rakhi", name: "Rudraksh Rakhi", price: 10, file: "Rudraksh Rakhi" }
+            { id: 1, type: "Hair Rubber Bands", name: "Coloured Rubber Bands", price: 80, images: ["Coloured Rubber Bands"] },
+            { id: 2, type: "Hair Rubber Bands", name: "Striped Rubber Bands", price: 100, images: ["Striped Rubber Bands"] },
+            { id: 3, type: "Bangle", name: "Stone Fancy Bangles", price: 500, images: ["Stone Fancy Bangles_1", "Stone Fancy Bangles_2"] },
+            { id: 4, type: "Bangle", name: "Jumka Fancy Bangles_3", price: 500, images: ["Jumka Fancy Bangles_1", "Jumka Fancy Bangles_2", "Jumka Fancy Bangles_3"] },
+            { id: 5, type: "Bangle", name: "Kashmiri Ghungroo Bangles Double Layered", price: 250, images: ["Kashmiri Ghungroo Bangles Double Layered_1", "Kashmiri Ghungroo Bangles Double Layered_2", "Kashmiri Ghungroo Bangles Double Layered_3"] },
+            { id: 6, type: "Bangle", name: "Kashmiri Ghungroo Bangles  Single Layered", price: 100, images: ["Kashmiri Ghungroo Bangles  Single Layered_1", "Kashmiri Ghungroo Bangles  Single Layered_2"] },
+            { id: 7, type: "Bracelet", name: "Bracelet Coloured_Child", price: 20, images: ["Bracelet Coloured_Child"] },
+            { id: 8, type: "Bracelet", name: "Bracelet Green Butterfly", price: 50, images: ["Bracelet Green Butterfly"] },
+            { id: 9, type: "Bracelet", name: "Bracelet Purple Butterfly", price: 50, images: ["Bracelet Purple Butterfly"] },
+            { id: 10, type: "Bracelet", name: "Bracelet Pearl", price: 50, images: ["Bracelet Pearl"] },
+            { id: 11, type: "Bracelet", name: "Bracelet Glass Stone", price: 80, images: ["Bracelet Glass Stone"] },
+            { id: 12, type: "Bracelet", name: "Bracelet Evil Eye", price: 30, images: ["Bracelet Evil Eye"] },
+            { id: 13, type: "Anklet", name: "Anklet Butterly", price: 50, images: ["Anklet Butterly"] },
+            { id: 14, type: "Anklet", name: "Anklet Evil Eye", price: 50, images: ["Anklet Evil Eye"] },
+            { id: 15, type: "Locket", name: "Locket Rose Gold", price: 30, images: ["Locket Rose Gold_1"] },
+            { id: 16, type: "Locket", name: "Locket Silver", price: 50, images: ["Locket Silver_1"] },
+            { id: 17, type: "Earing", name: "Jhumka Small", price: 30, images: ["Jhumka Small"] },
+            { id: 18, type: "Earing", name: "Jhumka Big", price: 40, images: ["Jhumka Big"] },
+            { id: 19, type: "Earing", name: "Oxydised Earcuf with Jhumka", price: 80, images: ["Oxydised Earcuf with Jhumka"] },
+            { id: 20, type: "Earing", name: "Floral Earcuf Earings", price: 80, images: ["Floral Earcuf Earings"] },
+            { id: 21, type: "Earing", name: "Square Ear-rings with Jhumka", price: 80, images: ["Square Ear-rings with Jhumka"] },
+            { id: 22, type: "Earing", name: "Single Mirror Jhumka Earing", price: 80, images: ["Single Mirror Jhumka Earing"] },
+            { id: 23, type: "Earing", name: "Golden Traditional Chand Bali Earing", price: 80, images: ["Golden Traditional Chand Bali Earing"] },
+            { id: 24, type: "Earing", name: "Silver Traditional Chand Bali Earing", price: 80, images: ["Silver Traditional Chand Bali Earing"] },
+            { id: 25, type: "Earing", name: "Pearl Fancy Jhumki", price: 80, images: ["Pearl Fancy Jhumki"] },
+            { id: 26, type: "Earing", name: "Stone Earing", price: 80, images: ["Stone Earing"] },
+            { id: 27, type: "Earing", name: "Green latkan Jhumki", price: 50, images: ["Green latkan Jhumki"] },
+            { id: 28, type: "Earing", name: "Peacock Jhumki", price: 50, images: ["Peacock Jhumki"] },
+            { id: 29, type: "Earing", name: "Small Earcufs Earing", price: 50, images: ["Small Earcufs Earing"] },
+            { id: 30, type: "Earing", name: "Sunflower Oxidised Jhumka", price: 50, images: ["Sunflower Oxidised Jhumka"] },
+            { id: 31, type: "Earing", name: "Cute Big Flower Earing", price: 50, images: ["Cute Big Flower Earing"] },
+            { id: 32, type: "Earing", name: "Trendy Pearl Earing Double Sided", price: 50, images: ["Trendy Pearl Earing Double Sided"] },
+            { id: 33, type: "Earing", name: "Yellow Stone Earing", price: 50, images: ["Yellow Stone Earing"] },
+            { id: 34, type: "Earing", name: "Pink Stone Earing", price: 50, images: ["Pink Stone Earing"] },
+            { id: 35, type: "Earing", name: "Sky Blue Stone Earing", price: 50, images: ["Sky Blue Stone Earing"] },
+            { id: 36, type: "Earing", name: "Sphere Nag Earing", price: 50, images: ["Heart Nag Earing"] },
+            { id: 37, type: "Earing", name: "Heart Nag Earing", price: 50, images: ["Heart Nag Earing"] },
+            { id: 38, type: "Earing", name: "Black Square Earing", price: 50, images: ["Black Square Earing"] },
+            { id: 39, type: "Earing", name: "Traditional Jhumka Earing", price: 50, images: ["Traditional Jhumka Earing"] },
+            { id: 40, type: "Bindi", name: "Premium Bindi Single", price: 30, images: ["Premium Bindi Single_1"] },
+            { id: 41, type: "Bindi", name: "Premium Bindi Four_in_one_2", price: 80, images: ["Premium Bindi Four_in_one_1"] },
+            { id: 42, type: "Bindi", name: "Small Bindi Pack", price: 10, images: ["Small Bindi Pack"] },
+            { id: 43, type: "Bindi", name: "Muti Colour Bindi", price: 15, images: ["Muti Colour Bindi"] },
+            { id: 44, type: "Bindi", name: "Green Color Bindi", price: 10, images: ["Green Color Bindi"] },
+            { id: 45, type: "Clip", name: "Clip_Ice cream", price: 30, images: ["Clip_Ice cream"] },
+            { id: 46, type: "Clip", name: "Clip_Sleepy Owl", price: 30, images: ["Clip_Sleepy Owl"] },
+            { id: 47, type: "Clip", name: "Clip_Ice cream Purple", price: 30, images: ["Clip_Ice cream Purple"] },
+            { id: 48, type: "Clip", name: "Clip_Purple", price: 30, images: ["Clip_Purple"] },
+            { id: 49, type: "Clip", name: "Clip_Car", price: 30, images: ["Clip_Car"] },
+            { id: 50, type: "Clip", name: "Clip_Yellow", price: 30, images: ["Clip_Yellow"] },
+            { id: 51, type: "Clip", name: "Clip_Cartoon", price: 30, images: ["Clip_Cartoon"] },
+            { id: 52, type: "Clip", name: "Clip_Ice cream stick", price: 30, images: ["Clip_Ice cream stick"] },
+            { id: 53, type: "Clip", name: "Clip_Coffee", price: 30, images: ["Clip_Coffee"] },
+            { id: 54, type: "Clip", name: "Clip_Strawberry", price: 30, images: ["Clip_Strawberry"] },
+            { id: 55, type: "Ring", name: "Black Awesome Ring", price: 25, images: ["Black Awesome Ring"] },
+            { id: 56, type: "Clip", name: "Clip_small_Fancy", price: 10, images: ["Clip_small_Fancy"] },
+            { id: 57, type: "Clip", name: "Clip_small_Fancy_Mouse", price: 10, images: ["Clip_small_Fancy_Mouse"] },
+            { id: 58, type: "Hair Rubber Bands", name: "Rubber Band Colourfull", price: 5, images: ["Rubber Band Colourfull"] },
+            { id: 59, type: "Clip", name: "Hair Clips", price: 5, images: ["Hair Clips"] },
+            { id: 60, type: "Earing", name: "Silver Toned Earing", price: 80, images: ["Silver Toned Earing"] },
+            { id: 61, type: "Locket", name: "Mangalsutra", price: 100, images: ["Mangalsutra"] },
+            { id: 62, type: "Earing", name: "Western Earing Design 1", price: 80, images: ["Western Earing_1"] },
+            { id: 63, type: "Earing", name: "Western Earing Design 2", price: 80, images: ["Western Earing_2"] },
+            { id: 64, type: "Earing", name: "Western Earing Design 3", price: 80, images: ["Western Earing_3"] },
+            { id: 65, type: "Earing", name: "Western Earing Design 4", price: 80, images: ["Western Earing_4"] },
+            { id: 66, type: "Earing", name: "Western Earing Design 5", price: 80, images: ["Western Earing_5"] },
+            { id: 67, type: "Earing", name: "Western Earing Design 6", price: 80, images: ["Western Earing_6"] },
+            { id: 68, type: "Earing", name: "Western Earing Design 7", price: 80, images: ["Western Earing_7"] },
+            { id: 69, type: "Earing", name: "Western Earing Design 8", price: 80, images: ["Western Earing_8"] },
+            { id: 70, type: "Earing", name: "Western Earing Design 9", price: 80, images: ["Western Earing_9"] },
+            { id: 71, type: "Earing", name: "Western Earing Design 10", price: 80, images: ["Western Earing_10"] },
+            { id: 72, type: "Earing", name: "Western Earing Design 11", price: 80, images: ["Western Earing_11"] },
+            { id: 73, type: "Earing", name: "Western Earing Design 12", price: 80, images: ["Western Earing_12"] },
+            { id: 74, type: "Bangle", name: "Daily Wear Bangle Design 1", price: 50, images: ["Daily Wear Bangle_1"] },
+            { id: 75, type: "Bangle", name: "Daily Wear Bangle Design 2", price: 50, images: ["Daily Wear Bangle_2"] },
+            { id: 76, type: "Bangle", name: "Daily Wear Bangle Design 3", price: 50, images: ["Daily Wear Bangle_3"] },
+            { id: 77, type: "Bangle", name: "Daily Wear Bangle Design 4", price: 50, images: ["Daily Wear Bangle_4"] },
+            { id: 78, type: "Bangle", name: "Daily Wear Bangle Design 5", price: 50, images: ["Daily Wear Bangle_5"] },
+            { id: 79, type: "Bangle", name: "Daily Wear Bangle Design 6", price: 60, images: ["Daily Wear Bangle_6"] },
+            { id: 80, type: "Bangle", name: "Daily Wear Bangle Design 7", price: 60, images: ["Daily Wear Bangle_7"] },
+            { id: 81, type: "Bangle", name: "Daily Wear Bangle Design 8", price: 60, images: ["Daily Wear Bangle_8"] },
+            { id: 82, type: "Bangle", name: "Fancy Bangle Box Design 1", price: 100, images: ["Fancy Bangle with box 1"] },
+            { id: 83, type: "Bangle", name: "Fancy Bangle Box Design 2", price: 100, images: ["Fancy Bangle with box 2"] },
+            { id: 84, type: "Bangle", name: "Fancy Bangle Box Design 3", price: 100, images: ["Fancy Bangle with box 3"] },
+            { id: 85, type: "Bangle", name: "Fancy Bangle Box Design 4", price: 100, images: ["Fancy Bangle with box 4"] },
+            { id: 86, type: "Bangle", name: "Fancy Bangle Box Design 5", price: 100, images: ["Fancy Bangle with box 5"] },
+            { id: 87, type: "Bangle", name: "Fancy Bangle Box Design 6", price: 100, images: ["Fancy Bangle with box 6"] },
+            { id: 88, type: "Bangle", name: "Fancy Bangle Box Design 7", price: 100, images: ["Fancy Bangle with box 7"] },
+            { id: 89, type: "Bangle", name: "Fancy Bangle Box Design 8", price: 100, images: ["Fancy Bangle with box 8"] },
+            { id: 90, type: "Bindi", name: "Bendi Pack", price: 10, images: ["Bendi"] },
+            { id: 91, type: "Hanky", name: "Soft Hanky", price: 20, images: ["Soft Hanky"] },
+            { id: 92, type: "Mehandi", name: "Neha Mehandi Cone", price: 10, images: ["Neha Mehandi"] },
+            { id: 93, type: "Mehandi", name: "Kaveri Mehandi Cone", price: 15, images: ["Kaveri Mehandi"] },
+            { id: 94, type: "Flag", name: "Tri Color Hand Band", price: 10, images: ["Tri Color Hand band"] },
+            { id: 95, type: "Flag", name: "Indian Flag_Plastic", price: 5, images: ["Indian Flag_Plastic"] },
+            { id: 96, type: "Lapel Pin", name: "Indian Flag Lapel Pin_1", price: 10, images: ["Indian Flag Lapel Pin_1", "Indian Flag Lapel Pin_2"] },
+            { id: 97, type: "Flag", name: "Indian Flag_Cloth", price: 10, images: ["Indian Flag_Cloth"] },
+            { id: 98, type: "Rakhi", name: "Instagram Premium Rakhi", price: 70, images: ["Instagram Premium Rakhi 1", "Instagram Premium Rakhi 2"] },
+            { id: 99, type: "Rakhi", name: "Triangle Diamond Stone Rakhi", price: 80, images: ["Triangle Diamond Stone Rakhi"] },
+            { id: 100, type: "Rakhi", name: "Flower Nag Rakhi", price: 80, images: ["Flower Nag Rakhi"] },
+            { id: 101, type: "Rakhi", name: "Krishna Ji Rakhi", price: 80, images: ["Krishna Ji Rakhi"] },
+            { id: 102, type: "Rakhi", name: "Premium Round Nag Rakhi", price: 80, images: ["Premium Round Nag Rakhi"] },
+            { id: 103, type: "Rakhi", name: "Ganesh Ji shaped Rakhi", price: 60, images: ["Ganesh Ji shaped Rakhi"] },
+            { id: 104, type: "Rakhi", name: "Yellow Print Rakhi", price: 35, images: ["Yellow Print Rakhi"] },
+            { id: 105, type: "Rakhi", name: "Bro Print Rakhi", price: 40, images: ["Bro Print Rakhi"] },
+            { id: 106, type: "Rakhi", name: "Om Print Rakhi", price: 25, images: ["Om Print Rakhi"] },
+            { id: 107, type: "Rakhi", name: "Om Shaped Rakhi", price: 30, images: ["Om Shaped Rakhi"] },
+            { id: 108, type: "Rakhi", name: "Ganesh Ji With Om Print Rakhi", price: 25, images: ["Ganesh Ji With Om Print Rakhi"] },
+            { id: 109, type: "Rakhi", name: "Mala Rakhi - Most Awaited", price: 150, images: ["Mala Rakhi - Most Awaited"] },
+            { id: 110, type: "Rakhi", name: "Bhaiya Bhabhi Rakhi", price: 300, images: ["Bhaiya Bhabhi Rakhi"] },
+            { id: 111, type: "Rakhi", name: "Hello Brother Rakhi", price: 40, images: ["Hello Brother Rakhi"] },
+            { id: 112, type: "Rakhi", name: "Fancy Rakhi with Nag", price: 40, images: ["Fancy Rakhi with Nag"] },
+            { id: 113, type: "Rakhi", name: "Elegant Coloured Rakhi 01", price: 60, images: ["Elegant Coloured Rakhi 01"] },
+            { id: 114, type: "Rakhi", name: "Elegant Coloured Rakhi 02", price: 60, images: ["Elegant Coloured Rakhi 02"] },
+            { id: 115, type: "Rakhi", name: "Premium Fancy Flower Rakhi", price: 70, images: ["Premium Fancy Flower Rakhi"] },
+            { id: 116, type: "Rakhi", name: "Fancy Rudraksh Rakhi", price: 60, images: ["Fancy Rudraksh Rakhi"] },
+            { id: 117, type: "Rakhi", name: "Rudraksh Rakhi", price: 10, images: ["Rudraksh Rakhi"] }
         ];
 
         const categoryEmojis = {
@@ -395,6 +402,7 @@
         let selectedCategory = 'ALL';
         let cart = loadCartFromStorage();
         let currentZoomProductId = null;
+        let currentZoomImageIndex = 0;
 
         // LocalStorage Helpers
         function loadCartFromStorage() {
@@ -415,8 +423,6 @@
         function handleImageError(img, baseName) {
             const step = parseInt(img.dataset.step || '0');
             const itemId = parseInt(img.dataset.itemid || '0');
-            
-            // Smart variants list to check all possible extensions and formats
             const variants = [
                 encodeURIComponent(baseName) + '.jpg',
                 encodeURIComponent(baseName) + '.jpeg',
@@ -425,12 +431,7 @@
                 encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpeg',
                 encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.png',
                 encodeURIComponent(baseName.replace(/_/g, ' ')) + '.jpg',
-                encodeURIComponent(baseName.replace(/_/g, ' ')) + '.jpeg',
-                // Special mapping for Rakhis or numbered items
-                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.jpg' : null,
-                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.jpeg' : null,
-                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.png' : null,
-                itemId >= 98 ? 'Rakhi ' + (itemId - 97) + '.jpg' : null
+                itemId >= 98 ? 'Rakhi_' + (itemId - 97) + '.jpg' : null
             ].filter(Boolean);
 
             if (step < variants.length) {
@@ -439,7 +440,7 @@
             } else {
                 img.onerror = null;
                 img.style.display = 'none';
-                if(img.nextElementSibling) {
+                if(img.nextElementSibling && img.nextElementSibling.tagName === 'DIV') {
                     img.nextElementSibling.style.display = 'flex';
                 }
             }
@@ -465,7 +466,6 @@
             filterProducts();
         }
 
-        // SEARCH CLEAR BUTTON LOGIC
         function handleSearchInput() {
             const input = document.getElementById('searchInput');
             const clearBtn = document.getElementById('searchClearBtn');
@@ -499,22 +499,27 @@
             document.getElementById('productCounter').innerText = `${items.length} Unique Products`;
 
             grid.innerHTML = items.map((product) => {
-                const initialSrc = encodeURIComponent(product.file) + '.jpg';
-                const safeName = product.file.replace(/'/g, "\\'");
+                const primaryImageName = product.images[0] || product.name;
+                const initialSrc = encodeURIComponent(primaryImageName) + '.jpg';
+                const safeName = primaryImageName.replace(/'/g, "\\'");
                 const cartItem = cart.find(c => c.id === product.id);
                 const qty = cartItem ? cartItem.qty : 0;
+                const hasMultiple = product.images.length > 1;
 
                 return `
                     <div class="product-card rounded-xl sm:rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
                         
-                        <!-- OFFICIAL AMAZON STYLE VECTOR SHARE BUTTON ON CARD -->
+                        <!-- SHARE BUTTON -->
                         <button onclick="shareProduct(${product.id}, event)" class="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center shadow hover:scale-110 cursor-pointer transition" title="Share Product">
                             <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-yellow-400" viewBox="0 0 24 24">
                                 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
                             </svg>
                         </button>
 
-                        <!-- ZOOM ON CLICK WITH STRICT CONTAINER CLASS -->
+                        <!-- MULTIPLE IMAGES BADGE -->
+                        ${hasMultiple ? `<span class="absolute top-2 left-2 z-20 bg-amber-500 text-black text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow">📷 ${product.images.length} Photos</span>` : ''}
+
+                        <!-- ZOOM / GALLERY TRIGGER -->
                         <div onclick="openProductZoomModal(${product.id})" class="product-img-box relative aspect-square bg-slate-950/80 p-2 sm:p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
                             <img id="img-${product.id}"
                                  src="${initialSrc}" 
@@ -528,7 +533,7 @@
                                 <span class="royal-font text-[10px] text-yellow-400/80 font-bold">${product.name}</span>
                             </div>
                             <span class="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 bg-black/60 text-yellow-300 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition">
-                                🔍 Zoom
+                                🔍 Zoom & Gallery
                             </span>
                         </div>
 
@@ -616,27 +621,61 @@
             }
         }
 
-        // ZOOM MODAL CONTROLS
+        // ZOOM & GALLERY SLIDER CONTROLS
         function openProductZoomModal(productId) {
             currentZoomProductId = productId;
+            currentZoomImageIndex = 0;
             const product = rawInventory.find(p => p.id === productId);
             if (!product) return;
 
-            const modal = document.getElementById('productZoomModal');
-            const cardImg = document.getElementById(`img-${productId}`);
-            
-            document.getElementById('modalZoomImg').src = cardImg ? cardImg.src : encodeURIComponent(product.file) + '.jpg';
             document.getElementById('modalProductName').innerText = product.name;
             document.getElementById('modalProductCategory').innerText = product.type;
             document.getElementById('modalProductPrice').innerText = `Price: ₹${product.price}`;
             
+            updateModalImageDisplay();
+
             const item = cart.find(p => p.id === productId);
             const qty = item ? item.qty : 0;
             document.getElementById('modalActionContainer').innerHTML = renderProductButton(productId, qty);
-
             document.getElementById('modalShareBtn').setAttribute('onclick', `shareProduct(${product.id}, event)`);
 
-            modal.classList.remove('hidden');
+            document.getElementById('productZoomModal').classList.remove('hidden');
+        }
+
+        function updateModalImageDisplay() {
+            const product = rawInventory.find(p => p.id === currentZoomProductId);
+            if(!product) return;
+
+            const imageName = product.images[currentZoomImageIndex] || product.name;
+            document.getElementById('modalZoomImg').src = encodeURIComponent(imageName) + '.jpg';
+
+            const prevBtn = document.getElementById('prevImgBtn');
+            const nextBtn = document.getElementById('nextImgBtn');
+            const badge = document.getElementById('imgCounterBadge');
+
+            if(product.images.length > 1) {
+                prevBtn.classList.remove('hidden');
+                nextBtn.classList.remove('hidden');
+                badge.classList.remove('hidden');
+                badge.innerText = `${currentZoomImageIndex + 1} / ${product.images.length}`;
+            } else {
+                prevBtn.classList.add('hidden');
+                nextBtn.classList.add('hidden');
+                badge.classList.add('hidden');
+            }
+        }
+
+        function slideModalImage(direction) {
+            const product = rawInventory.find(p => p.id === currentZoomProductId);
+            if(!product) return;
+
+            currentZoomImageIndex += direction;
+            if(currentZoomImageIndex < 0) {
+                currentZoomImageIndex = product.images.length - 1;
+            } else if(currentZoomImageIndex >= product.images.length) {
+                currentZoomImageIndex = 0;
+            }
+            updateModalImageDisplay();
         }
 
         function closeProductZoomModal() {
@@ -644,7 +683,6 @@
             currentZoomProductId = null;
         }
 
-        // NATIVE INTELLIGENT SHARE SHEET
         function shareProduct(productId, event) {
             if(event) event.stopPropagation();
             const product = rawInventory.find(p => p.id === productId);
@@ -660,7 +698,7 @@
                 navigator.share(shareData).catch((err) => console.log('Share canceled', err));
             } else {
                 navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
-                alert("✨ Product link copied to clipboard! You can paste and share it on WhatsApp/Instagram.");
+                alert("✨ Product link copied to clipboard!");
             }
         }
 
@@ -687,7 +725,6 @@
                     <div class="text-center py-6 text-gray-400">
                         <span class="text-3xl block mb-2">🛍️</span>
                         <p class="text-xs">Your shopping bag is empty!</p>
-                        <p class="text-[10px] text-gray-500 mt-1">Add items to place your order.</p>
                     </div>
                 `;
             } else {
@@ -708,29 +745,27 @@
         }
 
         function toggleCartModal() {
-            const modal = document.getElementById('cartModal');
-            modal.classList.toggle('hidden');
+            document.getElementById('cartModal').classList.toggle('hidden');
         }
 
         function sendWhatsAppCartOrder() {
             if(cart.length === 0) {
-                alert("Your shopping bag is empty! Please add products first.");
+                alert("Your shopping bag is empty!");
                 return;
             }
 
-            let msg = `Hello Aneeta Collections! 👋\nI would like to place an order for the following items:\n\n`;
+            let msg = `Hello Aneeta Collections! 👋\nI would like to place an order for:\n\n`;
             let total = 0;
 
             cart.forEach((item, index) => {
                 const subtotal = item.price * item.qty;
                 total += subtotal;
-                msg += `${index + 1}. *${item.name}* (${item.type})\n   Qty: ${item.qty} x ₹${item.price} = ₹${subtotal}\n\n`;
+                msg += `${index + 1}. *${item.name}*\n   Qty: ${item.qty} x ₹${item.price} = ₹${subtotal}\n\n`;
             });
 
-            msg += `------------------------------\n*Total Amount: ₹${total}*\n------------------------------\n\nPlease confirm product availability & shipping details. Thank you!`;
+            msg += `------------------------------\n*Total Amount: ₹${total}*\n------------------------------`;
 
             const waUrl = `https://api.whatsapp.com/send?phone=918796672636&text=${encodeURIComponent(msg)}`;
-            
             window.open(waUrl, '_blank');
 
             toggleCartModal();
