@@ -462,7 +462,7 @@
             renderGrid(filtered);
         }
 
-        // START AUTO-SLIDE & HOVER EFFECT ON CARD IMAGES
+        // AUTO SLIDE ON HOVER FOR MULTI-IMAGE CARDS
         function startCardHoverSlides(productId) {
             const product = rawInventory.find(p => p.id === productId);
             if (!product || product.images.length <= 1) return;
@@ -482,7 +482,6 @@
                 clearInterval(activeCardIntervals[productId]);
                 delete activeCardIntervals[productId];
                 
-                // Reset to first image
                 const product = rawInventory.find(p => p.id === productId);
                 const imgElement = document.getElementById(`grid-img-${productId}`);
                 if (product && imgElement) {
@@ -601,7 +600,9 @@
             }
         }
 
-        // ZOOM & GALLERY MODAL CONTROLS
+        // ZOOM & GALLERY MODAL CONTROLS WITH AUTO-SLIDE (EVERY 5 SECONDS)
+        let modalAutoSlideTimer = null;
+
         function openProductZoomModal(productId) {
             currentZoomProductId = productId;
             currentZoomImageIndex = 0;
@@ -619,6 +620,14 @@
             document.getElementById('modalShareBtn').setAttribute('onclick', `shareProduct(${product.id}, event)`);
 
             document.getElementById('productZoomModal').classList.remove('hidden');
+
+            // Start Auto Slide inside modal every 5 seconds if multiple images exist
+            if (product.images.length > 1) {
+                if (modalAutoSlideTimer) clearInterval(modalAutoSlideTimer);
+                modalAutoSlideTimer = setInterval(() => {
+                    slideModalImage(1);
+                }, 5000);
+            }
         }
 
         function updateModalImageDisplay() {
@@ -642,6 +651,10 @@
         }
 
         function closeProductZoomModal() {
+            if (modalAutoSlideTimer) {
+                clearInterval(modalAutoSlideTimer);
+                modalAutoSlideTimer = null;
+            }
             document.getElementById('productZoomModal').classList.add('hidden');
             currentZoomProductId = null;
         }
