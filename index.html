@@ -1,248 +1,233 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Aneeta Collections | Exclusive Jewelry Store</title>
-    <!-- Tailwind CSS -->
+    <title>Aneeta Collections | Exclusive Luxury Jewelry</title>
     <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@600;800&family=Inter:wght@300;400;500;600&display=swap');
-        body { font-family: 'Inter', sans-serif; background-color: #030712; color: #f9fafb; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #020617; color: #f8fafc; overflow-x: hidden; }
         .royal-font { font-family: 'Cinzel', serif; }
-        .emerald-glass {
-            background: linear-gradient(135deg, rgba(6, 40, 28, 0.95) 0%, rgba(15, 23, 42, 0.98) 100%);
-            backdrop-filter: blur(16px);
-            border: 1px solid rgba(212, 175, 55, 0.35);
-            box-shadow: 0 10px 35px rgba(0, 0, 0, 0.9);
+        
+        /* Ultra Luxury Glassmorphism & Glows */
+        .glass-card {
+            background: linear-gradient(135deg, rgba(15, 23, 42, 0.85) 0%, rgba(3, 7, 18, 0.95) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(212, 175, 55, 0.25);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8), inset 0 1px 0 rgba(255, 255, 255, 0.1);
         }
-        .product-card {
-            background: rgba(17, 24, 39, 0.85);
-            border: 1px solid rgba(212, 175, 55, 0.22);
-            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+        .glass-card:hover {
+            border-color: rgba(234, 179, 8, 0.7);
+            box-shadow: 0 25px 60px rgba(16, 185, 129, 0.2), 0 0 30px rgba(212, 175, 55, 0.3);
         }
-        .product-card:hover {
-            transform: translateY(-4px);
-            border-color: rgba(212, 175, 55, 0.8);
-            box-shadow: 0 10px 25px rgba(16, 185, 129, 0.2);
+
+        /* Next-Level Smooth Animations */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
         }
-        /* STRICT PRODUCT IMAGE FIX FOR MOBILE & DESKTOP */
-        .product-img-box img {
-            width: 100% !important;
-            height: 100% !important;
-            max-height: 160px !important;
-            object-fit: contain !important;
+        .floating-anim { animation: float 5s ease-in-out infinite; }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
         }
-        @media(min-width: 640px) {
-            .product-img-box img { max-height: 220px !important; }
+        .shimmer-text {
+            background: linear-gradient(90deg, #fef08a 0%, #ca8a04 50%, #fef08a 100%);
+            background-size: 200% auto;
+            color: transparent;
+            -webkit-background-clip: text;
+            animation: shimmer 4s linear infinite;
         }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; border: 1px solid rgba(212, 175, 55, 0.3); }
+        ::-webkit-scrollbar-thumb:hover { background: #ca8a04; }
+
         .category-chip {
-            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        .category-chip:hover {
-            transform: translateY(-2px) scale(1.04);
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.2);
-            border-color: rgba(250, 204, 21, 0.9);
-            color: #fef08a;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
         .category-chip.active {
             background: linear-gradient(135deg, #eab308 0%, #ca8a04 100%);
             color: #000000;
-            font-weight: 800;
-            border-color: #fef08a;
-            box-shadow: 0 4px 15px rgba(234, 179, 8, 0.4);
+            font-weight: 700;
+            box-shadow: 0 0 25px rgba(234, 179, 8, 0.5);
+            transform: scale(1.05);
         }
     </style>
 </head>
-<body class="min-h-screen pb-28 relative">
+<body class="min-h-screen pb-32 relative selection:bg-amber-500 selection:text-black">
 
-    <!-- STICKY BOTTOM CART RECOVERY BAR (TOAST) -->
-    <div id="cartToast" class="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-lg emerald-glass rounded-2xl p-3 shadow-2xl border-2 border-yellow-400/70 hidden transition-all duration-300">
-        <div class="flex items-center justify-between gap-2">
-            <div class="flex items-center gap-2 overflow-hidden">
-                <span class="text-xl animate-bounce">🛍️</span>
+    <div id="cartToast" class="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 w-[92%] max-w-lg glass-card rounded-2xl p-4 shadow-2xl border-2 border-yellow-400/80 hidden transition-all duration-500 transform translate-y-10 opacity-0">
+        <div class="flex items-center justify-between gap-3">
+            <div class="flex items-center gap-3 overflow-hidden">
+                <span class="text-2xl animate-bounce">🛍️</span>
                 <div class="truncate">
-                    <p class="text-[11px] font-bold text-yellow-300">Welcome Back!</p>
-                    <p class="text-[10px] text-gray-200 truncate">
-                        <span id="toastItemCount" class="font-bold text-emerald-400">0</span> item(s) • Total: <span id="toastCartTotal" class="font-bold text-yellow-400">₹0</span>
+                    <p class="text-xs font-bold text-yellow-300">Welcome Back to Luxury!</p>
+                    <p class="text-[11px] text-gray-300 truncate">
+                        <span id="toastItemCount" class="font-bold text-emerald-400">0</span> item(s) in bag • Total: <span id="toastCartTotal" class="font-bold text-yellow-400">₹0</span>
                     </p>
                 </div>
             </div>
-            <button onclick="toggleCartModal()" class="px-3 py-1.5 bg-gradient-to-r from-amber-500 to-yellow-400 text-black font-extrabold text-[11px] uppercase tracking-wider rounded-xl shadow flex-shrink-0 cursor-pointer">
+            <button onclick="toggleCartModal()" class="px-4 py-2 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold text-xs uppercase tracking-wider rounded-xl shadow-lg cursor-pointer transition transform hover:scale-105">
                 View Bag 🛒
             </button>
         </div>
     </div>
 
-    <!-- FLOATING CART BUTTON -->
-    <button onclick="toggleCartModal()" class="fixed bottom-5 right-5 z-40 bg-amber-500 hover:bg-yellow-400 text-black p-3.5 sm:p-4 rounded-full shadow-2xl flex items-center justify-center font-bold transition transform hover:scale-110 border-2 border-yellow-200 cursor-pointer">
-        <span class="text-xl sm:text-2xl mr-1">🛒</span>
-        <span id="floatingCartCount" class="bg-black text-yellow-400 text-[11px] px-2 py-0.5 rounded-full font-mono font-bold">0</span>
+    <button onclick="toggleCartModal()" class="fixed bottom-6 right-6 z-40 bg-gradient-to-br from-amber-400 to-yellow-600 text-black p-4 rounded-full shadow-2xl flex items-center justify-center font-bold transition-all duration-300 hover:scale-110 border-2 border-yellow-200 cursor-pointer floating-anim">
+        <span class="text-2xl mr-1">🛒</span>
+        <span id="floatingCartCount" class="absolute -top-1 -right-1 bg-black text-yellow-400 text-xs px-2 py-0.5 rounded-full font-mono font-bold border border-yellow-500">0</span>
     </button>
 
-    <!-- SHOPPING CART MODAL -->
-    <div id="cartModal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
-        <div class="emerald-glass w-full max-w-lg rounded-3xl p-5 sm:p-6 relative max-h-[85vh] flex flex-col shadow-2xl">
-            <div class="flex items-center justify-between pb-3 border-b border-yellow-500/30">
-                <h3 class="royal-font text-base sm:text-lg font-bold text-yellow-400 flex items-center gap-2">
-                    <span>🛒</span> Your Shopping Bag
+    <div id="cartModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4 transition-all duration-300">
+        <div class="glass-card w-full max-w-lg rounded-3xl p-6 relative max-h-[85vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
+            <div class="flex items-center justify-between pb-4 border-b border-yellow-500/30">
+                <h3 class="royal-font text-lg font-bold text-yellow-400 flex items-center gap-2">
+                    <span>🛍️</span> Your Luxury Shopping Bag
                 </h3>
-                <button onclick="toggleCartModal()" class="text-gray-400 hover:text-white text-lg font-bold cursor-pointer">✕</button>
+                <button onclick="toggleCartModal()" class="text-gray-400 hover:text-white text-xl font-bold cursor-pointer transition">✕</button>
             </div>
-
-            <!-- Cart Items List -->
-            <div id="cartItemsList" class="my-3 overflow-y-auto flex-grow space-y-2.5 pr-1">
-                <!-- Cart items populated via JS -->
-            </div>
-
-            <!-- Cart Footer Summary -->
-            <div class="pt-3 border-t border-yellow-500/30">
-                <div class="flex justify-between items-center mb-3">
+            <div id="cartItemsList" class="my-4 overflow-y-auto flex-grow space-y-3 pr-1"></div>
+            <div class="pt-4 border-t border-yellow-500/30">
+                <div class="flex justify-between items-center mb-4">
                     <span class="text-xs uppercase tracking-wider text-emerald-400 font-semibold">Total Amount:</span>
-                    <span id="cartTotal" class="royal-font text-lg sm:text-xl font-extrabold text-yellow-400">₹0</span>
+                    <span id="cartTotal" class="royal-font text-xl font-extrabold text-yellow-400">₹0</span>
                 </div>
-                <button onclick="sendWhatsAppCartOrder()" class="w-full py-3 bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 text-black font-extrabold rounded-xl text-center text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+                <button onclick="sendWhatsAppCartOrder()" class="w-full py-3.5 bg-gradient-to-r from-emerald-500 to-emerald-400 hover:from-emerald-400 text-black font-extrabold rounded-xl text-center text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer transform hover:scale-[1.02]">
                     <span>💬</span> Place Order via WhatsApp
                 </button>
             </div>
         </div>
     </div>
 
-    <!-- IMAGE ZOOM & GALLERY MODAL -->
-    <div id="productZoomModal" class="fixed inset-0 z-50 bg-black/85 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="emerald-glass w-full max-w-lg rounded-3xl p-5 sm:p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/40">
-            <button onclick="closeProductZoomModal()" class="absolute top-3 right-3 z-20 w-8 h-8 bg-slate-900/80 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
+    <div id="productZoomModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-lg hidden flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-lg rounded-3xl p-6 relative max-h-[90vh] flex flex-col shadow-2xl border-2 border-yellow-500/50">
+            <button onclick="closeProductZoomModal()" class="absolute top-4 right-4 z-20 w-9 h-9 bg-slate-900/90 border border-yellow-500/40 text-yellow-400 hover:text-white rounded-full font-bold flex items-center justify-center cursor-pointer transition">✕</button>
             
-            <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-3 flex items-center justify-center border border-slate-800 mb-3 overflow-hidden relative group">
-                <img id="modalZoomImg" src="" class="w-full h-full object-contain transition-transform duration-300" alt="Zoom View">
+            <div class="w-full aspect-square bg-slate-950/90 rounded-2xl p-4 flex items-center justify-center border border-slate-800 mb-4 overflow-hidden relative group">
+                <img id="modalZoomImg" src="" class="w-full h-full object-contain transition-transform duration-500 transform hover:scale-110" alt="Zoom View">
                 
-                <!-- Modal Arrows -->
-                <button onclick="slideModalImage(-1)" class="absolute left-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition">❮</button>
-                <button onclick="slideModalImage(1)" class="absolute right-2 top-1/2 -translate-y-1/2 bg-black/70 hover:bg-amber-500 hover:text-black text-yellow-400 w-8 h-8 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition">❯</button>
+                <button onclick="slideModalImage(-1)" class="absolute left-3 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-amber-500 hover:text-black text-yellow-400 w-9 h-9 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition shadow-lg">❮</button>
+                <button onclick="slideModalImage(1)" class="absolute right-3 top-1/2 -translate-y-1/2 bg-black/80 hover:bg-amber-500 hover:text-black text-yellow-400 w-9 h-9 rounded-full border border-yellow-500/40 flex items-center justify-center font-bold cursor-pointer transition shadow-lg">❯</button>
                 
-                <span id="imgCounterBadge" class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/70 text-yellow-300 text-[10px] px-2.5 py-0.5 rounded-full font-mono">1 / 1</span>
+                <span id="imgCounterBadge" class="absolute bottom-3 left-1/2 -translate-x-1/2 bg-black/80 text-yellow-300 text-xs px-3 py-1 rounded-full font-mono border border-yellow-500/30">1 / 1</span>
             </div>
 
             <div class="flex flex-col gap-2">
                 <div class="flex items-center justify-between">
-                    <span id="modalProductCategory" class="text-[10px] font-mono text-emerald-400 tracking-wider uppercase">Category</span>
-                    
-                    <button id="modalShareBtn" onclick="" class="px-3 py-1 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-lg text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer transition">
-                        <svg class="w-3.5 h-3.5 fill-current" viewBox="0 0 24 24">
-                            <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-                        </svg>
-                        <span>Share</span>
+                    <span id="modalProductCategory" class="text-[11px] font-mono text-emerald-400 tracking-widest uppercase">Category</span>
+                    <button id="modalShareBtn" onclick="" class="px-3.5 py-1.5 bg-amber-500/20 border border-yellow-500/40 text-yellow-300 rounded-xl text-xs font-bold flex items-center gap-1.5 hover:bg-amber-500/40 cursor-pointer transition">
+                        <span>Share 🔗</span>
                     </button>
                 </div>
-                <h3 id="modalProductName" class="royal-font text-base sm:text-lg font-bold text-gray-100">Product Name</h3>
-                <span id="modalProductPrice" class="royal-font text-base sm:text-lg font-extrabold text-yellow-400">Price: ₹0</span>
-
-                <div class="mt-3" id="modalActionContainer"></div>
+                <h3 id="modalProductName" class="royal-font text-lg sm:text-xl font-bold text-gray-100">Product Name</h3>
+                <span id="modalProductPrice" class="royal-font text-lg sm:text-xl font-extrabold text-yellow-400">Price: ₹0</span>
+                <div class="mt-4" id="modalActionContainer"></div>
             </div>
         </div>
     </div>
 
-    <!-- THANK YOU POPUP -->
-    <div id="thankYouModal" class="fixed inset-0 z-50 bg-black/90 backdrop-blur-md hidden flex items-center justify-center p-4">
-        <div class="emerald-glass w-full max-w-md rounded-3xl p-6 sm:p-8 text-center border-2 border-yellow-400 shadow-2xl relative">
-            <div class="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 bg-emerald-500/20 border-2 border-emerald-400 rounded-full flex items-center justify-center text-3xl sm:text-4xl shadow-lg">
+    <div id="thankYouModal" class="fixed inset-0 z-50 bg-black/95 backdrop-blur-md hidden flex items-center justify-center p-4">
+        <div class="glass-card w-full max-w-md rounded-3xl p-8 text-center border-2 border-yellow-400 shadow-2xl relative">
+            <div class="w-20 h-20 mx-auto mb-4 bg-emerald-500/20 border-2 border-emerald-400 rounded-full flex items-center justify-center text-4xl shadow-xl floating-anim">
                 ✨
             </div>
-            <h3 class="royal-font text-xl sm:text-2xl font-extrabold text-yellow-400 mb-2">Thank You! 🎉</h3>
-            <h4 class="text-xs sm:text-sm font-semibold text-emerald-300 mb-3">Your Order Details Have Been Sent</h4>
-            
-            <p class="text-xs text-gray-200 leading-relaxed mb-5 bg-slate-950/70 p-3.5 rounded-2xl border border-emerald-900/80">
-                We have received your order list on WhatsApp. Our team at <strong>Aneeta Collections</strong> will call you shortly to confirm your items and shipping details! 📞🛍️
+            <h3 class="royal-font text-2xl font-extrabold text-yellow-400 mb-2">Thank You! 🎉</h3>
+            <h4 class="text-sm font-semibold text-emerald-300 mb-4">Order Transmitted Successfully</h4>
+            <p class="text-xs text-gray-200 leading-relaxed mb-6 bg-slate-950/70 p-4 rounded-2xl border border-emerald-900/80">
+                We have received your list on WhatsApp. Our concierge at <strong>Aneeta Collections</strong> will contact you shortly to confirm your luxury order! 📞🛍️
             </p>
-
-            <button onclick="closeThankYouModal()" class="w-full py-3 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg cursor-pointer hover:scale-105">
-                Continue Shopping ✨
+            <button onclick="closeThankYouModal()" class="w-full py-3 bg-gradient-to-r from-yellow-500 to-yellow-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg cursor-pointer transform hover:scale-105">
+                Continue Exploring ✨
             </button>
         </div>
     </div>
 
-    <div class="max-w-7xl mx-auto px-2.5 sm:px-4 pt-4 sm:pt-6">
+    <div class="max-w-7xl mx-auto px-3 sm:px-6 pt-6">
         
-        <!-- HEADER SECTION -->
-        <header class="emerald-glass rounded-2xl sm:rounded-3xl p-4 sm:p-8 mb-4 sm:mb-6 flex flex-col md:flex-row items-center justify-between gap-4 sm:gap-6">
-            <div class="flex items-center gap-4 sm:gap-6 text-left w-full md:w-auto">
-                <div class="w-20 h-20 sm:w-28 sm:h-28 rounded-xl sm:rounded-2xl border-2 border-yellow-500/70 overflow-hidden bg-white p-1.5 shadow-xl flex-shrink-0 flex items-center justify-center">
+        <header class="glass-card rounded-3xl p-6 sm:p-10 mb-6 flex flex-col md:flex-row items-center justify-between gap-6 relative overflow-hidden">
+            <div class="absolute -right-20 -top-20 w-60 h-60 bg-emerald-500/10 rounded-full blur-3xl pointer-events-none"></div>
+            <div class="absolute -left-20 -bottom-20 w-60 h-60 bg-yellow-500/10 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div class="flex flex-col sm:flex-row items-center gap-6 text-center sm:text-left z-10">
+                <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-2xl border-2 border-yellow-500/70 overflow-hidden bg-white p-2 shadow-2xl flex-shrink-0 flex items-center justify-center transform hover:rotate-2 transition duration-300">
                     <img id="mainLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
                 </div>
-                <div class="flex-grow">
-                    <h1 class="royal-font text-xl sm:text-3xl lg:text-4xl font-extrabold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-yellow-200 via-yellow-400 to-yellow-100">
+                <div>
+                    <h1 class="royal-font text-3xl sm:text-4xl lg:text-5xl font-extrabold tracking-wider shimmer-text">
                         ANEETA COLLECTIONS
                     </h1>
-                    <p class="text-[10px] sm:text-xs tracking-widest text-emerald-400 uppercase font-semibold mt-0.5 sm:mt-1">✨ Exclusive Luxury Jewelry & Accessories ✨</p>
+                    <p class="text-xs tracking-[0.25em] text-emerald-400 uppercase font-semibold mt-2">✨ Haute Horlogerie & Timeless Luxury Jewelry ✨</p>
                     
-                    <div class="mt-2 text-[11px] sm:text-xs text-gray-200 space-y-0.5 font-medium">
-                        <p class="flex items-center gap-1.5">
-                            <span>📞</span> <strong>Call/WhatsApp:</strong> <a href="tel:8796672636" class="text-yellow-400 font-bold hover:underline">8796672636</a>
+                    <div class="mt-3 text-xs text-gray-300 space-y-1 font-medium">
+                        <p class="flex items-center justify-center sm:justify-start gap-2">
+                            <span>📞</span> <strong>Concierge / WhatsApp:</strong> <a href="tel:8796672636" class="text-yellow-400 font-bold hover:underline">8796672636</a>
                         </p>
-                        <p class="flex items-center gap-1.5 truncate">
-                            <span>📍</span> <span class="truncate">SG Shikhar Heights Indirapuram Ghaziabad</span>
+                        <p class="flex items-center justify-center sm:justify-start gap-2">
+                            <span>📍</span> <strong>Boutique Address:</strong> SG Shikhar Heights Indirapuram Ghaziabad, 201009
                         </p>
                     </div>
                 </div>
             </div>
 
-            <div class="w-full md:w-auto flex-shrink-0">
-                <button onclick="toggleCartModal()" class="w-full md:w-auto px-5 py-2.5 sm:py-3 bg-yellow-500 hover:bg-yellow-400 text-black font-extrabold rounded-xl text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-2 cursor-pointer">
+            <div class="w-full md:w-auto z-10 flex-shrink-0">
+                <button onclick="toggleCartModal()" class="w-full md:w-auto px-6 py-3.5 bg-gradient-to-r from-yellow-500 to-amber-400 hover:from-yellow-400 text-black font-extrabold rounded-2xl text-xs uppercase tracking-widest transition-all shadow-xl flex items-center justify-center gap-2 cursor-pointer transform hover:scale-105">
                     <span>🛒</span> View Bag (<span id="headerCartCount">0</span>)
                 </button>
             </div>
         </header>
 
-        <!-- LUXURY BANNER IMAGE SECTION -->
-        <section class="w-full rounded-2xl sm:rounded-3xl overflow-hidden mb-5 sm:mb-6 border-2 border-yellow-500/50 shadow-2xl bg-slate-950 flex items-center justify-center">
-            <img src="Image%20Banner.png" alt="Aneeta Collections Luxury Banner" class="w-full h-auto object-cover max-h-[320px] sm:max-h-[420px]" style="object-position: center 15%;" onerror="this.onerror=null; this.src='banner.png';">
+        <section class="w-full rounded-3xl overflow-hidden mb-6 border-2 border-yellow-500/40 shadow-2xl bg-slate-950 flex items-center justify-center relative group">
+            <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent pointer-events-none"></div>
+            <img src="Image%20Banner.png" alt="Luxury Banner" class="w-full h-auto object-cover max-h-[380px] sm:max-h-[460px] transition duration-700 group-hover:scale-105" style="object-position: center 15%;">
         </section>
 
-        <!-- SEARCH & CATEGORY FILTER BAR -->
-        <section class="emerald-glass rounded-2xl sm:rounded-3xl p-4 sm:p-6 mb-6 sm:mb-8 shadow-2xl border border-yellow-500/40">
-            <div class="flex flex-col gap-4 sm:gap-5">
+        <section class="glass-card rounded-3xl p-6 mb-8 shadow-2xl border border-yellow-500/30">
+            <div class="flex flex-col gap-5">
                 <div class="relative w-full">
-                    <span class="absolute inset-y-0 left-0 flex items-center pl-3.5 pointer-events-none text-yellow-400 text-sm sm:text-base">🔍</span>
-                    <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-10 pr-9 py-2.5 sm:py-3 bg-slate-950/90 border border-yellow-500/30 rounded-xl sm:rounded-2xl text-xs sm:text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
-                    <button id="searchClearBtn" onclick="clearSearch()" class="absolute inset-y-0 right-0 flex items-center pr-3 text-gray-400 hover:text-yellow-400 font-bold text-xs sm:text-sm hidden cursor-pointer transition">✕</button>
+                    <span class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none text-yellow-400 text-base">🔍</span>
+                    <input type="text" id="searchInput" onkeyup="handleSearchInput()" placeholder="Search Earrings, Bangles, Lockets, Rakhis..." class="w-full pl-11 pr-10 py-3.5 bg-slate-950/90 border border-yellow-500/30 rounded-2xl text-sm text-gray-100 placeholder-gray-400 focus:outline-none focus:border-yellow-400 focus:ring-2 focus:ring-yellow-500/20 transition">
+                    <button id="searchClearBtn" onclick="clearSearch()" class="absolute inset-y-0 right-0 flex items-center pr-4 text-gray-400 hover:text-yellow-400 font-bold text-sm hidden cursor-pointer transition">✕</button>
                 </div>
 
-                <div class="flex flex-col gap-1.5 sm:gap-2">
-                    <span class="text-[10px] sm:text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Explore Collections:</span>
-                    <div id="categoryContainer" class="flex flex-wrap gap-2 items-center"></div>
+                <div class="flex flex-col gap-2">
+                    <span class="text-[11px] font-mono uppercase tracking-widest text-emerald-400 font-bold">Explore Master Collections:</span>
+                    <div id="categoryContainer" class="flex flex-wrap gap-2.5 items-center"></div>
                 </div>
             </div>
         </section>
 
-        <!-- PRODUCTS SHOWROOM GRID -->
         <main>
-            <div class="flex items-center justify-between mb-4 sm:mb-6 pb-2 border-b border-emerald-900/60">
-                <h2 class="royal-font text-base sm:text-xl font-semibold text-yellow-400">Featured Collections Catalog</h2>
-                <span id="productCounter" class="text-[11px] sm:text-xs bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 px-2.5 py-1 rounded-full font-mono">0 Designs</span>
+            <div class="flex items-center justify-between mb-6 pb-2 border-b border-emerald-900/60">
+                <h2 class="royal-font text-xl font-semibold text-yellow-400 tracking-wide">Exquisite Catalog</h2>
+                <span id="productCounter" class="text-xs bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 px-3.5 py-1 rounded-full font-mono">0 Designs</span>
             </div>
 
-            <div id="showroomGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-6"></div>
+            <div id="showroomGrid" class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 sm:gap-6"></div>
         </main>
 
-        <!-- FOOTER SECTION -->
-        <footer class="emerald-glass rounded-2xl sm:rounded-3xl p-6 sm:p-8 mt-12 sm:mt-16 text-center">
-            <div class="w-14 h-14 sm:w-16 sm:h-16 rounded-xl border border-yellow-500/50 mx-auto mb-3 sm:mb-4 overflow-hidden bg-white p-1">
-                <img id="footerLogo" src="Logo.png" alt="Aneeta Collections" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
+        <footer class="glass-card rounded-3xl p-8 mt-16 text-center border border-yellow-500/30">
+            <div class="w-16 h-16 rounded-2xl border border-yellow-500/50 mx-auto mb-4 overflow-hidden bg-white p-1 shadow-lg">
+                <img id="footerLogo" src="Logo.png" alt="Logo" class="w-full h-full object-contain" onerror="this.onerror=null; this.src='Logo.jpeg';">
             </div>
-            <h3 class="royal-font text-lg sm:text-xl font-bold text-yellow-400 mb-1">ANEETA COLLECTIONS</h3>
-            <p class="text-[11px] sm:text-xs text-emerald-400 font-semibold mb-5">Your Destination for Premium Fancy Jewelry & Accessories</p>
+            <h3 class="royal-font text-xl font-bold text-yellow-400 mb-1">ANEETA COLLECTIONS</h3>
+            <p class="text-xs text-emerald-400 font-semibold mb-6">Your Ultimate Destination for High-End Fancy Jewelry & Accessories</p>
             
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-3 sm:gap-6 text-xs text-gray-300 pt-5 border-t border-slate-800">
-                <div class="bg-slate-950/60 p-3 sm:p-4 rounded-xl border border-slate-800">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs text-gray-300 pt-6 border-t border-slate-800">
+                <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
                     <p class="text-yellow-400 font-bold mb-1">📞 Contact Number</p>
                     <p>WhatsApp & Call: <a href="tel:8796672636" class="hover:underline font-semibold text-white">8796672636</a></p>
                 </div>
-                <div class="bg-slate-950/60 p-3 sm:p-4 rounded-xl border border-slate-800">
+                <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
                     <p class="text-yellow-400 font-bold mb-1">✉️ Email Address</p>
                     <p><a href="mailto:aneetacollections.in@gmail.com" class="hover:underline text-white">aneetacollections.in@gmail.com</a></p>
                 </div>
-                <div class="bg-slate-950/60 p-3 sm:p-4 rounded-xl border border-slate-800">
-                    <p class="text-yellow-400 font-bold mb-1">📍 Store Location</p>
+                <div class="bg-slate-950/60 p-4 rounded-2xl border border-slate-800">
+                    <p class="text-yellow-400 font-bold mb-1">📍 Boutique Location</p>
                     <p>SG Shikhar Heights Indirapuram Ghaziabad, 201009</p>
                 </div>
             </div>
@@ -371,7 +356,7 @@
         ];
 
         const categoryEmojis = {
-            'ALL': '✨ All Products',
+            'ALL': '✨ All Masterpieces',
             'Rakhi': '🪔 Rakhi Special',
             'Hair Rubber Bands': '🎀 Hair Bands',
             'Bangle': '🌸 Bangles',
@@ -389,47 +374,22 @@
         };
 
         let selectedCategory = 'ALL';
-        let cart = loadCartFromStorage();
+        let cart = JSON.parse(localStorage.getItem('aneeta_cart')) || [];
         let currentZoomProductId = null;
         let currentZoomImageIndex = 0;
         let activeCardIntervals = {};
+        let modalAutoSlideTimer = null;
 
-        function loadCartFromStorage() {
-            try {
-                const saved = localStorage.getItem('aneeta_cart');
-                return saved ? JSON.parse(saved) : [];
-            } catch(e) { return []; }
-        }
-
-        function saveCartToStorage() {
-            try { localStorage.setItem('aneeta_cart', JSON.stringify(cart)); } catch(e) {}
-        }
-
-        function handleImageError(img, baseName) {
-            const step = parseInt(img.dataset.step || '0');
-            const variants = [
-                encodeURIComponent(baseName) + '.jpg',
-                encodeURIComponent(baseName) + '.jpeg',
-                encodeURIComponent(baseName) + '.png',
-                encodeURIComponent(baseName.replace(/\s+/g, '_')) + '.jpg'
-            ];
-            if (step < variants.length) {
-                img.dataset.step = step + 1;
-                img.src = variants[step];
-            } else {
-                img.onerror = null;
-                img.style.display = 'none';
-                if(img.nextElementSibling) img.nextElementSibling.style.display = 'flex';
-            }
+        function saveCart() {
+            localStorage.setItem('aneeta_cart', JSON.stringify(cart));
         }
 
         function renderCategories() {
             const types = ['ALL', ...new Set(rawInventory.map(i => i.type))];
-            const container = document.getElementById('categoryContainer');
-            container.innerHTML = types.map(t => {
+            document.getElementById('categoryContainer').innerHTML = types.map(t => {
                 const label = categoryEmojis[t] || `✨ ${t}`;
                 const isActive = (selectedCategory === t) ? 'active' : 'bg-slate-950/80 border-yellow-500/30 text-gray-200';
-                return `<button onclick="filterCategory('${t}')" class="category-chip ${isActive} text-[11px] sm:text-xs px-3 sm:px-4 py-1.5 sm:py-2 rounded-xl border text-center font-medium cursor-pointer shadow-sm">${label}</button>`;
+                return `<button onclick="filterCategory('${t}')" class="category-chip ${isActive} text-xs px-4 py-2 rounded-2xl border text-center font-medium cursor-pointer shadow-sm">${label}</button>`;
             }).join('');
         }
 
@@ -441,8 +401,7 @@
 
         function handleSearchInput() {
             const input = document.getElementById('searchInput');
-            const clearBtn = document.getElementById('searchClearBtn');
-            clearBtn.classList.toggle('hidden', input.value.trim().length === 0);
+            document.getElementById('searchClearBtn').classList.toggle('hidden', input.value.trim().length === 0);
             filterProducts();
         }
 
@@ -462,29 +421,32 @@
             renderGrid(filtered);
         }
 
-        // AUTO SLIDE ON HOVER FOR MULTI-IMAGE CARDS
+        // SMOOTH HOVER AUTO SLIDE
         function startCardHoverSlides(productId) {
             const product = rawInventory.find(p => p.id === productId);
             if (!product || product.images.length <= 1) return;
-
             let imgIndex = 0;
             const imgElement = document.getElementById(`grid-img-${productId}`);
             if(!imgElement) return;
 
             activeCardIntervals[productId] = setInterval(() => {
                 imgIndex = (imgIndex + 1) % product.images.length;
-                imgElement.src = encodeURIComponent(product.images[imgIndex]) + '.jpg';
-            }, 3000); // changes every 3 seconds automatically on hover
+                imgElement.style.opacity = '0.3';
+                setTimeout(() => {
+                    imgElement.src = encodeURIComponent(product.images[imgIndex]) + '.jpg';
+                    imgElement.style.opacity = '1';
+                }, 200);
+            }, 2500);
         }
 
         function stopCardHoverSlides(productId) {
             if (activeCardIntervals[productId]) {
                 clearInterval(activeCardIntervals[productId]);
                 delete activeCardIntervals[productId];
-                
                 const product = rawInventory.find(p => p.id === productId);
                 const imgElement = document.getElementById(`grid-img-${productId}`);
                 if (product && imgElement) {
+                    imgElement.style.opacity = '1';
                     imgElement.src = encodeURIComponent(product.images[0]) + '.jpg';
                 }
             }
@@ -492,58 +454,35 @@
 
         function renderGrid(items) {
             const grid = document.getElementById('showroomGrid');
-            document.getElementById('productCounter').innerText = `${items.length} Unique Products`;
+            document.getElementById('productCounter').innerText = `${items.length} Unique Designs`;
 
             grid.innerHTML = items.map((product) => {
                 const initialSrc = encodeURIComponent(product.images[0]) + '.jpg';
-                const safeName = product.images[0].replace(/'/g, "\\'");
                 const cartItem = cart.find(c => c.id === product.id);
                 const qty = cartItem ? cartItem.qty : 0;
                 const hasMultiple = product.images.length > 1;
 
                 return `
-                    <div class="product-card rounded-xl sm:rounded-2xl overflow-hidden flex flex-col relative" id="card-${product.id}">
-                        
-                        <button onclick="shareProduct(${product.id}, event)" class="absolute top-2 right-2 sm:top-3 sm:right-3 z-20 w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center shadow hover:scale-110 cursor-pointer transition" title="Share Product">
-                            <svg class="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current text-yellow-400" viewBox="0 0 24 24">
-                                <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/>
-                            </svg>
+                    <div class="product-card rounded-3xl overflow-hidden flex flex-col relative group glass-card" id="card-${product.id}">
+                        <button onclick="shareProduct(${product.id}, event)" class="absolute top-3 right-3 z-20 w-8 h-8 rounded-full bg-slate-950/80 border border-yellow-500/40 text-yellow-300 flex items-center justify-center shadow hover:scale-110 cursor-pointer transition duration-300" title="Share Masterpiece">
+                            <svg class="w-4 h-4 fill-current text-yellow-400" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
                         </button>
-
-                        ${hasMultiple ? `<span class="absolute top-2 left-2 z-20 bg-amber-500 text-black text-[9px] font-extrabold px-1.5 py-0.5 rounded-md shadow">📷 ${product.images.length} Photos</span>` : ''}
+                        ${hasMultiple ? `<span class="absolute top-3 left-3 z-20 bg-amber-500 text-black text-[10px] font-extrabold px-2 py-0.5 rounded-lg shadow-lg">📷 ${product.images.length} Views</span>` : ''}
 
                         <div onclick="openProductZoomModal(${product.id})" 
                              onmouseenter="startCardHoverSlides(${product.id})" 
                              onmouseleave="stopCardHoverSlides(${product.id})"
-                             class="product-img-box relative aspect-square bg-slate-950/80 p-2 sm:p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer group">
+                             class="product-img-box relative aspect-square bg-slate-950/80 p-3 flex items-center justify-center border-b border-slate-900 cursor-pointer">
                             
-                            <img id="grid-img-${product.id}"
-                                 src="${initialSrc}" 
-                                 data-step="0" 
-                                 data-itemid="${product.id}"
-                                 class="transition-transform duration-300 group-hover:scale-105" 
-                                 alt="${product.name}" 
-                                 onerror="handleImageError(this, '${safeName}')">
-                            
-                            <div class="text-center p-2 hidden flex-col items-center justify-center">
-                                <span class="text-2xl block mb-1">💎</span>
-                                <span class="royal-font text-[10px] text-yellow-400/80 font-bold">${product.name}</span>
-                            </div>
-                            <span class="absolute bottom-1.5 right-1.5 sm:bottom-2 sm:right-2 bg-black/60 text-yellow-300 text-[9px] sm:text-[10px] px-1.5 py-0.5 rounded-full backdrop-blur-sm opacity-0 group-hover:opacity-100 transition">
-                                🔍 Zoom & Gallery
-                            </span>
+                            <img id="grid-img-${product.id}" src="${initialSrc}" class="transition-all duration-500 group-hover:scale-110" alt="${product.name}" onerror="this.onerror=null; this.src='Logo.png';">
+                            <span class="absolute bottom-2 right-2 bg-black/70 text-yellow-300 text-[10px] px-2.5 py-1 rounded-full opacity-0 group-hover:opacity-100 transition shadow">🔍 Quick View</span>
                         </div>
 
-                        <div class="p-3 sm:p-5 flex flex-col flex-grow">
-                            <span class="text-[9px] sm:text-[10px] font-mono text-emerald-400 tracking-wider uppercase mb-0.5 sm:mb-1">${product.type}</span>
-                            <h3 onclick="openProductZoomModal(${product.id})" class="royal-font text-xs sm:text-sm font-semibold text-gray-100 line-clamp-1 mb-1.5 sm:mb-2 cursor-pointer hover:text-yellow-400 transition">${product.name}</h3>
-                            <div class="flex items-center justify-between mb-3 sm:mb-4">
-                                <span class="text-[11px] sm:text-xs text-yellow-400 font-bold font-mono">Price: ₹${product.price}</span>
-                            </div>
-                            
-                            <div class="mt-auto" id="btn-container-${product.id}">
-                                ${renderProductButton(product.id, qty)}
-                            </div>
+                        <div class="p-4 sm:p-5 flex flex-col flex-grow">
+                            <span class="text-[10px] font-mono text-emerald-400 uppercase tracking-widest mb-1">${product.type}</span>
+                            <h3 onclick="openProductZoomModal(${product.id})" class="royal-font text-xs sm:text-sm font-semibold text-gray-100 line-clamp-1 mb-2 cursor-pointer hover:text-yellow-400 transition">${product.name}</h3>
+                            <div class="flex items-center justify-between mb-4"><span class="text-xs text-yellow-400 font-bold font-mono">Price: ₹${product.price}</span></div>
+                            <div class="mt-auto" id="btn-container-${product.id}">${renderProductButton(product.id, qty)}</div>
                         </div>
                     </div>
                 `;
@@ -553,26 +492,22 @@
         function renderProductButton(productId, qty) {
             if (qty > 0) {
                 return `
-                    <div class="w-full py-1.5 px-2 bg-slate-950 border border-yellow-500/50 rounded-xl flex items-center justify-between shadow-inner">
-                        <button onclick="changeQty(${productId}, -1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500/20 hover:bg-amber-500/40 text-yellow-400 font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition">-</button>
-                        <span class="text-[10px] sm:text-xs font-mono font-bold text-yellow-300 tracking-wider px-1">${qty} In Bag</span>
-                        <button onclick="changeQty(${productId}, 1)" class="w-7 h-7 sm:w-8 sm:h-8 rounded-lg bg-amber-500 hover:bg-yellow-400 text-black font-extrabold text-xs sm:text-sm flex items-center justify-center cursor-pointer transition shadow">+</button>
+                    <div class="w-full py-2 px-2.5 bg-slate-950 border border-yellow-500/50 rounded-2xl flex items-center justify-between shadow-inner">
+                        <button onclick="changeQty(${productId}, -1)" class="w-8 h-8 bg-amber-500/20 hover:bg-amber-500/40 text-yellow-400 font-extrabold rounded-xl transition">-</button>
+                        <span class="text-xs font-mono font-bold text-yellow-300">${qty} In Bag</span>
+                        <button onclick="changeQty(${productId}, 1)" class="w-8 h-8 bg-amber-500 hover:bg-yellow-400 text-black font-extrabold rounded-xl transition">+</button>
                     </div>
                 `;
             } else {
-                return `
-                    <button onclick="addToCart(${productId})" class="w-full py-2 sm:py-2.5 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold rounded-xl text-center text-[10px] sm:text-xs uppercase tracking-wider transition shadow-lg flex items-center justify-center gap-1.5 cursor-pointer">
-                        <span>🛒</span> Add To Bag
-                    </button>
-                `;
+                return `<button onclick="addToCart(${productId})" class="w-full py-2.5 bg-gradient-to-r from-amber-500 to-yellow-400 hover:from-yellow-400 text-black font-extrabold rounded-2xl text-xs uppercase tracking-widest shadow-lg cursor-pointer transform hover:scale-[1.02] transition"><span>🛒</span> Add To Bag</button>`;
             }
         }
 
         function addToCart(productId) {
             const product = rawInventory.find(p => p.id === productId);
             const existing = cart.find(item => item.id === productId);
-            if(existing) { existing.qty += 1; } else { cart.push({ ...product, qty: 1 }); }
-            saveCartToStorage();
+            if(existing) existing.qty += 1; else cart.push({ ...product, qty: 1 });
+            saveCart();
             updateCartUI();
             updateCardButton(productId);
         }
@@ -583,7 +518,7 @@
                 item.qty += delta;
                 if(item.qty <= 0) cart = cart.filter(p => p.id !== productId);
             }
-            saveCartToStorage();
+            saveCart();
             updateCartUI();
             updateCardButton(productId);
         }
@@ -600,9 +535,7 @@
             }
         }
 
-        // ZOOM & GALLERY MODAL CONTROLS WITH AUTO-SLIDE (EVERY 5 SECONDS)
-        let modalAutoSlideTimer = null;
-
+        // GALLERY MODAL & AUTO SLIDE
         function openProductZoomModal(productId) {
             currentZoomProductId = productId;
             currentZoomImageIndex = 0;
@@ -621,40 +554,35 @@
 
             document.getElementById('productZoomModal').classList.remove('hidden');
 
-            // Start Auto Slide inside modal every 5 seconds if multiple images exist
             if (product.images.length > 1) {
                 if (modalAutoSlideTimer) clearInterval(modalAutoSlideTimer);
-                modalAutoSlideTimer = setInterval(() => {
-                    slideModalImage(1);
-                }, 5000);
+                modalAutoSlideTimer = setInterval(() => { slideModalImage(1); }, 4000);
             }
         }
 
         function updateModalImageDisplay() {
             const product = rawInventory.find(p => p.id === currentZoomProductId);
             if(!product) return;
-
-            const imageName = product.images[currentZoomImageIndex];
-            document.getElementById('modalZoomImg').src = encodeURIComponent(imageName) + '.jpg';
+            const imgTag = document.getElementById('modalZoomImg');
+            imgTag.style.opacity = '0.2';
+            setTimeout(() => {
+                imgTag.src = encodeURIComponent(product.images[currentZoomImageIndex]) + '.jpg';
+                imgTag.style.opacity = '1';
+            }, 150);
             document.getElementById('imgCounterBadge').innerText = `${currentZoomImageIndex + 1} / ${product.images.length}`;
         }
 
         function slideModalImage(direction) {
             const product = rawInventory.find(p => p.id === currentZoomProductId);
             if(!product) return;
-
             currentZoomImageIndex += direction;
             if(currentZoomImageIndex < 0) currentZoomImageIndex = product.images.length - 1;
             if(currentZoomImageIndex >= product.images.length) currentZoomImageIndex = 0;
-
             updateModalImageDisplay();
         }
 
         function closeProductZoomModal() {
-            if (modalAutoSlideTimer) {
-                clearInterval(modalAutoSlideTimer);
-                modalAutoSlideTimer = null;
-            }
+            if (modalAutoSlideTimer) { clearInterval(modalAutoSlideTimer); modalAutoSlideTimer = null; }
             document.getElementById('productZoomModal').classList.add('hidden');
             currentZoomProductId = null;
         }
@@ -663,25 +591,14 @@
             if(event) event.stopPropagation();
             const product = rawInventory.find(p => p.id === productId);
             if (!product) return;
-
-            const shareData = {
-                title: product.name,
-                text: `✨ Check out '${product.name}' (₹${product.price}) from Aneeta Collections! 🛍️\n\nContact / Order on WhatsApp: 8796672636`,
-                url: window.location.href
-            };
-
-            if (navigator.share) {
-                navigator.share(shareData).catch((err) => {});
-            } else {
-                navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`);
-                alert("✨ Product link copied to clipboard!");
-            }
+            const shareData = { title: product.name, text: `Check out ${product.name} (₹${product.price}) from Aneeta Collections!`, url: window.location.href };
+            if (navigator.share) navigator.share(shareData).catch(() => {});
+            else { navigator.clipboard.writeText(`${shareData.text}\n${shareData.url}`); alert("Masterpiece link copied to clipboard!"); }
         }
 
         function updateCartUI() {
             const totalQty = cart.reduce((sum, item) => sum + item.qty, 0);
             const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
-
             document.getElementById('floatingCartCount').innerText = totalQty;
             document.getElementById('headerCartCount').innerText = totalQty;
             document.getElementById('cartTotal').innerText = `₹${totalPrice}`;
@@ -690,57 +607,47 @@
             if (totalQty > 0) {
                 document.getElementById('toastItemCount').innerText = totalQty;
                 document.getElementById('toastCartTotal').innerText = `₹${totalPrice}`;
-                toast.classList.remove('hidden');
-            } else {
-                toast.classList.add('hidden');
+                toast.classList.remove('translate-y-10', 'opacity-0');
+                toast.classList.add('translate-y-0', 'opacity-100');
+            } else { 
+                toast.classList.add('translate-y-10', 'opacity-0');
             }
 
             const listContainer = document.getElementById('cartItemsList');
             if(cart.length === 0) {
-                listContainer.innerHTML = `<div class="text-center py-6 text-gray-400"><span class="text-3xl block mb-2">🛍️</span><p class="text-xs">Your shopping bag is empty!</p></div>`;
+                listContainer.innerHTML = `<div class="text-center py-8 text-gray-400"><span class="text-4xl block mb-2">🛍️</span><p class="text-xs">Your luxury bag is empty!</p></div>`;
             } else {
                 listContainer.innerHTML = cart.map(item => `
-                    <div class="flex items-center justify-between bg-slate-950/80 p-2.5 rounded-xl border border-slate-800">
-                        <div class="flex-grow pr-2">
-                            <h4 class="text-xs font-bold text-gray-200 line-clamp-1">${item.name}</h4>
-                            <p class="text-[10px] text-yellow-400 font-mono font-bold">₹${item.price} x ${item.qty} = ₹${item.price * item.qty}</p>
-                        </div>
-                        <div class="flex items-center gap-1.5 bg-slate-900 border border-slate-700 rounded-lg px-2 py-1">
-                            <button onclick="changeQty(${item.id}, -1)" class="text-yellow-400 font-bold px-1 hover:text-white cursor-pointer">-</button>
-                            <span class="text-xs font-mono font-bold text-white px-1">${item.qty}</span>
-                            <button onclick="changeQty(${item.id}, 1)" class="text-yellow-400 font-bold px-1 hover:text-white cursor-pointer">+</button>
+                    <div class="flex items-center justify-between bg-slate-950/80 p-3 rounded-2xl border border-slate-800">
+                        <div class="flex-grow pr-2"><h4 class="text-xs font-bold text-gray-200 line-clamp-1">${item.name}</h4><p class="text-[10px] text-yellow-400 font-mono">₹${item.price} x ${item.qty} = ₹${item.price * item.qty}</p></div>
+                        <div class="flex items-center gap-2 bg-slate-900 border border-slate-700 rounded-xl px-2.5 py-1">
+                            <button onclick="changeQty(${item.id}, -1)" class="text-yellow-400 font-bold px-1 hover:text-white">-</button>
+                            <span class="text-xs font-mono text-white px-1">${item.qty}</span>
+                            <button onclick="changeQty(${item.id}, 1)" class="text-yellow-400 font-bold px-1 hover:text-white">+</button>
                         </div>
                     </div>
                 `).join('');
             }
         }
 
-        function toggleCartModal() {
-            document.getElementById('cartModal').classList.toggle('hidden');
-        }
+        function toggleCartModal() { document.getElementById('cartModal').classList.toggle('hidden'); }
 
         function sendWhatsAppCartOrder() {
-            if(cart.length === 0) { alert("Your shopping bag is empty!"); return; }
+            if(cart.length === 0) { alert("Your bag is empty!"); return; }
             let msg = `Hello Aneeta Collections! 👋\nI would like to place an order for:\n\n`;
             let total = 0;
             cart.forEach((item, index) => {
-                const subtotal = item.price * item.qty;
-                total += subtotal;
-                msg += `${index + 1}. *${item.name}*\n   Qty: ${item.qty} x ₹${item.price} = ₹${subtotal}\n\n`;
+                total += item.price * item.qty;
+                msg += `${index + 1}. *${item.name}* - Qty: ${item.qty} (₹${item.price * item.qty})\n`;
             });
-            msg += `------------------------------\n*Total Amount: ₹${total}*\n------------------------------`;
+            msg += `\n*Total Order Amount: ₹${total}*`;
             window.open(`https://api.whatsapp.com/send?phone=918796672636&text=${encodeURIComponent(msg)}`, '_blank');
             toggleCartModal();
             document.getElementById('thankYouModal').classList.remove('hidden');
-            cart = [];
-            saveCartToStorage();
-            updateCartUI();
-            filterProducts();
+            cart = []; saveCart(); updateCartUI(); filterProducts();
         }
 
-        function closeThankYouModal() {
-            document.getElementById('thankYouModal').classList.add('hidden');
-        }
+        function closeThankYouModal() { document.getElementById('thankYouModal').classList.add('hidden'); }
 
         renderCategories();
         renderGrid(rawInventory);
